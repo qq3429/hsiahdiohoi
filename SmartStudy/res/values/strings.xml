@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">智课堂</string>
+    <string name="action_settings">设置</string>
+    <string name="title_activity_video">播放器</string>
+    <string name="title_activity_recent_watch">近期观看</string>
+    <string name="action_clear">清空</string>
+    <string name="title_activity_course_detail">托福</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_collect">我的收藏</string>
+
+</resources>
