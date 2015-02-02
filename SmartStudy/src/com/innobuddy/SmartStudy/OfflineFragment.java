@@ -1,14 +1,21 @@
 package com.innobuddy.SmartStudy;
 
 
+import java.io.File;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.innobuddy.SmartStudy.DB.DBHelper;
 import com.innobuddy.SmartStudy.Video.VideoPlayerActivity;
+import com.innobuddy.download.services.DownloadTask;
+import com.innobuddy.download.utils.DStorageUtils;
+import com.innobuddy.download.utils.NetworkUtils;
 
+import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.database.Cursor;
@@ -20,6 +27,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemLongClickListener;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -29,6 +37,8 @@ public class OfflineFragment extends Fragment {
 	
 	FinishReceiver mFinishReceiver;
 	CourseCell2Adapter adapter;
+	
+	int longClickPostion;
 
 	public OfflineFragment() {
 		// Required empty public constructor
@@ -93,6 +103,56 @@ public class OfflineFragment extends Fragment {
 				
 			}
 		});
+		
+		listView.setOnItemLongClickListener(new OnItemLongClickListener() {
+			
+			@Override
+			public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+				
+				longClickPostion = position;
+				
+				new AlertDialog.Builder(getActivity()).setTitle("提示").setMessage("确定要删除该项吗？")
+				.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+									public void onClick(
+											DialogInterface dialoginterface,
+											int i) {
+										
+										adapter.cursor.moveToPosition(longClickPostion);
+										
+										int id = adapter.cursor.getInt(adapter.cursor.getColumnIndex("id"));
+										String url = adapter.cursor.getString(adapter.cursor.getColumnIndex("cache_url"));
+										
+										DBHelper.getInstance(null).deleteOffline(id);
+										
+						                File file = new File(DStorageUtils.FILE_ROOT
+						                        + NetworkUtils.getFileNameFromUrl(url));
+						                if (file.exists())
+						                    file.delete();
+										
+										if (adapter.cursor != null) {
+											adapter.cursor.close();
+											adapter.cursor = null;
+										}
+
+										adapter.cursor = DBHelper.getInstance(null).queryOffline();
+								        adapter.notifyDataSetChanged();
+										
+									}
+								})
+						.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+									public void onClick(
+											DialogInterface dialoginterface,
+											int i) {
+										
+									}
+								})
+								.show();
+
+				return true;
+			}
+		});
+
+		
 		
 		if (mFinishReceiver == null) {
 	        mFinishReceiver = new FinishReceiver();

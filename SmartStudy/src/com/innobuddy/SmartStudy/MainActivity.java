@@ -31,6 +31,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v13.app.FragmentPagerAdapter;
 //import android.support.v13.app.FragmentTabHost;
@@ -140,6 +141,9 @@ public class MainActivity extends FragmentActivity implements OnBackListener {
         downloadIntent.putExtra(MyIntents.TYPE, MyIntents.Types.START);
         getApplicationContext().startService(downloadIntent);
 		
+//        downloadIntent.putExtra(MyIntents.TYPE, MyIntents.Types.STOP);
+//        getApplicationContext().startService(downloadIntent);
+
     }
     
 	private void initView() {
@@ -206,6 +210,13 @@ public class MainActivity extends FragmentActivity implements OnBackListener {
 		Toast.makeText(this, "back", Toast.LENGTH_SHORT).show();
 	}
 	
+	@Override
+	public void onDestroy() {
+		
+		super.onDestroy();
+		
+	}
+
 	
 	
 }

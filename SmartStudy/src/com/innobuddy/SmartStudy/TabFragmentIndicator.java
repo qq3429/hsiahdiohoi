@@ -46,9 +46,6 @@ public class TabFragmentIndicator extends LinearLayout implements ViewPager.OnPa
 		mContext = context;
 	}
 	
-	
-	
-	
 	public void setViewPager(ViewPager viewPager)
 	{
 		viewPager.setOffscreenPageLimit(3);
@@ -57,7 +54,6 @@ public class TabFragmentIndicator extends LinearLayout implements ViewPager.OnPa
 		mSectionsPagerAdapter = new SectionsPagerAdapter(((FragmentActivity)mContext).getSupportFragmentManager());
 		mViewPager.setAdapter(mSectionsPagerAdapter);
 	}
-
 
 	public void addFragment(int index, Fragment fragment)
 	{
@@ -86,7 +82,6 @@ public class TabFragmentIndicator extends LinearLayout implements ViewPager.OnPa
 				((ViewGroup)container).getChildAt(i).setOnClickListener(this);
 			}
 		}
-		
 	}
 	
 	public void setTabSliderView(int layoutId)

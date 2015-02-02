@@ -1,6 +1,7 @@
 package com.innobuddy.SmartStudy;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -59,6 +60,8 @@ public class Fragment1 extends Fragment {
 	View rootView;
 	
 	JSONArray courseArray;
+	
+	Date lastDate;
 
 	public interface OnBackListener {
 		public void backEvent();
@@ -126,7 +129,6 @@ public class Fragment1 extends Fragment {
 					
 					@Override
 					public void onPageSelected(int arg0) {
-						// TODO Auto-generated method stub
 						
 						dots.get(lastPosition).setBackgroundResource(R.drawable.dot_normal);
 						dots.get(arg0).setBackgroundResource(R.drawable.dot_focused);
@@ -136,13 +138,11 @@ public class Fragment1 extends Fragment {
 					
 					@Override
 					public void onPageScrolled(int arg0, float arg1, int arg2) {
-						// TODO Auto-generated method stub
-						
+
 					}
 					
 					@Override
 					public void onPageScrollStateChanged(int arg0) {
-						// TODO Auto-generated method stub
 						
 					}
 				});
@@ -150,102 +150,6 @@ public class Fragment1 extends Fragment {
 		        viewPager.setAdapter(new HeaderPagerAdapter());
 				
 		        listView.addHeaderView(headerView, null, false);
-				
-				if (dialog != null) {
-					dialog.dismiss();
-					dialog = null;
-				}
-		        
-		        dialog = new ProgressDialog(getActivity(), 2);
-				dialog.setMessage("正在加载中…");
-				dialog.setIndeterminate(true);
-				dialog.setCancelable(true);
-				dialog.show();
-		        
-			AsyncHttpClient client = new AsyncHttpClient();
-			client.get("http://api.smartstudy.com/products?f=json&l=4", new AsyncHttpResponseHandler() {
-				
-				@Override
-				public void onSuccess(int arg0, Header[] arg1, byte[] arg2) {
-					
-					String str = new String(arg2);
-					Log.v("onSuccess", str);
-
-					try {
-						
-						JSONObject rootObject = new JSONObject(str);
-						JSONArray banner = rootObject.getJSONArray("banner");
-						
-						if (banner != null && banner.length() >= imageViews.size()) {
-							for (int i = 0; i < imageViews.size(); i++) {
-								ImageLoader.getInstance().displayImage(banner.getString(i), imageViews.get(i));
-							}
-						}
-						
-						courseArray = rootObject.getJSONArray("courses");
-						
-				        SeparatedListAdapter adapter = new SeparatedListAdapter(getActivity());
-						
-						for (int i = 0; i < courseArray.length(); i++) {
-							
-							JSONObject courseObject = courseArray.getJSONObject(i);
-							
-							JSONArray videoArray = courseObject.getJSONArray("videos");
-							
-							ArrayList<ArrayList<JSONObject>> arrayList = new ArrayList<ArrayList<JSONObject>>();
-							
-							if (videoArray.length() >= 4) {
-								
-								ArrayList<JSONObject> arrayList1 = new ArrayList<JSONObject>();
-								arrayList1.add(videoArray.getJSONObject(0));
-								arrayList1.add(videoArray.getJSONObject(1));
-								
-								arrayList.add(arrayList1);
-								
-								ArrayList<JSONObject> arrayList2 = new ArrayList<JSONObject>();
-								arrayList2.add(videoArray.getJSONObject(2));
-								arrayList2.add(videoArray.getJSONObject(3));
-
-								arrayList.add(arrayList2);
-								
-							}
-							
-							CourseCellAdapter courseCellAdapter = new CourseCellAdapter(getActivity(), arrayList);
-					        
-					        adapter.addSection(courseObject.getString("name"), courseObject.getInt("id"), courseCellAdapter);
-							
-						}
-						
-				        listView.setAdapter(adapter);
-				        adapter.notifyDataSetChanged();
-						
-					} catch (Exception e) {
-						// TODO: handle exception
-					}
-					
-					if (dialog != null) {
-						dialog.dismiss();
-						dialog = null;
-					}
-					
-				}
-				
-				@Override
-				public void onFailure(int arg0, Header[] arg1, byte[] arg2, Throwable arg3) {
-
-					if (arg2 != null) {
-						Log.v("onFailure", new String(arg2));
-					}
-					
-					if (dialog != null) {
-						dialog.dismiss();
-						dialog = null;
-					}
-					
-				}
-				
-			});
-
 			
 		} else {
 			
@@ -255,8 +159,118 @@ public class Fragment1 extends Fragment {
 			}
 			
 		}
+		
+		loadData();
 
 		return rootView;
+	}
+	
+	public void loadData() {
+		
+		Date date = new Date();
+		
+		if (courseArray == null || lastDate == null || (date.getTime() - lastDate.getTime() > 1000 * 60 * 60 * 3)) {
+			
+		} else {
+			return;
+		}
+		
+		if (dialog != null) {
+			dialog.dismiss();
+			dialog = null;
+		}
+        
+        dialog = new ProgressDialog(getActivity(), 2);
+		dialog.setMessage("正在加载中…");
+		dialog.setIndeterminate(true);
+		dialog.setCancelable(true);
+		dialog.show();
+        
+	AsyncHttpClient client = new AsyncHttpClient();
+	client.get("http://api.smartstudy.com/products?f=json&l=4", new AsyncHttpResponseHandler() {
+		
+		@Override
+		public void onSuccess(int arg0, Header[] arg1, byte[] arg2) {
+			
+			lastDate = new Date();
+			
+			String str = new String(arg2);
+			Log.v("onSuccess", str);
+
+			try {
+				
+				JSONObject rootObject = new JSONObject(str);
+				JSONArray banner = rootObject.getJSONArray("banner");
+				
+				if (banner != null && banner.length() >= imageViews.size()) {
+					for (int i = 0; i < imageViews.size(); i++) {
+						ImageLoader.getInstance().displayImage(banner.getString(i), imageViews.get(i));
+					}
+				}
+				
+				courseArray = rootObject.getJSONArray("courses");
+				
+		        SeparatedListAdapter adapter = new SeparatedListAdapter(getActivity());
+				
+				for (int i = 0; i < courseArray.length(); i++) {
+					
+					JSONObject courseObject = courseArray.getJSONObject(i);
+					
+					JSONArray videoArray = courseObject.getJSONArray("videos");
+					
+					ArrayList<ArrayList<JSONObject>> arrayList = new ArrayList<ArrayList<JSONObject>>();
+					
+					if (videoArray.length() >= 4) {
+						
+						ArrayList<JSONObject> arrayList1 = new ArrayList<JSONObject>();
+						arrayList1.add(videoArray.getJSONObject(0));
+						arrayList1.add(videoArray.getJSONObject(1));
+						
+						arrayList.add(arrayList1);
+						
+						ArrayList<JSONObject> arrayList2 = new ArrayList<JSONObject>();
+						arrayList2.add(videoArray.getJSONObject(2));
+						arrayList2.add(videoArray.getJSONObject(3));
+
+						arrayList.add(arrayList2);
+						
+					}
+					
+					CourseCellAdapter courseCellAdapter = new CourseCellAdapter(getActivity(), arrayList);
+			        
+			        adapter.addSection(courseObject.getString("name"), courseObject.getInt("id"), courseCellAdapter);
+					
+				}
+				
+		        listView.setAdapter(adapter);
+		        adapter.notifyDataSetChanged();
+				
+			} catch (Exception e) {
+			}
+			
+			if (dialog != null) {
+				dialog.dismiss();
+				dialog = null;
+			}
+			
+		}
+		
+		@Override
+		public void onFailure(int arg0, Header[] arg1, byte[] arg2, Throwable arg3) {
+
+			if (arg2 != null) {
+				Log.v("onFailure", new String(arg2));
+			}
+			
+			if (dialog != null) {
+				dialog.dismiss();
+				dialog = null;
+			}
+			
+		}
+		
+	});
+
 	}
 	
 	public class HeaderPagerAdapter extends PagerAdapter {

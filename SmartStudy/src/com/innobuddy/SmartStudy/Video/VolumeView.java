@@ -86,9 +86,9 @@ public class VolumeView extends View {
 		paint.setColor(Color.WHITE);
 		paint.setStrokeWidth(0);
 		paint.setTextSize(40);
-		float textWidth = paint.measureText("铃声"); // 测量字体宽度，我们需要根据字体的宽度设置在圆环中间
+		float textWidth = paint.measureText("声音"); // 测量字体宽度，我们需要根据字体的宽度设置在圆环中间
 
-		canvas.drawText("铃声", cx - textWidth / 2, cx + bitmap.getHeight() / 2
+		canvas.drawText("声音", cx - textWidth / 2, cx + bitmap.getHeight() / 2
 				+ 40, paint);
 
 		// 绘制进度

@@ -1,10 +1,16 @@
 package com.innobuddy.SmartStudy;
 
+import java.io.File;
+import java.util.Iterator;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.innobuddy.SmartStudy.DB.DBHelper;
+import com.innobuddy.download.services.DownloadTask;
+import com.innobuddy.download.utils.DStorageUtils;
 import com.innobuddy.download.utils.MyIntents;
+import com.innobuddy.download.utils.NetworkUtils;
 
 import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
@@ -23,6 +29,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemLongClickListener;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -39,8 +46,9 @@ public class DownloadFragment extends Fragment {
     
     JSONObject downloadObject;
 	
+	int longClickPostion;
+    
 	public DownloadFragment() {
-		// Required empty public constructor
 		
 	}
 
@@ -52,10 +60,14 @@ public class DownloadFragment extends Fragment {
 			adapter.cursor = null;
 		}
 		
-		SharedPreferences downloadPreferences = getActivity().getSharedPreferences(DOWNLOAD_INFOS, 0);
-		SharedPreferences.Editor editor = downloadPreferences.edit();
-		editor.putString(PROGRESS_INFO, downloadObject.toString());
-		editor.commit();
+		if (downloadObject != null) {
+						
+			SharedPreferences downloadPreferences = getActivity().getSharedPreferences(DOWNLOAD_INFOS, 0);
+			SharedPreferences.Editor editor = downloadPreferences.edit();
+			editor.putString(PROGRESS_INFO, downloadObject.toString());
+			editor.commit();
+
+		}
 		
 		if (mReceiver != null) {
 	        getActivity().unregisterReceiver(mReceiver);
@@ -68,7 +80,6 @@ public class DownloadFragment extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		// Inflate the layout for this fragment
 		
 		SharedPreferences downloadPreferences = getActivity().getSharedPreferences(DOWNLOAD_INFOS, Context.MODE_PRIVATE);
 		String jsonString = downloadPreferences.getString(PROGRESS_INFO, "");
@@ -79,6 +90,19 @@ public class DownloadFragment extends Fragment {
     			downloadObject = new JSONObject();
 			} else {
 				downloadObject = new JSONObject(jsonString);
+				if (downloadObject != null) {
+					
+					Iterator<?> iterator = downloadObject.keys();
+					
+					 while(iterator.hasNext()) {
+						 String url = (String)iterator.next();
+						 try {
+							 JSONObject jsonObject = downloadObject.getJSONObject(url);
+		                    jsonObject.put(MyIntents.DOWNLOAD_STATUS, MyIntents.Status.PAUSE);
+						} catch (Exception e) {
+						}
+					 }
+				}
 			}
         	
 		} catch (JSONException e) {
@@ -124,32 +148,27 @@ public class DownloadFragment extends Fragment {
                 	try {
                         jsonObject.put(MyIntents.DOWNLOAD_SIZE, 0L);
                         jsonObject.put(MyIntents.TOTAL_SIZE, 0L);
-                        jsonObject.put(MyIntents.IS_PAUSED, false);
+                        jsonObject.put(MyIntents.DOWNLOAD_STATUS, MyIntents.Status.WAITING);
 					} catch (JSONException e) {
 					}
 				}
                 
                 try {
                 	
-                    boolean isPaused = jsonObject.getBoolean(MyIntents.IS_PAUSED);
+                	int status = jsonObject.getInt(MyIntents.DOWNLOAD_STATUS);
                     
-        			Intent downloadIntent = new Intent("com.innobuddy.download.services.IDownloadService");
-                    
-                    if (isPaused) {
-        				downloadIntent.putExtra(MyIntents.TYPE,
-        						MyIntents.Types.CONTINUE);
+        			Intent downloadIntent = new Intent("com.innobuddy.download.services.IDownloadService");        			
+        			
+                    if (status == MyIntents.Status.PAUSE || status == MyIntents.Status.ERROR) {
+        				downloadIntent.putExtra(MyIntents.TYPE, MyIntents.Types.CONTINUE);
         				downloadIntent.putExtra(MyIntents.URL, url);
         				getActivity().getApplicationContext().startService(downloadIntent);
-                        jsonObject.put(MyIntents.IS_PAUSED, false);
-                        jsonObject.put(MyIntents.IS_ERROR, false);
-                        
+                        jsonObject.put(MyIntents.DOWNLOAD_STATUS, MyIntents.Status.WAITING);
 					} else {
 						downloadIntent.putExtra(MyIntents.TYPE, MyIntents.Types.PAUSE);
 						downloadIntent.putExtra(MyIntents.URL, url);
 						getActivity().getApplicationContext().startService(downloadIntent);
-                        jsonObject.put(MyIntents.IS_PAUSED, true);
-                        jsonObject.put(MyIntents.IS_ERROR, false);
-
+                        jsonObject.put(MyIntents.DOWNLOAD_STATUS, MyIntents.Status.PAUSE);
 					}
                     
                     adapter.notifyDataSetChanged();
@@ -161,7 +180,63 @@ public class DownloadFragment extends Fragment {
 			
 		});
 		
+		listView.setOnItemLongClickListener(new OnItemLongClickListener() {
+			
+			@Override
+			public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+				
+				longClickPostion = position;
+				
+				new AlertDialog.Builder(getActivity()).setTitle("提示").setMessage("确定要删除该项吗？")
+				.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+									public void onClick(
+											DialogInterface dialoginterface,
+											int i) {
+										
+										adapter.cursor.moveToPosition(longClickPostion);
+										
+										String url = adapter.cursor.getString(adapter.cursor.getColumnIndex("cache_url"));
+										int id = adapter.cursor.getInt(adapter.cursor.getColumnIndex("id"));
+										
+										Intent downloadIntent = new Intent("com.innobuddy.download.services.IDownloadService");        			
+										downloadIntent.putExtra(MyIntents.TYPE, MyIntents.Types.DELETE);
+										downloadIntent.putExtra(MyIntents.URL, url);
+										getActivity().getApplicationContext().startService(downloadIntent);
+										
+						                File file = new File(DStorageUtils.FILE_ROOT
+						                        + NetworkUtils.getFileNameFromUrl(url) + DownloadTask.TEMP_SUFFIX);
+						                if (file.exists())
+						                    file.delete();
+										
+										DBHelper.getInstance(null).deleteDownload(id);
+										
+					                    downloadObject.remove(url);
+										
+										if (adapter.cursor != null) {
+											adapter.cursor.close();
+											adapter.cursor = null;
+										}
+
+										adapter.cursor = DBHelper.getInstance(null).queryDownload();
+								        adapter.notifyDataSetChanged();
+										
+									}
+								})
+						.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+									public void onClick(
+											DialogInterface dialoginterface,
+											int i) {
+										
+									}
+								})
+								.show();
+
+				return true;
+			}
+		});
+		
 		return view;
+		
 	}
 	
     public class MyReceiver extends BroadcastReceiver {
@@ -176,6 +251,7 @@ public class DownloadFragment extends Fragment {
         private void handleIntent(Intent intent) {
 
             if (intent != null && intent.getAction().equals("com.innobuddy.download.observe")) {
+            	
                 int type = intent.getIntExtra(MyIntents.TYPE, -1);
                 String url = intent.getStringExtra(MyIntents.URL);
 
@@ -190,33 +266,32 @@ public class DownloadFragment extends Fragment {
 				}
                 
                 try {
+                	
                     if (jsonObject == null) {
                     	jsonObject = new JSONObject();
                     	try {
                             jsonObject.put(MyIntents.DOWNLOAD_SIZE, 0L);
                             jsonObject.put(MyIntents.TOTAL_SIZE, 0L);
-                            jsonObject.put(MyIntents.IS_PAUSED, false);
+                            jsonObject.put(MyIntents.DOWNLOAD_STATUS, MyIntents.Status.WAITING);
     					} catch (JSONException e) {
-    						// TODO: handle exception
     					}
                         downloadObject.put(url, jsonObject);
     				}
+                    
 				} catch (Exception e) {
 					
 				}
                 
-                
                 switch (type) {
                     case MyIntents.Types.ADD:
-                        
-                        boolean isPaused = intent.getBooleanExtra(MyIntents.IS_PAUSED, false);
-                        if (!TextUtils.isEmpty(url)) {
-                        	try {
-                                jsonObject.put(MyIntents.IS_PAUSED, isPaused);
-							} catch (JSONException e) {
-								
+
+                    	boolean isPaused = intent.getBooleanExtra(MyIntents.IS_PAUSED, false);
+                    	try {
+                            if (isPaused) {
+                                jsonObject.put(MyIntents.DOWNLOAD_STATUS, MyIntents.Status.PAUSE);
 							}
-                        }
+						} catch (JSONException e) {
+						}
                         
                 		if (adapter.cursor != null) {
                 			adapter.cursor.close();
@@ -228,6 +303,7 @@ public class DownloadFragment extends Fragment {
                         
                         break;
                     case MyIntents.Types.COMPLETE:
+                    	
                         if (!TextUtils.isEmpty(url)) {
                         	
                         	Cursor cursor = DBHelper.getInstance(null).queryDownload(url);
@@ -238,6 +314,8 @@ public class DownloadFragment extends Fragment {
 							}
                         	
                         	DBHelper.getInstance(null).deleteDownload(url);
+                        	
+		                    downloadObject.remove(url);
                         	
                     		if (adapter.cursor != null) {
                     			adapter.cursor.close();
@@ -250,17 +328,21 @@ public class DownloadFragment extends Fragment {
                         	
                             Intent nofityIntent = new Intent("downloadFinished");
                             getActivity().sendBroadcast(nofityIntent);
+                            
                         }
                         break;
                     case MyIntents.Types.PROCESS:
+                    	
                         long downloadSize = intent.getLongExtra(MyIntents.DOWNLOAD_SIZE, 0);
                         long totalSize = intent.getLongExtra(MyIntents.TOTAL_SIZE, 0);
                 		
                         try {
-							
+                    		int status = jsonObject.getInt(MyIntents.DOWNLOAD_STATUS);
+                    		if (status != MyIntents.Status.PAUSE) {
+                                jsonObject.put(MyIntents.DOWNLOAD_STATUS, MyIntents.Status.DOWNLOADING);
+							}
                             jsonObject.put(MyIntents.DOWNLOAD_SIZE, downloadSize);
-                            jsonObject.put(MyIntents.TOTAL_SIZE, totalSize);
-                        	
+                            jsonObject.put(MyIntents.TOTAL_SIZE, totalSize);                            
 						} catch (JSONException e) {
 						}
                                                 
@@ -270,7 +352,10 @@ public class DownloadFragment extends Fragment {
                     case MyIntents.Types.ERROR:
                         
                     	try {
-                            jsonObject.put(MyIntents.IS_ERROR, true);
+                    		int status = jsonObject.getInt(MyIntents.DOWNLOAD_STATUS);
+                    		if (status == MyIntents.Status.WAITING || status == MyIntents.Status.DOWNLOADING) {
+                                jsonObject.put(MyIntents.DOWNLOAD_STATUS, MyIntents.Status.ERROR);
+							}
 						} catch (JSONException e) {
 							
 						}
@@ -285,7 +370,5 @@ public class DownloadFragment extends Fragment {
         }
         
     }
-
-	
 
 }

@@ -20,12 +20,16 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ListView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.TextView;
 
 public class RecentWatchActivity extends Activity {
 
 	CourseCell2Adapter adapter;
 	
 	int longClickPostion;
+	
+	ListView listView;
+	TextView emptyTextView;
 	
 	@Override
 	public void finish() {
@@ -42,12 +46,15 @@ public class RecentWatchActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		
+		Cursor cursor = DBHelper.getInstance(null).queryRecentWatch();
+		
 		setContentView(R.layout.activity_recent_watch);
 		
-        ListView listView = (ListView)findViewById(R.id.listView1);        
+        listView = (ListView)findViewById(R.id.listView1);     
         
-		Cursor cursor = DBHelper.getInstance(null).queryRecentWatch();
-        
+        emptyTextView = (TextView)findViewById(R.id.emptyTextView);        
+               
 		adapter = new CourseCell2Adapter(this, cursor);
 		listView.setAdapter(adapter);
 		
@@ -106,6 +113,8 @@ public class RecentWatchActivity extends Activity {
 										adapter.cursor = DBHelper.getInstance(null).queryRecentWatch();
 								        adapter.notifyDataSetChanged();
 										
+										checkEmpty();
+
 									}
 								})
 						.setNegativeButton("取消", new DialogInterface.OnClickListener() {
@@ -125,6 +134,18 @@ public class RecentWatchActivity extends Activity {
 //		getActionBar().setDisplayHomeAsUpEnabled(true);
 //		getActionBar().setDisplayShowHomeEnabled(true);
 		
+		checkEmpty();
+		
+	}
+	
+	public void checkEmpty() {
+        if (adapter.cursor.getCount() > 0) {
+        	emptyTextView.setVisibility(View.GONE);
+        	listView.setVisibility(View.VISIBLE);
+		} else {
+        	emptyTextView.setVisibility(View.VISIBLE);
+        	listView.setVisibility(View.GONE);
+		}
 	}
 
 	@Override
@@ -158,6 +179,8 @@ public class RecentWatchActivity extends Activity {
 									adapter.cursor = DBHelper.getInstance(null).queryRecentWatch();
 							        adapter.notifyDataSetChanged();
 									
+									checkEmpty();
+
 								}
 							})
 					.setNegativeButton("取消", new DialogInterface.OnClickListener() {

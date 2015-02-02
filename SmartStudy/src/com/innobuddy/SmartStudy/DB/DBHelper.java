@@ -84,8 +84,9 @@ public class DBHelper extends SQLiteOpenHelper {
 			
 			if (jsonObject != null) {
 				int id = jsonObject.getInt(VIDEO_ID);
-				Cursor c = queryDownload(id);
-				if (c != null && c.getCount() > 0) {
+				Cursor c1 = queryDownload(id);
+				Cursor c2 = queryOffline(id);
+				if ((c1 != null && c1.getCount() > 0) || c2 != null && c2.getCount() > 0) {
 					
 				} else {
 					SQLiteDatabase db = getWritableDatabase();
@@ -99,8 +100,12 @@ public class DBHelper extends SQLiteOpenHelper {
 					db.insert(TABLE_DOWNLOAD, null, cv);
 				}
 				
-				if (c != null) {
-					c.close();
+				if (c1 != null) {
+					c1.close();
+				}
+				
+				if (c2 != null) {
+					c2.close();
 				}
 				
 			}

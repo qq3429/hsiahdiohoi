@@ -179,7 +179,16 @@ public class DownloadManager extends Thread {
         List<String> urlList = ConfigUtils.getURLArray(mContext);
         if (urlList.size() >= 0) {
             for (int i = 0; i < urlList.size(); i++) {
-                addTask(urlList.get(i));
+            	
+//                addTask(urlList.get(i));
+            	
+                try {
+                	DownloadTask task = newDownloadTask(urlList.get(i));
+                    mPausingTasks.add(task);
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                }
+                
             }
         }
     }
@@ -224,13 +233,15 @@ public class DownloadManager extends Thread {
         for (int i = 0; i < mDownloadingTasks.size(); i++) {
             task = mDownloadingTasks.get(i);
             if (task != null && task.getUrl().equals(url)) {
+            	
                 File file = new File(DStorageUtils.FILE_ROOT
-                        + NetworkUtils.getFileNameFromUrl(task.getUrl()));
+                        + NetworkUtils.getFileNameFromUrl(task.getUrl()) + DownloadTask.TEMP_SUFFIX);
                 if (file.exists())
                     file.delete();
-
+            	
                 task.onCancelled();
                 completeTask(task);
+                
                 return;
             }
         }

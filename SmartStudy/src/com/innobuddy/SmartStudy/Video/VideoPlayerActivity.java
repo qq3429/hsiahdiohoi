@@ -18,10 +18,12 @@ import org.json.JSONObject;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
@@ -281,14 +283,44 @@ public class VideoPlayerActivity extends Activity implements OnClickListener {
 
 	private void offline() {
 				
-        DBHelper.getInstance(null).insertDownload(jsonObject);
-        try {
-            Intent downloadIntent = new Intent("com.innobuddy.download.services.IDownloadService");
-            downloadIntent.putExtra(MyIntents.TYPE, MyIntents.Types.ADD);
-            downloadIntent.putExtra(MyIntents.URL, jsonObject.getString(DBHelper.VIDEO_CACHE_URL));
-            getApplicationContext().startService(downloadIntent);
-		} catch (JSONException e) {
+		try {
+			
+			if (jsonObject != null) {
+				
+				int id = jsonObject.getInt(DBHelper.VIDEO_ID);
+				Cursor c1 = DBHelper.getInstance(null).queryDownload(id);
+				Cursor c2 = DBHelper.getInstance(null).queryOffline(id);
+				if ((c1 != null && c1.getCount() > 0) || c2 != null && c2.getCount() > 0) {
+					
+				} else {
+					
+			        DBHelper.getInstance(null).insertDownload(jsonObject);
+			        try {
+			            Intent downloadIntent = new Intent("com.innobuddy.download.services.IDownloadService");
+			            downloadIntent.putExtra(MyIntents.TYPE, MyIntents.Types.ADD);
+			            downloadIntent.putExtra(MyIntents.URL, jsonObject.getString(DBHelper.VIDEO_CACHE_URL));
+			            getApplicationContext().startService(downloadIntent);
+					} catch (JSONException e) {
+					}
+			        
+				}
+				
+				if (c1 != null) {
+					c1.close();
+				}
+				
+				if (c2 != null) {
+					c2.close();
+				}
+				
+			}
+
+		} catch (Exception e) {
+			
 		}
+
+		
+		
 	}
 	
 	private void backward() {

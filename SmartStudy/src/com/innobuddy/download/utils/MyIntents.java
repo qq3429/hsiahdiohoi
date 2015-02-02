@@ -13,11 +13,11 @@ public class MyIntents {
 	public static final String IS_PAUSED = "is_paused";
 	public static final String IS_ERROR = "is_error";
 
-	public class Types{
-
+	public static final String DOWNLOAD_STATUS = "download_status";
+	
+	public class Types {
 		public static final int PROCESS = 0;
 		public static final int COMPLETE = 1;
-		
 		public static final int START = 2;
 		public static final int PAUSE = 3;
 		public static final int DELETE = 4;
@@ -26,4 +26,13 @@ public class MyIntents {
 		public static final int STOP = 7; 
 		public static final int ERROR = 9;
 	}
+	
+	public class Status {
+		public static final int WAITING = 0;
+		public static final int DOWNLOADING = 1;
+		public static final int COMPLETE = 2;
+		public static final int PAUSE = 3;
+		public static final int ERROR = 4;
+	}
+	
 }

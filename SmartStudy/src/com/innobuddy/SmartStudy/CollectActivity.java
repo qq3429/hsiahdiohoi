@@ -17,6 +17,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 
@@ -25,6 +26,9 @@ public class CollectActivity extends Activity {
 	CourseCell2Adapter adapter;
 	
 	int longClickPostion;
+	
+	ListView listView;
+	TextView emptyTextView;
 	
 	@Override
 	public void finish() {
@@ -43,8 +47,10 @@ public class CollectActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_collect);
 		
-        ListView listView = (ListView)findViewById(R.id.listView1);        
+		listView = (ListView)findViewById(R.id.listView1);        
         
+        emptyTextView = (TextView)findViewById(R.id.emptyTextView);        
+		
 		Cursor cursor = DBHelper.getInstance(null).queryCollect();
         
 		adapter = new CourseCell2Adapter(this, cursor);
@@ -104,6 +110,8 @@ public class CollectActivity extends Activity {
 										adapter.cursor = DBHelper.getInstance(null).queryCollect();
 								        adapter.notifyDataSetChanged();
 										
+										checkEmpty();
+
 									}
 								})
 						.setNegativeButton("取消", new DialogInterface.OnClickListener() {
@@ -119,7 +127,18 @@ public class CollectActivity extends Activity {
 			}
 		});
 
+		checkEmpty();
 		
+	}
+	
+	public void checkEmpty() {
+        if (adapter.cursor.getCount() > 0) {
+        	emptyTextView.setVisibility(View.GONE);
+        	listView.setVisibility(View.VISIBLE);
+		} else {
+        	emptyTextView.setVisibility(View.VISIBLE);
+        	listView.setVisibility(View.GONE);
+		}
 	}
 
 	@Override
@@ -153,6 +172,8 @@ public class CollectActivity extends Activity {
 									adapter.cursor = DBHelper.getInstance(null).queryCollect();
 							        adapter.notifyDataSetChanged();
 									
+									checkEmpty();
+
 								}
 							})
 					.setNegativeButton("取消", new DialogInterface.OnClickListener() {

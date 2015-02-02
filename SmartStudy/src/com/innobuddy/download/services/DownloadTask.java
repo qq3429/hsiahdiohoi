@@ -33,7 +33,7 @@ public class DownloadTask extends AsyncTask<Void, Integer, Long> {
 
     private static final String TAG = "DownloadTask";
     private static final boolean DEBUG = true;
-    private static final String TEMP_SUFFIX = ".download";
+    public static final String TEMP_SUFFIX = ".download";
 
     private URL URL;
     private File file;

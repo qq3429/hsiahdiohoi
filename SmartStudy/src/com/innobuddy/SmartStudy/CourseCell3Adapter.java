@@ -104,8 +104,7 @@ public class CourseCell3Adapter extends BaseAdapter {
 			
 			  long downloadSize = 0;
 			  long totalSize = 0;
-			  boolean isPaused = false;
-			  boolean isError = false;
+			  int status = 0;
 			  
 			  try {
 
@@ -116,8 +115,7 @@ public class CourseCell3Adapter extends BaseAdapter {
 					  if (jsonObject != null) {
 						  downloadSize = jsonObject.getLong(MyIntents.DOWNLOAD_SIZE);
 						  totalSize = jsonObject.getLong(MyIntents.TOTAL_SIZE);
-						  isPaused = jsonObject.getBoolean(MyIntents.IS_PAUSED);
-						  isError = jsonObject.getBoolean(MyIntents.IS_ERROR);
+						  status = jsonObject.getInt(MyIntents.DOWNLOAD_STATUS);
 					}
 					  
 				  }
@@ -133,19 +131,22 @@ public class CourseCell3Adapter extends BaseAdapter {
 				  holder.progressTextView.setText("0%");				  
 			  }
 			  
-			  if (isPaused) {
-				  holder.statusTextView.setText("暂停");
-				  holder.statusImageView.setImageResource(R.drawable.download_paused);
-			  } else {
+			  if (status == MyIntents.Status.WAITING) {
+//				  holder.statusTextView.setText("等待中");
+//				  holder.statusImageView.setImageResource(R.drawable.download_waiting);
 				  holder.statusTextView.setText("下载中");
 				  holder.statusImageView.setImageResource(R.drawable.download_downloading);
-			  }
-			  
-			  if (isError) {
+			  } else if (status == MyIntents.Status.DOWNLOADING) {
+				  holder.statusTextView.setText("下载中");
+				  holder.statusImageView.setImageResource(R.drawable.download_downloading);
+			  } else if (status == MyIntents.Status.PAUSE) {
+				  holder.statusTextView.setText("暂停");
+				  holder.statusImageView.setImageResource(R.drawable.download_paused);
+			  } else if (status == MyIntents.Status.ERROR) {
 				  holder.statusTextView.setText("失败");
 				  holder.statusImageView.setImageResource(R.drawable.download_error);
-			}
-			  
+			  }
+			  			  
 		}
 	}
 

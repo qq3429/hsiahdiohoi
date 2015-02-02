@@ -50,7 +50,7 @@
                 android:layout_gravity="center"
                 android:layout_marginLeft="6dp"
                 android:maxLines="1"
-                android:text="120.32M"
+                android:text=""
                 android:textColor="#848486"
                 android:textSize="12sp" />            
 
