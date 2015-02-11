@@ -9,28 +9,16 @@
         android:id="@+id/textView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="4dp"
-        android:layout_marginLeft="4dp"
-        android:layout_marginTop="4dp"
+        android:layout_marginBottom="6dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="6dp"
         android:text="网络设置" />
-
-    <View
-        android:id="@+id/view1"
-        android:layout_width="match_parent"
-        android:background="#dddddd"
-        android:layout_height="1dp" />
 
     <Switch
         android:id="@+id/switch1"
         android:background="#ffffff"
         android:layout_width="match_parent"
-        android:layout_height="36dp"
-        android:text="使用蜂窝移动网络时询问我" />
-    
-        <View
-        android:id="@+id/view2"
-        android:layout_width="match_parent"
-        android:background="#dddddd"
-        android:layout_height="1dp" />
+        android:layout_height="wrap_content"
+        android:text=" 使用蜂窝移动网络时询问我" />
 
 </LinearLayout>

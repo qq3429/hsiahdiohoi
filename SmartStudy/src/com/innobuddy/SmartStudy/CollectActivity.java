@@ -77,11 +77,9 @@ public class CollectActivity extends Activity {
 				} catch (JSONException e) {
 					e.printStackTrace();
 				}
+								
+				Utilitys.getInstance().playVideo(jsonObject, CollectActivity.this);
 				
-				Intent intent = new Intent();
-				intent.putExtra("json", jsonObject.toString());
-				intent.setClass(CollectActivity.this, VideoPlayerActivity.class);
-				startActivity(intent);
 			}
 		});
 

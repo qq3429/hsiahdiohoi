@@ -1,6 +1,7 @@
 package com.innobuddy.SmartStudy.Video;
 
 import com.innobuddy.SmartStudy.R;
+import com.innobuddy.SmartStudy.Utilitys;
 import com.innobuddy.SmartStudy.DB.DBHelper;
 import com.innobuddy.download.utils.DStorageUtils;
 import com.innobuddy.download.utils.MyIntents;
@@ -18,12 +19,13 @@ import org.json.JSONObject;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.content.ContentValues;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
@@ -40,6 +42,7 @@ import android.view.animation.Animation.AnimationListener;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.SeekBar;
+import android.widget.Toast;
 import android.widget.VideoView;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
@@ -142,7 +145,6 @@ public class VideoPlayerActivity extends Activity implements OnClickListener {
 				if (c != null) {
 					c.close();
 				}
-
 				
 			} catch (JSONException e) {
 				e.printStackTrace();
@@ -288,19 +290,69 @@ public class VideoPlayerActivity extends Activity implements OnClickListener {
 			if (jsonObject != null) {
 				
 				int id = jsonObject.getInt(DBHelper.VIDEO_ID);
+				String url = jsonObject.getString(DBHelper.VIDEO_CACHE_URL);
+                File file = new File(DStorageUtils.FILE_ROOT
+                        + NetworkUtils.getFileNameFromUrl(url));
+                if (file.exists()) {
+					Toast.makeText(VideoPlayerActivity.this, "已缓存。", Toast.LENGTH_SHORT).show();
+					return;
+                }
+				
 				Cursor c1 = DBHelper.getInstance(null).queryDownload(id);
+				
 				Cursor c2 = DBHelper.getInstance(null).queryOffline(id);
+				
 				if ((c1 != null && c1.getCount() > 0) || c2 != null && c2.getCount() > 0) {
-					
+					Toast.makeText(VideoPlayerActivity.this, "已加入缓存中。", Toast.LENGTH_SHORT).show();
 				} else {
+
+					SharedPreferences settingPreferences = getSharedPreferences(Utilitys.SETTING_INFOS, 0);
 					
-			        DBHelper.getInstance(null).insertDownload(jsonObject);
-			        try {
-			            Intent downloadIntent = new Intent("com.innobuddy.download.services.IDownloadService");
-			            downloadIntent.putExtra(MyIntents.TYPE, MyIntents.Types.ADD);
-			            downloadIntent.putExtra(MyIntents.URL, jsonObject.getString(DBHelper.VIDEO_CACHE_URL));
-			            getApplicationContext().startService(downloadIntent);
-					} catch (JSONException e) {
+					boolean mobileHint = settingPreferences.getBoolean(Utilitys.MOBILE_HINT, true);
+					
+					if (Utilitys.isMobileNetwork(this) && mobileHint) {
+						
+						new AlertDialog.Builder(VideoPlayerActivity.this).setTitle("提示").setMessage("您正在使用蜂窝移动网络。")
+						.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+											public void onClick(
+													DialogInterface dialoginterface,
+													int i) {
+												
+												Toast.makeText(VideoPlayerActivity.this, "已加入缓存中。", Toast.LENGTH_SHORT).show();
+
+												DBHelper.getInstance(null).insertDownload(jsonObject);
+										        try {
+										            Intent downloadIntent = new Intent("com.innobuddy.download.services.IDownloadService");
+										            downloadIntent.putExtra(MyIntents.TYPE, MyIntents.Types.ADD);
+										            downloadIntent.putExtra(MyIntents.URL, jsonObject.getString(DBHelper.VIDEO_CACHE_URL));
+										            getApplicationContext().startService(downloadIntent);
+												} catch (JSONException e) {
+												}
+
+											}
+										})
+								.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+											public void onClick(
+													DialogInterface dialoginterface,
+													int i) {
+												
+											}
+										})
+										.show();
+						
+					} else {
+						
+						Toast.makeText(VideoPlayerActivity.this, "已加入缓存中。", Toast.LENGTH_SHORT).show();
+
+						DBHelper.getInstance(null).insertDownload(jsonObject);
+				        try {
+				            Intent downloadIntent = new Intent("com.innobuddy.download.services.IDownloadService");
+				            downloadIntent.putExtra(MyIntents.TYPE, MyIntents.Types.ADD);
+				            downloadIntent.putExtra(MyIntents.URL, jsonObject.getString(DBHelper.VIDEO_CACHE_URL));
+				            getApplicationContext().startService(downloadIntent);
+						} catch (JSONException e) {
+						}
+				        
 					}
 			        
 				}
@@ -362,15 +414,19 @@ public class VideoPlayerActivity extends Activity implements OnClickListener {
 	}
 
 	private void forward(float delataX) {
-		int current = mVideo.getCurrentPosition();
-		int forwardTime = (int) (delataX / width * mVideo.getDuration());
-		int currentTime = current + forwardTime;
-		if (currentTime > mVideo.getDuration()) {
-			currentTime = mVideo.getDuration();
+		
+		int duration = mVideo.getDuration();
+		if (duration > 0) {
+			int current = mVideo.getCurrentPosition();
+			int forwardTime = (int) (delataX / width * mVideo.getDuration());
+			int currentTime = current + forwardTime;
+			if (currentTime > mVideo.getDuration()) {
+				currentTime = mVideo.getDuration();
+			}
+			mVideo.seekTo(currentTime);
+			mSeekBar.setProgress(currentTime * 100 / mVideo.getDuration());
+			mPlayTime.setText(formatTime(currentTime));
 		}
-		mVideo.seekTo(currentTime);
-		mSeekBar.setProgress(currentTime * 100 / mVideo.getDuration());
-		mPlayTime.setText(formatTime(currentTime));
 	}
 
 	private void volumeDown(float delatY) {
@@ -464,8 +520,11 @@ public class VideoPlayerActivity extends Activity implements OnClickListener {
 //				mVideo.setVideoHeight(mp.getVideoHeight());
 
 				mVideo.start();
-				if (playTime != 0) {
+				int duration = mVideo.getDuration();
+				if (playTime != 0 && (duration - playTime > 1000)) {
 					mVideo.seekTo(playTime);
+				} else {
+					playTime = 0;
 				}
 
 				mHandler.removeCallbacks(hideRunnable);
@@ -484,9 +543,7 @@ public class VideoPlayerActivity extends Activity implements OnClickListener {
 		mVideo.setOnCompletionListener(new OnCompletionListener() {
 			@Override
 			public void onCompletion(MediaPlayer mp) {
-				mPlay.setImageResource(R.drawable.video_play);
-				mPlayTime.setText("00:00");
-				mSeekBar.setProgress(0);
+				goBack();
 			}
 		});
 		mVideo.setOnTouchListener(mTouchListener);
@@ -599,11 +656,13 @@ public class VideoPlayerActivity extends Activity implements OnClickListener {
 		switch (v.getId()) {
 		case R.id.imageView5:
 			if (mVideo.isPlaying()) {
-				mVideo.pause();
-				mPlay.setImageResource(R.drawable.video_play);
+				if (mVideo.canPause()) {
+					mPlay.setImageResource(R.drawable.video_play);
+					mVideo.pause();
+				}
 			} else {
-				mVideo.start();
 				mPlay.setImageResource(R.drawable.video_pause);
+				mVideo.start();
 			}
 			break;
 		default:
@@ -689,6 +748,7 @@ public class VideoPlayerActivity extends Activity implements OnClickListener {
 			
 			mHandler.removeCallbacks(hideRunnable);
 			mHandler.postDelayed(hideRunnable, HIDE_TIME);
+			
 		}
 	}
 

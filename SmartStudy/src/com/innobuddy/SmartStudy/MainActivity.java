@@ -3,11 +3,12 @@ package com.innobuddy.SmartStudy;
 import java.io.File;
 import java.io.IOException;
 import java.util.Locale;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import com.innobuddy.SmartStudy.R;
 import com.innobuddy.SmartStudy.DB.DBHelper;
 import com.innobuddy.SmartStudy.DownloadFragment.MyReceiver;
-import com.innobuddy.SmartStudy.Fragment1.OnBackListener;
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiscCache;
 import com.nostra13.universalimageloader.cache.disc.naming.HashCodeFileNameGenerator;
 import com.nostra13.universalimageloader.cache.memory.impl.LruMemoryCache;
@@ -32,11 +33,13 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v13.app.FragmentPagerAdapter;
 //import android.support.v13.app.FragmentTabHost;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -58,27 +61,12 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTabHost;
 import android.text.TextUtils;
 
-public class MainActivity extends FragmentActivity implements OnBackListener {
+public class MainActivity extends FragmentActivity {
     	
 	FragmentTabHost mTabHost;
 	RadioGroup mTabRg;
 			
 	private static final Class<?>[] fragments = {Fragment1.class, Fragment2.class, Fragment3.class, Fragment4.class};
-
-	public static final DisplayImageOptions options = new DisplayImageOptions.Builder()  
-    .showImageOnLoading(R.drawable.course_default) //设置图片在下载期间显示的图片  
-    .showImageForEmptyUri(R.drawable.course_default)//设置图片Uri为空或是错误的时候显示的图片  
-   .showImageOnFail(R.drawable.course_default)  //设置图片加载/解码过程中错误时候显示的图片
-   .cacheInMemory(true)//设置下载的图片是否缓存在内存中  
-   .cacheOnDisk(true)//设置下载的图片是否缓存在SD卡中  
-   .considerExifParams(true)  //是否考虑JPEG图像EXIF参数（旋转，翻转）
-   //.delayBeforeLoading(int delayInMillis)//int delayInMillis为你设置的下载前的延迟时间
-   //设置图片加入缓存前，对bitmap进行设置  
-   //.preProcessor(BitmapProcessor preProcessor)  
-   .resetViewBeforeLoading(true)//设置图片在下载前是否重置，复位  
-//   .displayer(new RoundedBitmapDisplayer(20))//是否设置为圆角，弧度为多少  
-//   .displayer(new FadeInBitmapDisplayer(100))//是否图片加载好后渐入的动画时间  
-   .build();//构建完成
 	
 	/**
 	 * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -119,6 +107,9 @@ public class MainActivity extends FragmentActivity implements OnBackListener {
         setContentView(R.layout.activity_main);
 		initView();
 		
+//        getActionBar().setBackgroundDrawable(new ColorDrawable(0xff54c4ff));
+
+		
 		DBHelper.getInstance(getApplicationContext());
 		
         if (!DStorageUtils.isSDCardPresent()) {
@@ -144,9 +135,11 @@ public class MainActivity extends FragmentActivity implements OnBackListener {
 //        downloadIntent.putExtra(MyIntents.TYPE, MyIntents.Types.STOP);
 //        getApplicationContext().startService(downloadIntent);
 
+        
     }
     
 	private void initView() {
+		
 		mTabHost = (FragmentTabHost) findViewById(android.R.id.tabhost);
 		mTabHost.setup(this, getSupportFragmentManager(), R.id.realtabcontent);
 		// 得到fragment的个数
@@ -169,17 +162,13 @@ public class MainActivity extends FragmentActivity implements OnBackListener {
 					break;
 				case R.id.tab_rb_2:
 					mTabHost.setCurrentTab(1);
-
 					break;
 				case R.id.tab_rb_3:
-
 					mTabHost.setCurrentTab(2);
 					break;
 				case R.id.tab_rb_4:
-
 					mTabHost.setCurrentTab(3);
 					break;
-
 				default:
 					break;
 				}
@@ -200,16 +189,7 @@ public class MainActivity extends FragmentActivity implements OnBackListener {
         }
         return super.onOptionsItemSelected(item);
     }
-
-	@Override
-	public void onBackPressed() {
-	}
-	
-	@Override
-	public void backEvent() {
-		Toast.makeText(this, "back", Toast.LENGTH_SHORT).show();
-	}
-	
+		
 	@Override
 	public void onDestroy() {
 		
@@ -217,6 +197,45 @@ public class MainActivity extends FragmentActivity implements OnBackListener {
 		
 	}
 
-	
+	/**
+     * 菜单、返回键响应
+     */
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        // TODO Auto-generated method stub
+        if(keyCode == KeyEvent.KEYCODE_BACK)
+        {  
+            exitBy2Click();        //调用双击退出函数
+        }
+        return false;
+    }
+    
+    /**
+     * 双击退出函数
+     */
+    private static Boolean isExit = false;
+
+    private void exitBy2Click() {
+        Timer tExit = null;
+        if (isExit == false) {
+            isExit = true; // 准备退出
+            Toast.makeText(this, "再按一次退出程序", Toast.LENGTH_SHORT).show();
+            tExit = new Timer();
+            tExit.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    isExit = false; // 取消退出
+                }
+            }, 2000); // 如果2秒钟内没有按下返回键，则启动定时器取消掉刚才执行的任务
+
+        } else {
+
+//            Intent nofityIntent = new Intent("applicationExit");
+//            sendBroadcast(nofityIntent);
+            
+            finish();
+            System.exit(0);
+        }
+    }
 	
 }

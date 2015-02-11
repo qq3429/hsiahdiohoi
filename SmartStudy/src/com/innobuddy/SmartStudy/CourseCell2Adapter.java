@@ -65,7 +65,7 @@ public class CourseCell2Adapter extends BaseAdapter {
 		
 		  if (cursor != null && holder != null) {
 			  cursor.moveToPosition(position);
-			  ImageLoader.getInstance().displayImage(cursor.getString(cursor.getColumnIndex("poster")), holder.imageView1, MainActivity.options);
+			  ImageLoader.getInstance().displayImage(cursor.getString(cursor.getColumnIndex("poster")), holder.imageView1, Utilitys.defaultOptions);
 			  holder.textView1.setText(cursor.getString(cursor.getColumnIndex("name")));
 			  
 			  int columnIndex = cursor.getColumnIndex("postion");

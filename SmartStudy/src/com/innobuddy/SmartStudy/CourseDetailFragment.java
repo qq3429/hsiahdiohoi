@@ -10,6 +10,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -55,9 +56,16 @@ public class CourseDetailFragment extends Fragment {
 			if (guideObject != null) {
 				ImageView imageView = new ImageView(getActivity());
 				imageView.setImageResource(R.drawable.course_focus);
-				imageView.setLayoutParams(new ListView.LayoutParams(ListView.LayoutParams.MATCH_PARENT, 460));
-				ImageLoader.getInstance().displayImage(guideObject.getString("poster"), imageView);
+				
+		        DisplayMetrics displayMetrics = new DisplayMetrics();
+		        getActivity().getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+		        int width = displayMetrics.widthPixels;
+		        int height = (int)Math.ceil(width * 7.0 / 16.0);
+				
+				imageView.setLayoutParams(new ListView.LayoutParams(ListView.LayoutParams.MATCH_PARENT, height));
+				ImageLoader.getInstance().displayImage(guideObject.getString("poster"), imageView, Utilitys.focusOptions);
 		        listView.addHeaderView(imageView, null, false);
+		        
 			}
 			
 		} catch (JSONException e) {

@@ -79,11 +79,8 @@ public class RecentWatchActivity extends Activity {
 				} catch (JSONException e) {
 					e.printStackTrace();
 				}
-				
-				Intent intent = new Intent();
-				intent.putExtra("json", jsonObject.toString());
-				intent.setClass(RecentWatchActivity.this, VideoPlayerActivity.class);
-				startActivity(intent);
+								
+				Utilitys.getInstance().playVideo(jsonObject, RecentWatchActivity.this);
 				
 			}
 		});

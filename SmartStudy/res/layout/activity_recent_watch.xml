@@ -19,7 +19,7 @@
             android:visibility="gone"
             android:layout_gravity="center"
             android:textColor="#808080"
-            android:text="暂无收藏" />
+            android:text="暂无最近观看" />
         
     </FrameLayout>
 

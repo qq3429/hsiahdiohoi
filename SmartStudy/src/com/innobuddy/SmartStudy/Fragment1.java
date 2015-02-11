@@ -2,10 +2,7 @@ package com.innobuddy.SmartStudy;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.http.Header;
 import org.json.JSONArray;
@@ -15,38 +12,22 @@ import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
-import android.R.integer;
-import android.R.raw;
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.app.DownloadManager;
 import android.app.ProgressDialog;
-import android.content.Intent;
-import android.graphics.Matrix.ScaleToFit;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.PagerTabStrip;
 import android.support.v4.view.ViewPager;
+import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.FrameLayout.LayoutParams;
-import android.widget.ImageView.ScaleType;
-import android.widget.SimpleAdapter;
 
 public class Fragment1 extends Fragment {
-	OnBackListener mListener;
 	
 	ListView listView;
 	
@@ -62,16 +43,11 @@ public class Fragment1 extends Fragment {
 	JSONArray courseArray;
 	
 	Date lastDate;
-
-	public interface OnBackListener {
-		public void backEvent();
-	}
 	
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         try {
-            mListener = (OnBackListener) activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString() + " must implement OnArticleSelectedListener");
         }
@@ -113,10 +89,15 @@ public class Fragment1 extends Fragment {
 			
 			listView = (ListView)view.findViewById(R.id.listView1);
 			listView.setDividerHeight(0);
-				        									  	        
+				        				
+	        DisplayMetrics displayMetrics = new DisplayMetrics();
+	        getActivity().getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+	        int width = displayMetrics.widthPixels;
+	        int height = (int)Math.ceil(width * 7.0 / 16.0);
+			
 		        View headerView = (View)inflater.inflate(R.layout.course_header, null);
-		        headerView.setLayoutParams(new ListView.LayoutParams(ListView.LayoutParams.MATCH_PARENT, 460));
-					        
+		        headerView.setLayoutParams(new ListView.LayoutParams(ListView.LayoutParams.MATCH_PARENT, height));
+		        
 				ViewPager viewPager = (ViewPager)headerView.findViewById(R.id.viewPager);
 
 				dots = new ArrayList<View>();
@@ -204,7 +185,7 @@ public class Fragment1 extends Fragment {
 				
 				if (banner != null && banner.length() >= imageViews.size()) {
 					for (int i = 0; i < imageViews.size(); i++) {
-						ImageLoader.getInstance().displayImage(banner.getString(i), imageViews.get(i));
+						ImageLoader.getInstance().displayImage(banner.getString(i), imageViews.get(i), Utilitys.focusOptions);
 					}
 				}
 				

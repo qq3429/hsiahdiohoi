@@ -80,7 +80,7 @@ public class CourseCell3Adapter extends BaseAdapter {
 		  if (cursor != null) {
 			  
 			  cursor.moveToPosition(position);
-			  ImageLoader.getInstance().displayImage(cursor.getString(cursor.getColumnIndex("poster")), holder.imageView, MainActivity.options);
+			  ImageLoader.getInstance().displayImage(cursor.getString(cursor.getColumnIndex("poster")), holder.imageView, Utilitys.defaultOptions);
 			  holder.nameTextView.setText(cursor.getString(cursor.getColumnIndex("name")));
 			  
 			  String url = cursor.getString(cursor.getColumnIndex("cache_url"));

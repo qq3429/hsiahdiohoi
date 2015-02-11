@@ -10,8 +10,10 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -59,7 +61,22 @@ public class CourseCellAdapter extends BaseAdapter {
 	      holder.imageView1 = (ImageView) convertView.findViewById(R.id.imageView1);
 	      holder.textView2 = (TextView) convertView.findViewById(R.id.textView2);
 	      holder.imageView2 = (ImageView) convertView.findViewById(R.id.imageView2);
+	      
+	        DisplayMetrics displayMetrics = new DisplayMetrics();
+	        ((Activity)_context).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+	        float density = displayMetrics.density;
+	        if (density <= 0) {
+	        	density = 1.5f;
+			}
+	        int width = (displayMetrics.widthPixels - (int)(24 * density)) / 2;
+
+	      ViewGroup.LayoutParams layoutParams = holder.imageView1.getLayoutParams();
+	      layoutParams.height = (int)Math.ceil(width * 9.0 / 16.0);
+	      holder.imageView1.setLayoutParams(layoutParams);
+	      holder.imageView2.setLayoutParams(layoutParams);
+	      
 	      convertView.setTag(holder);
+	      
 	    }
 	    else
 	    {
@@ -77,9 +94,9 @@ public class CourseCellAdapter extends BaseAdapter {
 	    try {
 	    	
 //	    	holder.textView1.setText(object1.getString("name"));
-			ImageLoader.getInstance().displayImage(object1.getString("poster"), holder.imageView1, MainActivity.options);
+			ImageLoader.getInstance().displayImage(object1.getString("poster"), holder.imageView1, Utilitys.defaultOptions);
 //	    	holder.textView2.setText(object2.getString("name"));
-		    ImageLoader.getInstance().displayImage(object2.getString("poster"), holder.imageView2, MainActivity.options);
+		    ImageLoader.getInstance().displayImage(object2.getString("poster"), holder.imageView2, Utilitys.defaultOptions);
 
 		} catch (JSONException e) {
 			e.printStackTrace();
@@ -89,10 +106,9 @@ public class CourseCellAdapter extends BaseAdapter {
 			
 			@Override
 			public void onClick(View v) {
-				Intent intent = new Intent();
-				intent.putExtra("json", v.getTag().toString());
-				intent.setClass(_context, VideoPlayerActivity.class);
-				_context.startActivity(intent);
+				
+				Utilitys.getInstance().playVideo((JSONObject)v.getTag(), _context);
+				
 			}
 			
 		});
@@ -101,10 +117,9 @@ public class CourseCellAdapter extends BaseAdapter {
 			
 			@Override
 			public void onClick(View v) {
-				Intent intent = new Intent();
-				intent.putExtra("json", v.getTag().toString());
-				intent.setClass(_context, VideoPlayerActivity.class);
-				_context.startActivity(intent);
+				
+				Utilitys.getInstance().playVideo((JSONObject)v.getTag(), _context);
+
 			}
 			
 		});

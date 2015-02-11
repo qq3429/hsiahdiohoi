@@ -6,7 +6,7 @@
     android:orientation="vertical"
     tools:context=".MainActivity" >
 
-        <FrameLayout
+    <FrameLayout
         android:id="@+id/realtabcontent"
         android:layout_width="fill_parent"
         android:layout_height="0dp"
@@ -16,7 +16,7 @@
         android:id="@+id/tab_rg_menu"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/mmfooter_bg"
+        android:background="#303134"
         android:orientation="horizontal" >
 
         <RadioButton

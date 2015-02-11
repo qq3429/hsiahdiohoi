@@ -8,7 +8,6 @@ import org.json.JSONObject;
 
 import com.innobuddy.SmartStudy.DB.DBHelper;
 import com.innobuddy.SmartStudy.Video.VideoPlayerActivity;
-import com.innobuddy.download.services.DownloadTask;
 import com.innobuddy.download.utils.DStorageUtils;
 import com.innobuddy.download.utils.NetworkUtils;
 
@@ -26,6 +25,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 
@@ -40,6 +40,9 @@ public class OfflineFragment extends Fragment {
 	
 	int longClickPostion;
 
+	ListView listView;
+	TextView emptyTextView;
+	
 	public OfflineFragment() {
 		// Required empty public constructor
 	}
@@ -67,8 +70,11 @@ public class OfflineFragment extends Fragment {
 		// Inflate the layout for this fragment
 		
 		View view = inflater.inflate(R.layout.fragment_offline, container, false);
-		ListView listView = (ListView)view.findViewById(R.id.listView1);
-				
+		
+		listView = (ListView)view.findViewById(R.id.listView1);
+		
+        emptyTextView = (TextView)view.findViewById(R.id.emptyTextView);
+		
 		Cursor cursor = DBHelper.getInstance(null).queryOffline();
 
 		adapter = new CourseCell2Adapter(getActivity(), cursor);
@@ -95,11 +101,8 @@ public class OfflineFragment extends Fragment {
 				} catch (JSONException e) {
 					e.printStackTrace();
 				}
-				
-				Intent intent = new Intent();
-				intent.putExtra("json", jsonObject.toString());
-				intent.setClass(getActivity(), VideoPlayerActivity.class);
-				startActivity(intent);
+								
+				Utilitys.getInstance().playVideo(jsonObject, getActivity());
 				
 			}
 		});
@@ -137,6 +140,8 @@ public class OfflineFragment extends Fragment {
 										adapter.cursor = DBHelper.getInstance(null).queryOffline();
 								        adapter.notifyDataSetChanged();
 										
+										checkEmpty();
+								        
 									}
 								})
 						.setNegativeButton("取消", new DialogInterface.OnClickListener() {
@@ -161,7 +166,19 @@ public class OfflineFragment extends Fragment {
 	        getActivity().registerReceiver(mFinishReceiver, filter);
 		}
 		
+		checkEmpty();
+		
 		return view;
+	}
+	
+	public void checkEmpty() {
+        if (adapter.cursor.getCount() > 0) {
+        	emptyTextView.setVisibility(View.GONE);
+        	listView.setVisibility(View.VISIBLE);
+		} else {
+        	emptyTextView.setVisibility(View.VISIBLE);
+        	listView.setVisibility(View.GONE);
+		}
 	}
 	
 	public class FinishReceiver extends BroadcastReceiver {
@@ -176,6 +193,9 @@ public class OfflineFragment extends Fragment {
 
         		adapter.cursor = DBHelper.getInstance(null).queryOffline();
             	adapter.notifyDataSetChanged();
+            	
+            	checkEmpty();
+            	
             }
         }
 		

@@ -7,6 +7,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.innobuddy.SmartStudy.DB.DBHelper;
+import com.innobuddy.SmartStudy.OfflineFragment.FinishReceiver;
 import com.innobuddy.download.services.DownloadTask;
 import com.innobuddy.download.utils.DStorageUtils;
 import com.innobuddy.download.utils.MyIntents;
@@ -28,6 +29,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 
@@ -48,6 +50,12 @@ public class DownloadFragment extends Fragment {
 	
 	int longClickPostion;
     
+	ListView listView;
+	
+	TextView emptyTextView;
+	
+	ExitReceiver exitReceiver;
+	
 	public DownloadFragment() {
 		
 	}
@@ -66,11 +74,14 @@ public class DownloadFragment extends Fragment {
 			SharedPreferences.Editor editor = downloadPreferences.edit();
 			editor.putString(PROGRESS_INFO, downloadObject.toString());
 			editor.commit();
-
 		}
 		
 		if (mReceiver != null) {
 	        getActivity().unregisterReceiver(mReceiver);
+		}
+		
+		if (exitReceiver != null) {
+	        getActivity().unregisterReceiver(exitReceiver);
 		}
 		
 		super.onDestroy();
@@ -117,7 +128,10 @@ public class DownloadFragment extends Fragment {
 		}
 		
 		View view = inflater.inflate(R.layout.fragment_download, container, false);
-		ListView listView = (ListView)view.findViewById(R.id.listView1);
+		
+		listView = (ListView)view.findViewById(R.id.listView1);
+		
+        emptyTextView = (TextView)view.findViewById(R.id.emptyTextView);
 		
 		Cursor cursor = DBHelper.getInstance(null).queryDownload();
 
@@ -149,6 +163,7 @@ public class DownloadFragment extends Fragment {
                         jsonObject.put(MyIntents.DOWNLOAD_SIZE, 0L);
                         jsonObject.put(MyIntents.TOTAL_SIZE, 0L);
                         jsonObject.put(MyIntents.DOWNLOAD_STATUS, MyIntents.Status.WAITING);
+                        downloadObject.put(url, jsonObject);
 					} catch (JSONException e) {
 					}
 				}
@@ -219,6 +234,8 @@ public class DownloadFragment extends Fragment {
 
 										adapter.cursor = DBHelper.getInstance(null).queryDownload();
 								        adapter.notifyDataSetChanged();
+								        
+										checkEmpty();
 										
 									}
 								})
@@ -235,8 +252,27 @@ public class DownloadFragment extends Fragment {
 			}
 		});
 		
+		checkEmpty();
+		
+		if (exitReceiver == null) {
+			exitReceiver = new ExitReceiver();
+	        IntentFilter filter = new IntentFilter();
+	        filter.addAction("applicationExit");
+	        getActivity().registerReceiver(exitReceiver, filter);
+		}
+		
 		return view;
 		
+	}
+	
+	public void checkEmpty() {
+        if (adapter.cursor.getCount() > 0) {
+        	emptyTextView.setVisibility(View.GONE);
+        	listView.setVisibility(View.VISIBLE);
+		} else {
+        	emptyTextView.setVisibility(View.VISIBLE);
+        	listView.setVisibility(View.GONE);
+		}
 	}
 	
     public class MyReceiver extends BroadcastReceiver {
@@ -301,6 +337,8 @@ public class DownloadFragment extends Fragment {
                 		adapter.cursor = DBHelper.getInstance(null).queryDownload();
                     	adapter.notifyDataSetChanged();
                         
+                    	checkEmpty();
+                    	
                         break;
                     case MyIntents.Types.COMPLETE:
                     	
@@ -326,10 +364,13 @@ public class DownloadFragment extends Fragment {
                         	
                         	adapter.notifyDataSetChanged();
                         	
+                        	checkEmpty();
+                        	
                             Intent nofityIntent = new Intent("downloadFinished");
                             getActivity().sendBroadcast(nofityIntent);
                             
                         }
+                        
                         break;
                     case MyIntents.Types.PROCESS:
                     	
@@ -349,10 +390,11 @@ public class DownloadFragment extends Fragment {
                 		adapter.updateStatus(url);
                 		
                         break;
-                    case MyIntents.Types.ERROR:
+                               		
+     case MyIntents.Types.ERROR:
                         
                     	try {
-                    		int status = jsonObject.getInt(MyIntents.DOWNLOAD_STATUS);
+                   		int status = jsonObject.getInt(MyIntents.DOWNLOAD_STATUS);
                     		if (status == MyIntents.Status.WAITING || status == MyIntents.Status.DOWNLOADING) {
                                 jsonObject.put(MyIntents.DOWNLOAD_STATUS, MyIntents.Status.ERROR);
 							}
@@ -370,5 +412,25 @@ public class DownloadFragment extends Fragment {
         }
         
     }
+    
+    
+	public class ExitReceiver extends BroadcastReceiver {
+		
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (intent != null && intent.getAction().equals("applicationExit")) {
+            	
+        		if (downloadObject != null) {
+					
+        			SharedPreferences downloadPreferences = getActivity().getSharedPreferences(DOWNLOAD_INFOS, 0);
+        			SharedPreferences.Editor editor = downloadPreferences.edit();
+        			editor.putString(PROGRESS_INFO, downloadObject.toString());
+        			editor.commit();
+        		}
+
+            }
+        }
+	}
+
 
 }

@@ -120,6 +120,19 @@ public class SeparatedListAdapter extends BaseAdapter {
             // check if position inside this section  
             if (position == 0) {
             	View view = headers.getView(sectionnum, convertView, parent);
+            	
+            	TextView courseTextView = (TextView)view.findViewById(R.id.textView2);
+            	courseTextView.setTag(sectionnum);
+            	courseTextView.setOnClickListener(new View.OnClickListener() {
+					
+					@Override
+					public void onClick(View v) {
+
+						goDetail(ids.get((Integer)v.getTag()), headers.getItem((Integer)v.getTag()));
+						
+					}
+				});
+
             	TextView moreTextView = (TextView)view.findViewById(R.id.textView3);
             	moreTextView.setTag(sectionnum);
             	moreTextView.setOnClickListener(new View.OnClickListener() {
