@@ -7,7 +7,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.innobuddy.SmartStudy.DB.DBHelper;
-import com.innobuddy.SmartStudy.OfflineFragment.FinishReceiver;
 import com.innobuddy.download.services.DownloadTask;
 import com.innobuddy.download.utils.DStorageUtils;
 import com.innobuddy.download.utils.MyIntents;
@@ -59,7 +58,7 @@ public class DownloadFragment extends Fragment {
 	public DownloadFragment() {
 		
 	}
-
+	
 	@Override
 	public void onDestroy() {
 		

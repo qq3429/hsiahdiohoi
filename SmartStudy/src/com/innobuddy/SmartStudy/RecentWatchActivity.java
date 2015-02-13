@@ -5,12 +5,14 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.innobuddy.SmartStudy.DB.DBHelper;
-import com.innobuddy.SmartStudy.Video.VideoPlayerActivity;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.Menu;
@@ -24,6 +26,8 @@ import android.widget.TextView;
 
 public class RecentWatchActivity extends Activity {
 
+	PositionReceiver positionReceiver;
+	
 	CourseCell2Adapter adapter;
 	
 	int longClickPostion;
@@ -37,6 +41,11 @@ public class RecentWatchActivity extends Activity {
 		if (adapter.cursor != null) {
 			adapter.cursor.close();
 			adapter.cursor = null;
+		}
+		
+		if (positionReceiver != null) {
+			unregisterReceiver(positionReceiver);
+	        positionReceiver = null;
 		}
 		
 		super.finish();
@@ -131,6 +140,13 @@ public class RecentWatchActivity extends Activity {
 //		getActionBar().setDisplayHomeAsUpEnabled(true);
 //		getActionBar().setDisplayShowHomeEnabled(true);
 		
+		if (positionReceiver == null) {
+			positionReceiver = new PositionReceiver();
+	        IntentFilter filter = new IntentFilter();
+	        filter.addAction("videoPositionChanged");
+	        registerReceiver(positionReceiver, filter);
+		}
+		
 		checkEmpty();
 		
 	}
@@ -199,4 +215,26 @@ public class RecentWatchActivity extends Activity {
 		}
 		return super.onOptionsItemSelected(item);
 	}
+	
+	public class PositionReceiver extends BroadcastReceiver {
+		
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (intent != null && intent.getAction().equals("videoPositionChanged")) {
+            	
+        		if (adapter.cursor != null) {
+        			adapter.cursor.close();
+        			adapter.cursor = null;
+        		}
+
+        		adapter.cursor = DBHelper.getInstance(null).queryRecentWatch();
+            	adapter.notifyDataSetChanged();
+            	
+            	checkEmpty();
+            	
+            }
+        }
+		
+	}
+	
 }

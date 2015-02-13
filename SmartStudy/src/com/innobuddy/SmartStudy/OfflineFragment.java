@@ -36,6 +36,9 @@ import android.widget.AdapterView.OnItemLongClickListener;
 public class OfflineFragment extends Fragment {
 	
 	FinishReceiver mFinishReceiver;
+	
+	PositionReceiver positionReceiver;
+	
 	CourseCell2Adapter adapter;
 	
 	int longClickPostion;
@@ -57,6 +60,12 @@ public class OfflineFragment extends Fragment {
 				
 		if (mFinishReceiver != null) {
 	        getActivity().unregisterReceiver(mFinishReceiver);
+	        mFinishReceiver = null;
+		}
+		
+		if (positionReceiver != null) {
+	        getActivity().unregisterReceiver(positionReceiver);
+	        positionReceiver = null;
 		}
 		
 		super.onDestroy();
@@ -166,6 +175,13 @@ public class OfflineFragment extends Fragment {
 	        getActivity().registerReceiver(mFinishReceiver, filter);
 		}
 		
+		if (positionReceiver == null) {
+			positionReceiver = new PositionReceiver();
+	        IntentFilter filter = new IntentFilter();
+	        filter.addAction("videoPositionChanged");
+	        getActivity().registerReceiver(positionReceiver, filter);
+		}
+		
 		checkEmpty();
 		
 		return view;
@@ -186,6 +202,27 @@ public class OfflineFragment extends Fragment {
         @Override
         public void onReceive(Context context, Intent intent) {
             if (intent != null && intent.getAction().equals("downloadFinished")) {
+        		if (adapter.cursor != null) {
+        			adapter.cursor.close();
+        			adapter.cursor = null;
+        		}
+
+        		adapter.cursor = DBHelper.getInstance(null).queryOffline();
+            	adapter.notifyDataSetChanged();
+            	
+            	checkEmpty();
+            	
+            }
+        }
+		
+	}
+	
+	public class PositionReceiver extends BroadcastReceiver {
+		
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (intent != null && intent.getAction().equals("videoPositionChanged")) {
+            	
         		if (adapter.cursor != null) {
         			adapter.cursor.close();
         			adapter.cursor = null;

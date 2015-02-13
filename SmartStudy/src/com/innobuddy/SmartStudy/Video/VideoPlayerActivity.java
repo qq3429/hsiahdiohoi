@@ -263,15 +263,28 @@ public class VideoPlayerActivity extends Activity implements OnClickListener {
 		}
 	};
 
-	private void goBack() {
+	
+	@Override
+	public void finish() {
 		
 		if (jsonObject != null) {
 			try {
+				
 				DBHelper.getInstance(null).updateRecentWatch(jsonObject.getInt("id"), mVideo.getCurrentPosition());
+				
+	            Intent nofityIntent = new Intent("videoPositionChanged");
+	            sendBroadcast(nofityIntent);
+				
 			} catch (JSONException e) {
 
 			}
 		}
+		
+		super.finish();
+	}
+
+	
+	private void goBack() {
 		
 		finish();
 
@@ -279,6 +292,7 @@ public class VideoPlayerActivity extends Activity implements OnClickListener {
 	
 	private void collect() {
 		if (jsonObject != null) {
+			Toast.makeText(VideoPlayerActivity.this, "已收藏。", Toast.LENGTH_SHORT).show();
 	        DBHelper.getInstance(null).insertCollect(jsonObject);
 		}
 	}

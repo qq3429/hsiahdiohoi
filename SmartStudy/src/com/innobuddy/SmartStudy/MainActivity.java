@@ -191,7 +191,22 @@ public class MainActivity extends FragmentActivity {
     }
 		
 	@Override
+	public void finish() {
+		
+        Intent downloadIntent = new Intent("com.innobuddy.download.services.IDownloadService");
+        downloadIntent.putExtra(MyIntents.TYPE, MyIntents.Types.STOP);
+        getApplicationContext().startService(downloadIntent);
+
+		super.finish();
+	}
+
+    
+	@Override
 	public void onDestroy() {
+		
+        Intent downloadIntent = new Intent("com.innobuddy.download.services.IDownloadService");
+        downloadIntent.putExtra(MyIntents.TYPE, MyIntents.Types.STOP);
+        getApplicationContext().startService(downloadIntent);
 		
 		super.onDestroy();
 		
@@ -232,9 +247,9 @@ public class MainActivity extends FragmentActivity {
 
 //            Intent nofityIntent = new Intent("applicationExit");
 //            sendBroadcast(nofityIntent);
-            
+                    	
             finish();
-            System.exit(0);
+//            System.exit(0);
         }
     }
 	

@@ -47,9 +47,9 @@ public class DownloadManager extends Thread {
 
     public void close() {
 
-        isRunning = false;
+//        isRunning = false;
         pauseAllTask();
-        this.stop();
+//        this.stop();
     }
 
     public boolean isRunning() {
