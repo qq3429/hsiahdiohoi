@@ -6,11 +6,6 @@ import java.io.File;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.innobuddy.SmartStudy.DB.DBHelper;
-import com.innobuddy.SmartStudy.Video.VideoPlayerActivity;
-import com.innobuddy.download.utils.DStorageUtils;
-import com.innobuddy.download.utils.NetworkUtils;
-
 import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -24,10 +19,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
+import android.widget.ListView;
+import android.widget.TextView;
+
+import com.innobuddy.SmartStudy.DB.DBHelper;
+import com.innobuddy.download.utils.DStorageUtils;
+import com.innobuddy.download.utils.NetworkUtils;
+import com.umeng.analytics.MobclickAgent;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -236,6 +236,14 @@ public class OfflineFragment extends Fragment {
             }
         }
 		
+	}
+	public void onResume() {
+	    super.onResume();
+	    MobclickAgent.onPageStart("MainScreen"); //统计页面
+	}
+	public void onPause() {
+	    super.onPause();
+	    MobclickAgent.onPageEnd("MainScreen"); 
 	}
 
 }

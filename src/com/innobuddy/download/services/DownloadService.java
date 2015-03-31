@@ -34,7 +34,7 @@ public class DownloadService extends Service {
         // if (mDownloadManager == null) {
         // mDownloadManager = new DownloadManager(this);
         // }
-
+        if(intent.getAction()!=null){
         if (intent.getAction().equals("com.innobuddy.download.services.IDownloadService")) {
             int type = intent.getIntExtra(MyIntents.TYPE, -1);
             String url;
@@ -79,6 +79,7 @@ public class DownloadService extends Service {
                 default:
                     break;
             }
+        }
         }
 
     }

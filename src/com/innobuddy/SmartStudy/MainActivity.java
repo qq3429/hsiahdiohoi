@@ -2,72 +2,43 @@ package com.innobuddy.SmartStudy;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import com.innobuddy.SmartStudy.R;
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentTabHost;
+import android.support.v4.view.ViewPager;
+import android.view.KeyEvent;
+import android.view.MenuItem;
+import android.widget.RadioGroup;
+import android.widget.RadioGroup.OnCheckedChangeListener;
+import android.widget.TabHost.TabSpec;
+import android.widget.Toast;
+
 import com.innobuddy.SmartStudy.DB.DBHelper;
-import com.innobuddy.SmartStudy.DownloadFragment.MyReceiver;
+import com.innobuddy.download.utils.DStorageUtils;
+import com.innobuddy.download.utils.MyIntents;
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiscCache;
 import com.nostra13.universalimageloader.cache.disc.naming.HashCodeFileNameGenerator;
 import com.nostra13.universalimageloader.cache.memory.impl.LruMemoryCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-import com.nostra13.universalimageloader.core.decode.BaseImageDecoder;
-import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
-import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 import com.nostra13.universalimageloader.core.download.BaseImageDownloader;
 import com.nostra13.universalimageloader.utils.StorageUtils;
-import com.innobuddy.download.utils.DStorageUtils;
-import com.innobuddy.download.utils.MyIntents;
-
-import android.app.Activity;
-import android.app.AlertDialog;
-import android.app.Fragment;
-import android.app.FragmentManager;
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.content.IntentFilter;
-import android.content.SharedPreferences;
-import android.graphics.drawable.ColorDrawable;
-import android.os.Bundle;
-import android.support.v13.app.FragmentPagerAdapter;
+import com.umeng.analytics.MobclickAgent;
 //import android.support.v13.app.FragmentTabHost;
-import android.support.v4.view.ViewPager;
-import android.util.Log;
-import android.view.KeyEvent;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.view.Window;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.ImageButton;
-import android.widget.ListView;
-import android.widget.RadioGroup;
-import android.widget.Toast;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.RadioGroup.OnCheckedChangeListener;
-import android.widget.TabHost.TabSpec;
-
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentTabHost;
-import android.text.TextUtils;
 
 public class MainActivity extends FragmentActivity {
-    	
+
 	FragmentTabHost mTabHost;
 	RadioGroup mTabRg;
-			
-	private static final Class<?>[] fragments = {Fragment1.class, Fragment2.class, Fragment3.class, Fragment4.class};
-	
+
+	private static final Class<?>[] fragments = { Fragment1.class,
+			Fragment2.class, Fragment3.class, Fragment4.class };
+
 	/**
 	 * The {@link android.support.v4.view.PagerAdapter} that will provide
 	 * fragments for each of the sections. We use a {@link FragmentPagerAdapter}
@@ -81,65 +52,70 @@ public class MainActivity extends FragmentActivity {
 	 */
 	ViewPager mViewPager;
 
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		// requestWindowFeature(Window.FEATURE_NO_TITLE);
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-//        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        
-        File cacheDir = StorageUtils.getOwnCacheDirectory(getApplicationContext(), "ImageLoader/Cache"); 
-        
-        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(getApplicationContext())
-        .memoryCacheExtraOptions(720, 1280) // default = device screen dimensions
-        .diskCacheExtraOptions(720, 1280, null)
-        .memoryCache(new LruMemoryCache(2 * 1024 * 1024))
-        .memoryCacheSize(2 * 1024 * 1024)
-        .memoryCacheSizePercentage(13) // default
-        .diskCache(new UnlimitedDiscCache(cacheDir)) // default
-        .diskCacheSize(50 * 1024 * 1024)
-        .diskCacheFileCount(100)
-        .diskCacheFileNameGenerator(new HashCodeFileNameGenerator()) // default
-        .imageDownloader(new BaseImageDownloader(getApplicationContext())) // default
-        .defaultDisplayImageOptions(DisplayImageOptions.createSimple()) // default
-        .build();
-        ImageLoader.getInstance().init(config);
+		File cacheDir = StorageUtils.getOwnCacheDirectory(
+				getApplicationContext(), "ImageLoader/Cache");
 
-        setContentView(R.layout.activity_main);
+		ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(
+				getApplicationContext())
+				.memoryCacheExtraOptions(720, 1280)
+				// default = device screen dimensions
+				.diskCacheExtraOptions(720, 1280, null)
+				.memoryCache(new LruMemoryCache(2 * 1024 * 1024))
+				.memoryCacheSize(2 * 1024 * 1024)
+				.memoryCacheSizePercentage(13)
+				// default
+				.diskCache(new UnlimitedDiscCache(cacheDir))
+				// default
+				.diskCacheSize(50 * 1024 * 1024)
+				.diskCacheFileCount(100)
+				.diskCacheFileNameGenerator(new HashCodeFileNameGenerator())
+				// default
+				.imageDownloader(
+						new BaseImageDownloader(getApplicationContext())) // default
+				.defaultDisplayImageOptions(DisplayImageOptions.createSimple()) // default
+				.build();
+		ImageLoader.getInstance().init(config);
+
+		setContentView(R.layout.activity_main);
 		initView();
-		
-//        getActionBar().setBackgroundDrawable(new ColorDrawable(0xff54c4ff));
 
-		
+		// getActionBar().setBackgroundDrawable(new ColorDrawable(0xff54c4ff));
+
 		DBHelper.getInstance(getApplicationContext());
-		
-        if (!DStorageUtils.isSDCardPresent()) {
-            Toast.makeText(this, "未发现SD卡", Toast.LENGTH_LONG).show();
-            return;
-        }
 
-        if (!DStorageUtils.isSdCardWrittenable()) {
-            Toast.makeText(this, "SD卡不能读写", Toast.LENGTH_LONG).show();
-            return;
-        }
+		if (!DStorageUtils.isSDCardPresent()) {
+			Toast.makeText(this, "未发现SD卡", Toast.LENGTH_LONG).show();
+			return;
+		}
 
-        try {
-            DStorageUtils.mkdir();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        
-        Intent downloadIntent = new Intent("com.innobuddy.download.services.IDownloadService");
-        downloadIntent.putExtra(MyIntents.TYPE, MyIntents.Types.START);
-        getApplicationContext().startService(downloadIntent);
-		
-//        downloadIntent.putExtra(MyIntents.TYPE, MyIntents.Types.STOP);
-//        getApplicationContext().startService(downloadIntent);
+		if (!DStorageUtils.isSdCardWrittenable()) {
+			Toast.makeText(this, "SD卡不能读写", Toast.LENGTH_LONG).show();
+			return;
+		}
 
-        
-    }
-    
+		try {
+			DStorageUtils.mkdir();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		Intent downloadIntent = new Intent(
+				"com.innobuddy.download.services.IDownloadService");
+		downloadIntent.putExtra(MyIntents.TYPE, MyIntents.Types.START);
+		getApplicationContext().startService(downloadIntent);
+
+		// downloadIntent.putExtra(MyIntents.TYPE, MyIntents.Types.STOP);
+		// getApplicationContext().startService(downloadIntent);
+
+	}
+
 	private void initView() {
-		
+
 		mTabHost = (FragmentTabHost) findViewById(android.R.id.tabhost);
 		mTabHost.setup(this, getSupportFragmentManager(), R.id.realtabcontent);
 		// 得到fragment的个数
@@ -177,80 +153,90 @@ public class MainActivity extends FragmentActivity {
 
 		mTabHost.setCurrentTab(0);
 	}
- 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-		
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		// Handle action bar item clicks here. The action bar will
+		// automatically handle clicks on the Home/Up button, so long
+		// as you specify a parent activity in AndroidManifest.xml.
+		int id = item.getItemId();
+		if (id == R.id.action_settings) {
+			return true;
+		}
+		return super.onOptionsItemSelected(item);
+	}
+
 	@Override
 	public void finish() {
-		
-        Intent downloadIntent = new Intent("com.innobuddy.download.services.IDownloadService");
-        downloadIntent.putExtra(MyIntents.TYPE, MyIntents.Types.STOP);
-        getApplicationContext().startService(downloadIntent);
+
+		Intent downloadIntent = new Intent(
+				"com.innobuddy.download.services.IDownloadService");
+		downloadIntent.putExtra(MyIntents.TYPE, MyIntents.Types.STOP);
+		getApplicationContext().startService(downloadIntent);
 
 		super.finish();
 	}
 
-    
 	@Override
 	public void onDestroy() {
-		
-        Intent downloadIntent = new Intent("com.innobuddy.download.services.IDownloadService");
-        downloadIntent.putExtra(MyIntents.TYPE, MyIntents.Types.STOP);
-        getApplicationContext().startService(downloadIntent);
-		
+
+		Intent downloadIntent = new Intent(
+				"com.innobuddy.download.services.IDownloadService");
+		downloadIntent.putExtra(MyIntents.TYPE, MyIntents.Types.STOP);
+		getApplicationContext().startService(downloadIntent);
+
 		super.onDestroy();
-		
+
 	}
 
 	/**
-     * 菜单、返回键响应
-     */
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        // TODO Auto-generated method stub
-        if(keyCode == KeyEvent.KEYCODE_BACK)
-        {  
-            exitBy2Click();        //调用双击退出函数
-        }
-        return false;
-    }
-    
-    /**
-     * 双击退出函数
-     */
-    private static Boolean isExit = false;
+	 * 菜单、返回键响应
+	 */
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		// TODO Auto-generated method stub
+		if (keyCode == KeyEvent.KEYCODE_BACK) {
+			exitBy2Click(); // 调用双击退出函数
+		}
+		return false;
+	}
 
-    private void exitBy2Click() {
-        Timer tExit = null;
-        if (isExit == false) {
-            isExit = true; // 准备退出
-            Toast.makeText(this, "再按一次退出程序", Toast.LENGTH_SHORT).show();
-            tExit = new Timer();
-            tExit.schedule(new TimerTask() {
-                @Override
-                public void run() {
-                    isExit = false; // 取消退出
-                }
-            }, 2000); // 如果2秒钟内没有按下返回键，则启动定时器取消掉刚才执行的任务
+	/**
+	 * 双击退出函数
+	 */
+	private static Boolean isExit = false;
 
-        } else {
+	private void exitBy2Click() {
+		Timer tExit = null;
+		if (isExit == false) {
+			isExit = true; // 准备退出
+			Toast.makeText(this, "再按一次退出程序", Toast.LENGTH_SHORT).show();
+			tExit = new Timer();
+			tExit.schedule(new TimerTask() {
+				@Override
+				public void run() {
+					isExit = false; // 取消退出
+				}
+			}, 2000); // 如果2秒钟内没有按下返回键，则启动定时器取消掉刚才执行的任务
 
-//            Intent nofityIntent = new Intent("applicationExit");
-//            sendBroadcast(nofityIntent);
-                    	
-            finish();
-//            System.exit(0);
-        }
-    }
+		} else {
+
+			// Intent nofityIntent = new Intent("applicationExit");
+			// sendBroadcast(nofityIntent);
+
+			finish();
+			// System.exit(0);
+		}
+	}
 	
+	public void onResume() {
+		super.onResume();
+		MobclickAgent.onResume(this);//友盟统计
+	}
+
+	public void onPause() {
+		super.onPause();
+		MobclickAgent.onPause(this); // 友盟统计
+	}
+
 }

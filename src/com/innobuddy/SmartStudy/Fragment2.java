@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.umeng.analytics.MobclickAgent;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -82,7 +84,14 @@ public class Fragment2 extends Fragment {
 		
 		return view;
 	}
-
+	public void onResume() {
+	    super.onResume();
+	    MobclickAgent.onPageStart("MainScreen"); //统计页面
+	}
+	public void onPause() {
+	    super.onPause();
+	    MobclickAgent.onPageEnd("MainScreen"); 
+	}
 	
 	
 }

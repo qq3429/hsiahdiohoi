@@ -1,6 +1,7 @@
 package com.innobuddy.SmartStudy;
 
 import com.innobuddy.SmartStudy.TabFragmentIndicator.OnTabClickListener;
+import com.umeng.analytics.MobclickAgent;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -72,6 +73,14 @@ public class Fragment3 extends Fragment implements OnTabClickListener {
 	public void onTabClick(View v) {
 		// TODO Auto-generated method stub
 		
+	}
+	public void onResume() {
+	    super.onResume();
+	    MobclickAgent.onPageStart("MainScreen"); //统计页面
+	}
+	public void onPause() {
+	    super.onPause();
+	    MobclickAgent.onPageEnd("MainScreen"); 
 	}
     
 }

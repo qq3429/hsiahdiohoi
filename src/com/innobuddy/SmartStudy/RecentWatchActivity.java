@@ -5,6 +5,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.innobuddy.SmartStudy.DB.DBHelper;
+import com.umeng.analytics.MobclickAgent;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -236,5 +237,12 @@ public class RecentWatchActivity extends Activity {
         }
 		
 	}
-	
+	public void onResume() {
+	    super.onResume();
+	    MobclickAgent.onResume(this);       //统计时长
+	}
+	public void onPause() {
+	    super.onPause();
+	    MobclickAgent.onPause(this);
+	}
 }
