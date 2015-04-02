@@ -127,7 +127,6 @@ try {
 							.show();
 			
 		} else {
-			
 			Intent intent = new Intent();
 			intent.putExtra("json", jsonObject.toString());
 			intent.setClass(context, VideoPlayerActivity.class);
