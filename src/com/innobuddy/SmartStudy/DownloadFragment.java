@@ -31,6 +31,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
+import android.widget.Toast;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -82,7 +83,6 @@ public class DownloadFragment extends Fragment {
 		if (exitReceiver != null) {
 	        getActivity().unregisterReceiver(exitReceiver);
 		}
-		
 		super.onDestroy();
 		
 	}
@@ -144,7 +144,7 @@ public class DownloadFragment extends Fragment {
 					long id) {
 								
 				adapter.cursor.moveToPosition(position);
-				String url = adapter.cursor.getString(adapter.cursor.getColumnIndex("cache_url"));
+				String url = adapter.cursor.getString(adapter.cursor.getColumnIndex("url"));
 
                 JSONObject jsonObject = null;
                 try {
@@ -209,7 +209,7 @@ public class DownloadFragment extends Fragment {
 										
 										adapter.cursor.moveToPosition(longClickPostion);
 										
-										String url = adapter.cursor.getString(adapter.cursor.getColumnIndex("cache_url"));
+										String url = adapter.cursor.getString(adapter.cursor.getColumnIndex("url"));
 										int id = adapter.cursor.getInt(adapter.cursor.getColumnIndex("id"));
 										
 										Intent downloadIntent = new Intent("com.innobuddy.download.services.IDownloadService");        			
@@ -217,10 +217,13 @@ public class DownloadFragment extends Fragment {
 										downloadIntent.putExtra(MyIntents.URL, url);
 										getActivity().getApplicationContext().startService(downloadIntent);
 										
-						                File file = new File(DStorageUtils.FILE_ROOT
-						                        + NetworkUtils.getFileNameFromUrl(url) + DownloadTask.TEMP_SUFFIX);
-						                if (file.exists())
-						                    file.delete();
+//						                File file = new File(DStorageUtils.FILE_ROOT
+//						                        + NetworkUtils.getFileNameFromUrl(url) + DownloadTask.TEMP_SUFFIX);
+										File file = new File(DStorageUtils.FILE_ROOT + Md5Utils.encode(url)
+						    					+ "/" + NetworkUtils.getFileNameFromUrl(url));
+//										if (file.exists())
+//						                    file.delete();
+										 deleteDir(file);
 										
 										DBHelper.getInstance(null).deleteDownload(id);
 										
@@ -260,6 +263,14 @@ public class DownloadFragment extends Fragment {
 	        getActivity().registerReceiver(exitReceiver, filter);
 		}
 		
+		
+		/**
+		 * 
+		 */
+		DownLoadReceiver downLoadReceiver=new DownLoadReceiver();
+		IntentFilter downloadFilter=new IntentFilter();
+		downloadFilter.addAction("download");
+		getActivity().registerReceiver(downLoadReceiver, downloadFilter);
 		return view;
 		
 	}
@@ -372,21 +383,22 @@ public class DownloadFragment extends Fragment {
                         
                         break;
                     case MyIntents.Types.PROCESS:
-                    	
-                        long downloadSize = intent.getLongExtra(MyIntents.DOWNLOAD_SIZE, 0);
-                        long totalSize = intent.getLongExtra(MyIntents.TOTAL_SIZE, 0);
-                		
+                        long downloadSize = intent.getLongExtra(MyIntents.DOWNLOAD_SIZE, 0L);
+                        long totalSize = intent.getLongExtra(MyIntents.TOTAL_SIZE, 0L);
+                		long download=intent.getLongExtra("download", 0L);
                         try {
                     		int status = jsonObject.getInt(MyIntents.DOWNLOAD_STATUS);
                     		if (status != MyIntents.Status.PAUSE) {
                                 jsonObject.put(MyIntents.DOWNLOAD_STATUS, MyIntents.Status.DOWNLOADING);
 							}
                             jsonObject.put(MyIntents.DOWNLOAD_SIZE, downloadSize);
-                            jsonObject.put(MyIntents.TOTAL_SIZE, totalSize);                            
+                            jsonObject.put(MyIntents.TOTAL_SIZE, totalSize);   
+                            jsonObject.put("download", download);
 						} catch (JSONException e) {
+							
 						}
                                                 
-                		adapter.updateStatus(url);
+                		adapter.updateStatus(url);//更新进度
                 		
                         break;
                                		
@@ -430,6 +442,52 @@ public class DownloadFragment extends Fragment {
             }
         }
 	}
+	public class DownLoadReceiver extends BroadcastReceiver{
+
+		@Override
+		public void onReceive(Context context, Intent intent) {
+			// TODO Auto-generated method stub
+			//下载进度接受
+			 if (intent != null && intent.getAction().equals("download")) {
+				String loading= intent.getStringExtra("loading");
+				System.out.println("XXXXXX"+loading);
+				//Toast.makeText(DownloadFragment.this.getActivity(), "OK", Toast.LENGTH_LONG).show();
+			 }
+		}
+		
+	}
+	
+//	  private static void doDeleteEmptyDir(String dir) {
+//	        boolean success = (new File(dir)).delete();
+//	        if (success) {
+//	            System.out.println("Successfully deleted empty directory: " + dir);
+//	        } else {
+//	            System.out.println("Failed to delete empty directory: " + dir);
+//	        }
+//	    }
+
+	    /**
+	     * 递归删除目录下的所有文件及子目录下所有文件
+	     * @param dir 将要删除的文件目录
+	     * @return boolean Returns "true" if all deletions were successful.
+	     *                 If a deletion fails, the method stops attempting to
+	     *                 delete and returns "false".
+	     */
+	    private static boolean deleteDir(File dir) {
+	        if (dir.isDirectory()) {
+	            String[] children = dir.list();
+	            //递归删除目录中的子目录下
+	            for (int i=0; i<children.length; i++) {
+	                boolean success = deleteDir(new File(dir, children[i]));
+	                if (!success) {
+	                    return false;
+	                }
+	            }
+	        }
+	        // 目录此时为空，可以删除
+	        return dir.delete();
+	    }
+	 
 
 
 }

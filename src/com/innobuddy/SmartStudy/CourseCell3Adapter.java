@@ -83,7 +83,7 @@ public class CourseCell3Adapter extends BaseAdapter {
 			  ImageLoader.getInstance().displayImage(cursor.getString(cursor.getColumnIndex("poster")), holder.imageView, Utilitys.defaultOptions);
 			  holder.nameTextView.setText(cursor.getString(cursor.getColumnIndex("name")));
 			  
-			  String url = cursor.getString(cursor.getColumnIndex("cache_url"));
+			  String url = cursor.getString(cursor.getColumnIndex("url"));
 			  hashMap.put(url, holder);
 			  
 			  updateStatus(url);
@@ -95,7 +95,6 @@ public class CourseCell3Adapter extends BaseAdapter {
 	
 	public void updateStatus(String url) {
 		if (url != null) {
-			
 			CourseCell3Holder holder = hashMap.get(url);
 			
 			if (holder == null) {
@@ -103,9 +102,9 @@ public class CourseCell3Adapter extends BaseAdapter {
 			}
 			
 			  long downloadSize = 0;
-			  long totalSize = 0;
+			  long totalSize =0;
 			  int status = 0;
-			  
+			  long download=0;
 			  try {
 
 				  if (downloadObject != null) {
@@ -116,6 +115,7 @@ public class CourseCell3Adapter extends BaseAdapter {
 						  downloadSize = jsonObject.getLong(MyIntents.DOWNLOAD_SIZE);
 						  totalSize = jsonObject.getLong(MyIntents.TOTAL_SIZE);
 						  status = jsonObject.getInt(MyIntents.DOWNLOAD_STATUS);
+						  download=jsonObject.getLong("download");
 					}
 					  
 				  }
@@ -126,7 +126,8 @@ public class CourseCell3Adapter extends BaseAdapter {
 			  
 			  if (totalSize > 0) {
 				  holder.progressTextView.setText((int)Math.ceil(100.0 * downloadSize / totalSize) + "%");
-				  holder.totalSizeTextView.setText(DStorageUtils.size(totalSize));
+				//  holder.totalSizeTextView.setText(DStorageUtils.size(totalSize));
+				  holder.totalSizeTextView.setText(DStorageUtils.size(download));
 			  } else {
 				  holder.progressTextView.setText("0%");				  
 			  }

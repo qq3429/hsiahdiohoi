@@ -243,7 +243,7 @@ public class OfflineFragment extends Fragment {
 	}
 	public void onPause() {
 	    super.onPause();
-	    MobclickAgent.onPageEnd("MainScreen"); 
+	    MobclickAgent.onPageEnd("MainScreen"); //统计界面
 	}
 
 }

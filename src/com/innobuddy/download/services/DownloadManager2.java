@@ -17,7 +17,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 
-public class DownloadManager extends Thread {
+public class DownloadManager2 extends Thread {
 
     private static final int MAX_TASK_COUNT = 100;
     private static final int MAX_DOWNLOAD_THREAD_COUNT = 3;
@@ -30,7 +30,7 @@ public class DownloadManager extends Thread {
 
     private Boolean isRunning = false;
 
-    public DownloadManager(Context context) {
+    public DownloadManager2(Context context) {
 
         mContext = context;
         mTaskQueue = new TaskQueue();
@@ -236,7 +236,6 @@ public class DownloadManager extends Thread {
             	
                 File file = new File(DStorageUtils.FILE_ROOT
                         + NetworkUtils.getFileNameFromUrl(task.getUrl()) + DownloadTask.TEMP_SUFFIX);
-              
                 if (file.exists())
                     file.delete();
             	

@@ -67,7 +67,7 @@ public class DBHelper extends SQLiteOpenHelper {
 	
 	public Cursor queryDownload(String cacheUrl) {
 		SQLiteDatabase db = getReadableDatabase();
-		Cursor c = db.query(TABLE_DOWNLOAD, null,  VIDEO_CACHE_URL + "= ?", new String[]{cacheUrl}, null, null, null);
+		Cursor c = db.query(TABLE_DOWNLOAD, null,  VIDEO_URL + "= ?", new String[]{cacheUrl}, null, null, null);
 		return c;
 	}
 	
@@ -128,7 +128,7 @@ public class DBHelper extends SQLiteOpenHelper {
 	
 	public void updateDownload(String cacheUrl, long downloadedSize, long totalSize) {
 		SQLiteDatabase db = getWritableDatabase();
-		String where = VIDEO_CACHE_URL + " = ?";
+		String where = VIDEO_URL + " = ?";
 		String[] whereValue = {cacheUrl};
 		ContentValues cv = new ContentValues();
 		cv.put(VIDEO_DOWNLOAD_SIZE, downloadedSize);
@@ -145,7 +145,7 @@ public class DBHelper extends SQLiteOpenHelper {
 	
 	public void deleteDownload(String cacheUrl) {
 		SQLiteDatabase db = getWritableDatabase();
-		String where = VIDEO_CACHE_URL + " = ?";
+		String where = VIDEO_URL + " = ?";
 		String[] whereValue = {cacheUrl};
 		db.delete(TABLE_DOWNLOAD, where, whereValue);
 	}

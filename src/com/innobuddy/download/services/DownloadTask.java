@@ -1,6 +1,8 @@
 
 package com.innobuddy.download.services;
 
+import com.innobuddy.SmartStudy.GlobalParams;
+import com.innobuddy.SmartStudy.Md5Utils;
 import com.innobuddy.download.error.FileAlreadyExistException;
 import com.innobuddy.download.error.NoMemoryException;
 import com.innobuddy.download.http.AndroidHttpClient;
@@ -83,9 +85,17 @@ public class DownloadTask extends AsyncTask<Void, Integer, Long> {
         this.url = url;
         this.URL = new URL(url);
         this.listener = listener;
+        //String path2=url.replace("ts", "m3u8");
+       // System.out.println(path2);
+        //path=path+Md5Utils.encode(path2)+"/";
+     //   System.out.println(path);
         String fileName = NetworkUtils.getFileNameFromUrl(url);
-        this.file = new File(path, fileName);
-        this.tempFile = new File(path, fileName + TEMP_SUFFIX);
+        String m3u8_postfixname = url.substring(
+				url.lastIndexOf("/") + 1,
+				url.length());
+        this.file = new File(path+GlobalParams.path, m3u8_postfixname);
+        System.out.println(file.getAbsolutePath());
+        this.tempFile = new File(path+GlobalParams.path, m3u8_postfixname + TEMP_SUFFIX);
         this.context = context;
     }
 
