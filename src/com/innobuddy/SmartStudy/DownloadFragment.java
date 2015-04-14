@@ -6,12 +6,6 @@ import java.util.Iterator;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.innobuddy.SmartStudy.DB.DBHelper;
-import com.innobuddy.download.services.DownloadTask;
-import com.innobuddy.download.utils.DStorageUtils;
-import com.innobuddy.download.utils.MyIntents;
-import com.innobuddy.download.utils.NetworkUtils;
-
 import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -27,11 +21,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
-import android.widget.Toast;
+import android.widget.ListView;
+import android.widget.TextView;
+
+import com.innobuddy.SmartStudy.DB.DBHelper;
+import com.innobuddy.download.utils.DStorageUtils;
+import com.innobuddy.download.utils.FileUtils;
+import com.innobuddy.download.utils.MyIntents;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -161,6 +159,7 @@ public class DownloadFragment extends Fragment {
                 	try {
                         jsonObject.put(MyIntents.DOWNLOAD_SIZE, 0L);
                         jsonObject.put(MyIntents.TOTAL_SIZE, 0L);
+                        jsonObject.put(MyIntents.LOADING_SIZE, 0L);
                         jsonObject.put(MyIntents.DOWNLOAD_STATUS, MyIntents.Status.WAITING);
                         downloadObject.put(url, jsonObject);
 					} catch (JSONException e) {
@@ -219,11 +218,11 @@ public class DownloadFragment extends Fragment {
 										
 //						                File file = new File(DStorageUtils.FILE_ROOT
 //						                        + NetworkUtils.getFileNameFromUrl(url) + DownloadTask.TEMP_SUFFIX);
-										File file = new File(DStorageUtils.FILE_ROOT + Md5Utils.encode(url)
-						    					+ "/" + NetworkUtils.getFileNameFromUrl(url));
+										File file = new File(DStorageUtils.FILE_ROOT + Md5Utils.encode(url));
+						    				//删除文件加
 //										if (file.exists())
 //						                    file.delete();
-										 deleteDir(file);
+										FileUtils.deleteDir(file);
 										
 										DBHelper.getInstance(null).deleteDownload(id);
 										
@@ -318,6 +317,7 @@ public class DownloadFragment extends Fragment {
                     	try {
                             jsonObject.put(MyIntents.DOWNLOAD_SIZE, 0L);
                             jsonObject.put(MyIntents.TOTAL_SIZE, 0L);
+                            jsonObject.put(MyIntents.LOADING_SIZE, 0L);
                             jsonObject.put(MyIntents.DOWNLOAD_STATUS, MyIntents.Status.WAITING);
     					} catch (JSONException e) {
     					}
@@ -385,7 +385,7 @@ public class DownloadFragment extends Fragment {
                     case MyIntents.Types.PROCESS:
                         long downloadSize = intent.getLongExtra(MyIntents.DOWNLOAD_SIZE, 0L);
                         long totalSize = intent.getLongExtra(MyIntents.TOTAL_SIZE, 0L);
-                		long download=intent.getLongExtra("download", 0L);
+                		long download=intent.getLongExtra(MyIntents.LOADING_SIZE, 0L);
                         try {
                     		int status = jsonObject.getInt(MyIntents.DOWNLOAD_STATUS);
                     		if (status != MyIntents.Status.PAUSE) {
@@ -393,7 +393,7 @@ public class DownloadFragment extends Fragment {
 							}
                             jsonObject.put(MyIntents.DOWNLOAD_SIZE, downloadSize);
                             jsonObject.put(MyIntents.TOTAL_SIZE, totalSize);   
-                            jsonObject.put("download", download);
+                            jsonObject.put(MyIntents.LOADING_SIZE, download);
 						} catch (JSONException e) {
 							
 						}
@@ -466,28 +466,6 @@ public class DownloadFragment extends Fragment {
 //	        }
 //	    }
 
-	    /**
-	     * 递归删除目录下的所有文件及子目录下所有文件
-	     * @param dir 将要删除的文件目录
-	     * @return boolean Returns "true" if all deletions were successful.
-	     *                 If a deletion fails, the method stops attempting to
-	     *                 delete and returns "false".
-	     */
-	    private static boolean deleteDir(File dir) {
-	        if (dir.isDirectory()) {
-	            String[] children = dir.list();
-	            //递归删除目录中的子目录下
-	            for (int i=0; i<children.length; i++) {
-	                boolean success = deleteDir(new File(dir, children[i]));
-	                if (!success) {
-	                    return false;
-	                }
-	            }
-	        }
-	        // 目录此时为空，可以删除
-	        return dir.delete();
-	    }
-	 
 
 
 }

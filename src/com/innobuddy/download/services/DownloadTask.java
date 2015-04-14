@@ -1,14 +1,14 @@
 
 package com.innobuddy.download.services;
 
-import com.innobuddy.SmartStudy.GlobalParams;
-import com.innobuddy.SmartStudy.Md5Utils;
-import com.innobuddy.download.error.FileAlreadyExistException;
-import com.innobuddy.download.error.NoMemoryException;
-import com.innobuddy.download.http.AndroidHttpClient;
-import com.innobuddy.download.utils.NetworkUtils;
-import com.innobuddy.download.utils.DStorageUtils;
-import com.innobuddy.download.utils.Utils;
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.RandomAccessFile;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -19,14 +19,12 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import java.io.BufferedInputStream;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.RandomAccessFile;
-import java.net.MalformedURLException;
-import java.net.URL;
+import com.innobuddy.SmartStudy.GlobalParams;
+import com.innobuddy.download.error.FileAlreadyExistException;
+import com.innobuddy.download.error.NoMemoryException;
+import com.innobuddy.download.http.AndroidHttpClient;
+import com.innobuddy.download.utils.DStorageUtils;
+import com.innobuddy.download.utils.NetworkUtils;
 
 public class DownloadTask extends AsyncTask<Void, Integer, Long> {
 
@@ -89,12 +87,11 @@ public class DownloadTask extends AsyncTask<Void, Integer, Long> {
        // System.out.println(path2);
         //path=path+Md5Utils.encode(path2)+"/";
      //   System.out.println(path);
-        String fileName = NetworkUtils.getFileNameFromUrl(url);
+       // String fileName = NetworkUtils.getFileNameFromUrl(url);
         String m3u8_postfixname = url.substring(
 				url.lastIndexOf("/") + 1,
 				url.length());
         this.file = new File(path+GlobalParams.path, m3u8_postfixname);
-        System.out.println(file.getAbsolutePath());
         this.tempFile = new File(path+GlobalParams.path, m3u8_postfixname + TEMP_SUFFIX);
         this.context = context;
     }

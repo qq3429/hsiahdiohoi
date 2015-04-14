@@ -1,6 +1,5 @@
 package com.innobuddy.SmartStudy.Video;
 
-import com.innobuddy.SmartStudy.R;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -11,6 +10,8 @@ import android.graphics.Paint.Style;
 import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.view.View;
+
+import com.innobuddy.SmartStudy.R;
 
 /**
  * 仿小米声音调节环形进度条

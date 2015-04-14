@@ -3,8 +3,8 @@ package com.innobuddy.SmartStudy.Video;
 import android.app.Activity;
 import android.content.ContentResolver;
 import android.provider.Settings;
-import android.view.WindowManager;
 import android.provider.Settings.System;
+import android.view.WindowManager;
 
 public class LightnessController {
 	

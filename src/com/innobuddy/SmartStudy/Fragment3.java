@@ -1,14 +1,14 @@
 package com.innobuddy.SmartStudy;
 
-import com.innobuddy.SmartStudy.TabFragmentIndicator.OnTabClickListener;
-import com.umeng.analytics.MobclickAgent;
-
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.innobuddy.SmartStudy.TabFragmentIndicator.OnTabClickListener;
+import com.umeng.analytics.MobclickAgent;
 
 public class Fragment3 extends Fragment implements OnTabClickListener {
 	

@@ -1,21 +1,26 @@
 
 package com.innobuddy.download.services;
 
-import com.innobuddy.download.utils.ConfigUtils;
-import com.innobuddy.download.utils.MyIntents;
-import com.innobuddy.download.utils.NetworkUtils;
-import com.innobuddy.download.utils.DStorageUtils;
-
-import android.content.Context;
-import android.content.Intent;
-import android.widget.Toast;
-
 import java.io.File;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
+
+import android.content.Context;
+import android.content.Intent;
+import android.os.Handler;
+import android.os.Message;
+import android.widget.Toast;
+
+import com.innobuddy.SmartStudy.GlobalParams;
+import com.innobuddy.SmartStudy.Md5Utils;
+import com.innobuddy.download.utils.ConfigUtils;
+import com.innobuddy.download.utils.DStorageUtils;
+import com.innobuddy.download.utils.FileUtils;
+import com.innobuddy.download.utils.MyIntents;
+import com.innobuddy.download.utils.NetworkUtils;
 
 public class DownloadManager extends Thread {
 
@@ -27,15 +32,18 @@ public class DownloadManager extends Thread {
     private TaskQueue mTaskQueue;
     private List<DownloadTask> mDownloadingTasks;
     private List<DownloadTask> mPausingTasks;
-
+    private Handler mHandler;
     private Boolean isRunning = false;
+	private DownloadTaskListener taskListener;
 
-    public DownloadManager(Context context) {
+    public DownloadManager(Context context, Handler handler, DownloadTaskListener listener) {
 
         mContext = context;
         mTaskQueue = new TaskQueue();
         mDownloadingTasks = new ArrayList<DownloadTask>();
         mPausingTasks = new ArrayList<DownloadTask>();
+        mHandler=handler;
+        listener=taskListener;
     }
 
     public void startManage() {
@@ -61,10 +69,15 @@ public class DownloadManager extends Thread {
     public void run() {
 
         super.run();
-        while (isRunning) {
+        while (isRunning) { // true
             DownloadTask task = mTaskQueue.poll();
             mDownloadingTasks.add(task);
-            task.execute();
+           //task.execute();
+            Message msg=new Message();
+            msg.what=1000;
+            msg.obj=task.getUrl();
+            mHandler.sendMessage(msg);//执行啦
+            
         }
     }
 
@@ -181,9 +194,9 @@ public class DownloadManager extends Thread {
             for (int i = 0; i < urlList.size(); i++) {
             	
 //                addTask(urlList.get(i));
-            	
                 try {
                 	DownloadTask task = newDownloadTask(urlList.get(i));
+                	GlobalParams.list.add(urlList.get(i));
                     mPausingTasks.add(task);
                 } catch (MalformedURLException e) {
                     e.printStackTrace();
@@ -233,12 +246,10 @@ public class DownloadManager extends Thread {
         for (int i = 0; i < mDownloadingTasks.size(); i++) {
             task = mDownloadingTasks.get(i);
             if (task != null && task.getUrl().equals(url)) {
-            	
-                File file = new File(DStorageUtils.FILE_ROOT
-                        + NetworkUtils.getFileNameFromUrl(task.getUrl()) + DownloadTask.TEMP_SUFFIX);
-              
-                if (file.exists())
-                    file.delete();
+
+            	File file = new File(DStorageUtils.FILE_ROOT + Md5Utils.encode(url));
+
+			   FileUtils.deleteDir(file);
             	
                 task.onCancelled();
                 completeTask(task);
@@ -321,7 +332,7 @@ public class DownloadManager extends Thread {
      */
     private DownloadTask newDownloadTask(String url) throws MalformedURLException {
 
-        DownloadTaskListener taskListener = new DownloadTaskListener() {
+        taskListener = new DownloadTaskListener() {
 
             @Override
             public void updateProcess(DownloadTask task) {
@@ -426,5 +437,7 @@ public class DownloadManager extends Thread {
             return taskQueue.remove(task);
         }
     }
+   
+ 
 
 }

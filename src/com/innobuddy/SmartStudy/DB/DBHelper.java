@@ -319,7 +319,6 @@ public class DBHelper extends SQLiteOpenHelper {
 				if (c != null) {
 					c.close();
 				}
-				
 			}
 			
 		} catch (Exception e) {

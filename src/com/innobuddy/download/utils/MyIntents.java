@@ -7,6 +7,7 @@ public class MyIntents {
 	public static final String PROCESS_PROGRESS = "process_progress";
 	public static final String DOWNLOAD_SIZE = "download_size";
 	public static final String TOTAL_SIZE = "total_size";
+	public static final String LOADING_SIZE="loading_size";
 	public static final String URL = "url";
 	public static final String ERROR_CODE = "error_code";
 	public static final String ERROR_INFO = "error_info";

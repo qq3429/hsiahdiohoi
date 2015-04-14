@@ -6,8 +6,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.nostra13.universalimageloader.core.ImageLoader;
-
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.DisplayMetrics;
@@ -16,6 +14,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ListView;
+
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 /**
  * A simple {@link Fragment} subclass. Activities that contain this fragment

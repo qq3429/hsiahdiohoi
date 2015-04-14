@@ -1,7 +1,5 @@
 package com.innobuddy.SmartStudy;
 
-import com.umeng.analytics.MobclickAgent;
-
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -10,6 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.Switch;
+
+import com.umeng.analytics.MobclickAgent;
 
 public class Fragment4 extends Fragment {
 

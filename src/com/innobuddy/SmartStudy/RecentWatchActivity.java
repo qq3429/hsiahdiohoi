@@ -4,9 +4,6 @@ package com.innobuddy.SmartStudy;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.innobuddy.SmartStudy.DB.DBHelper;
-import com.umeng.analytics.MobclickAgent;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
@@ -20,10 +17,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ListView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.TextView;
+
+import com.innobuddy.SmartStudy.DB.DBHelper;
+import com.umeng.analytics.MobclickAgent;
 
 public class RecentWatchActivity extends Activity {
 

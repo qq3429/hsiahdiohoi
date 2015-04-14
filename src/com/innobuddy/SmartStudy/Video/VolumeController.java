@@ -1,11 +1,12 @@
 package com.innobuddy.SmartStudy.Video;
 
-import com.innobuddy.SmartStudy.R;
 import android.content.Context;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Toast;
+
+import com.innobuddy.SmartStudy.R;
 
 public class VolumeController {
 	private Toast t;

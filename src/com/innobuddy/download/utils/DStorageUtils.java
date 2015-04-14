@@ -1,6 +1,12 @@
 
 package com.innobuddy.download.utils;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.text.DecimalFormat;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
@@ -11,12 +17,6 @@ import android.os.Build;
 import android.os.Environment;
 import android.os.StatFs;
 import android.util.Log;
-
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.text.DecimalFormat;
 
 public class DStorageUtils {
 

@@ -4,9 +4,6 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import com.innobuddy.SmartStudy.DB.DBHelper;
-import com.nostra13.universalimageloader.core.ImageLoader;
-
 import android.content.Context;
 import android.database.Cursor;
 import android.view.LayoutInflater;
@@ -15,6 +12,9 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.innobuddy.SmartStudy.DB.DBHelper;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 public class CourseCell2Adapter extends BaseAdapter {
 

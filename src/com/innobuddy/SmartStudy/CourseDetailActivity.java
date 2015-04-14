@@ -8,8 +8,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.innobuddy.SmartStudy.TabFragmentIndicator.OnTabClickListener;
-
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
@@ -17,6 +15,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+
+import com.innobuddy.SmartStudy.TabFragmentIndicator.OnTabClickListener;
 
 public class CourseDetailActivity extends FragmentActivity implements OnTabClickListener {
 

@@ -1,7 +1,8 @@
 
 package com.innobuddy.download.services;
 
-import com.innobuddy.download.utils.ConfigUtils;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import android.app.Service;
 import android.content.Context;
@@ -16,8 +17,7 @@ import android.os.IBinder;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 
-import java.util.Timer;
-import java.util.TimerTask;
+import com.innobuddy.download.utils.ConfigUtils;
 
 public class TrafficCounterService extends Service {
 
