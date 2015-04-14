@@ -1,8 +1,10 @@
 package com.innobuddy.download.services;
 
+
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -18,8 +20,8 @@ import android.os.RemoteException;
 import android.text.TextUtils;
 import android.widget.Toast;
 
-import com.innobuddy.SmartStudy.GlobalParams;
 import com.innobuddy.SmartStudy.Md5Utils;
+import com.innobuddy.SmartStudy.global.GlobalParams;
 import com.innobuddy.download.domain.TsFile;
 import com.innobuddy.download.utils.ConfigUtils;
 import com.innobuddy.download.utils.DStorageUtils;
@@ -44,7 +46,7 @@ public class DownloadService extends Service {
 	private HttpHandler<File> httpHandler;
 	private DownloadTaskListener listener;
 	private String target;
-	//private static final String TAG = "DownloadService";
+	// private static final String TAG = "DownloadService";
 	private boolean flag = true;// 如果删除 文件 关闭
 	private Handler handler = new Handler() {
 
@@ -65,7 +67,6 @@ public class DownloadService extends Service {
 				int j = ConfigUtils.getInt(DownloadService.this, url + "count");
 				if (list == null || list.size() == 0 || j >= list.size() || list.get(j) == null)
 					return;
-				//System.out.println(list.get(j).getTsUrl());
 				final String tag = target + list.get(j).getTsUrl().substring(list.get(j).getTsUrl().lastIndexOf("/") + 1, list.get(j).getTsUrl().length());
 				http.configCurrentHttpCacheExpiry(0); // 请求缓存
 				httpHandler = http.download(list.get(j).getTsUrl(), tag, true, false, new RequestCallBack<File>() {
@@ -102,7 +103,6 @@ public class DownloadService extends Service {
 							Message msg = obtainMessage();
 							msg.what = DOWNLOADCODE;
 							handler.sendMessage(msg);
-							
 						} else {
 							downloadError(url);// 下载错误
 							nextDownload(url);
@@ -110,31 +110,45 @@ public class DownloadService extends Service {
 					}
 
 					public void onLoading(long total, long current, boolean isUploading) {
-						ConfigUtils.setLong(DownloadService.this, url + "download", ConfigUtils.getLong(DownloadService.this, url + "download") + ConfigUtils.getLong(DownloadService.this, url + "current"));
-						ConfigUtils.setLong(DownloadService.this, url + "current", current);
-						float downloadSize=0f;
-						float totalSize=0f;
-						for(int i=0;i<list.size();i++)
-						{
-							if(i<ConfigUtils.getInt(DownloadService.this, url + "count"))
-							{
-								downloadSize=downloadSize+list.get(i).getTime();
-							}else if(i==ConfigUtils.getInt(DownloadService.this, url + "count"))
-							{
-								downloadSize=downloadSize+current*list.get(i).getTime()/total;
+						//计算下载量算法
+						long download = current - ConfigUtils.getLong(DownloadService.this, url + "current" + ConfigUtils.getInt(DownloadService.this, url + "count"));
+						ConfigUtils.setLong(DownloadService.this, url + "current" + ConfigUtils.getInt(DownloadService.this, url + "count"), current);
+						ConfigUtils.setLong(DownloadService.this, url + "download", ConfigUtils.getLong(DownloadService.this, url + "download") + download);
+						// 算法
+						float downloadTime = 0f;
+						float totalTime = 0f;
+						for (int i = 0; i < list.size(); i++) {
+							if (i < ConfigUtils.getInt(DownloadService.this, url + "count")) {
+								downloadTime = downloadTime + list.get(i).getTime();
+							} else if (i == ConfigUtils.getInt(DownloadService.this, url + "count")) {
+								downloadTime = downloadTime + current * list.get(i).getTime() / total;
 							}
-							    totalSize=totalSize+list.get(i).getTime();
+							totalTime = totalTime + list.get(i).getTime();
 						}
+						ConfigUtils.setLong(DownloadService.this, url+"downloadTime", (long)downloadTime);
+						ConfigUtils.setLong(DownloadService.this, url+"totalTime", (long)totalTime);
 						Intent updateIntent = new Intent("com.innobuddy.download.observe");
 						updateIntent.putExtra(MyIntents.TYPE, MyIntents.Types.PROCESS);
 						updateIntent.putExtra(MyIntents.PROCESS_SPEED, "");
 						updateIntent.putExtra(MyIntents.PROCESS_PROGRESS, 0 + "");
 						updateIntent.putExtra(MyIntents.LOADING_SIZE, ConfigUtils.getLong(DownloadService.this, url + "download"));
-						updateIntent.putExtra(MyIntents.DOWNLOAD_SIZE, (long)downloadSize);
-						updateIntent.putExtra(MyIntents.TOTAL_SIZE, (long)totalSize);
+						updateIntent.putExtra(MyIntents.DOWNLOAD_TIME, (long) downloadTime);
+						updateIntent.putExtra(MyIntents.TOTAL_TIME, (long) totalTime);
 						updateIntent.putExtra(MyIntents.URL, url);
 						sendBroadcast(updateIntent);
-						
+						//读取文件夹大小
+						String path = DStorageUtils.FILE_ROOT + Md5Utils.encode(url) + "/";
+						File file = new File(path);
+						long totelSize;
+						try {
+							totelSize = getFileSize(file);
+							String str = DStorageUtils.size(totelSize);
+							System.out.println(str);
+						} catch (Exception e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						/*******************/
 					}
 
 					public void onCancelled() {
@@ -235,10 +249,18 @@ public class DownloadService extends Service {
 					ConfigUtils.setInt(DownloadService.this, url + "count", 0);
 					ConfigUtils.setString(DownloadService.this, url + "m3u8", "");
 					ConfigUtils.setString(DownloadService.this, url + "end", "");// 设置service
-					//if (httpHandler != null)
-						// httpHandler.cancel();
-						GlobalParams.list.remove(url);// 集合里面删除
+					// if (httpHandler != null)
+					// httpHandler.cancel();
+					GlobalParams.list.remove(url);// 集合里面删除
 					flag = false;
+					for (int i = 0; i < GlobalParams.list.size(); i++) {
+						if (!GlobalParams.list.get(i).equals(url)) {
+							if (!TextUtils.isEmpty(GlobalParams.list.get(i))) {// &&
+								mDownloadManager.addTask(GlobalParams.list.get(i));
+								flag = true;
+							}
+						}
+					}
 					break;
 				case MyIntents.Types.PAUSE:
 					url = intent.getStringExtra(MyIntents.URL);
@@ -251,7 +273,8 @@ public class DownloadService extends Service {
 						flag = false;
 						for (int i = 0; i < GlobalParams.list.size(); i++) {
 							if (!GlobalParams.list.get(i).equals(url)) {
-								if (!TextUtils.isEmpty(GlobalParams.list.get(i)) ) {//&& !mDownloadManager.hasTask(GlobalParams.list.get(i))
+								if (!TextUtils.isEmpty(GlobalParams.list.get(i))) {// &&
+																					// !mDownloadManager.hasTask(GlobalParams.list.get(i))
 									mDownloadManager.addTask(GlobalParams.list.get(i));
 									flag = true;
 								}
@@ -263,7 +286,7 @@ public class DownloadService extends Service {
 				case MyIntents.Types.STOP:
 					mDownloadManager.close();// 关闭服务下载
 					if (httpHandler != null)
-					 httpHandler.cancel();//
+						httpHandler.cancel();//
 					break;
 				default:
 					break;
@@ -289,17 +312,14 @@ public class DownloadService extends Service {
 
 		@Override
 		public void pauseTask(String url) throws RemoteException {
-
 		}
 
 		@Override
 		public void deleteTask(String url) throws RemoteException {
-
 		}
 
 		@Override
 		public void continueTask(String url) throws RemoteException {
-
 		}
 
 	}
@@ -320,25 +340,24 @@ public class DownloadService extends Service {
 			writer.flush();
 			writer.close();
 		} catch (Exception e) {
-			// TODO: handle exception
 			e.printStackTrace();//  
 		}
-
+		// 解析文件
 		InputStream in = new ByteArrayInputStream(result.getBytes());
 		ArrayList<TsFile> list_ts = new ArrayList<TsFile>();
 		try {
 			BufferedReader reader = new BufferedReader(new InputStreamReader(in));
 			String line = null;
-			TsFile tsFile=null;
+			TsFile tsFile = null;
 			while ((line = reader.readLine()) != null) {
-			//	tsFile=new TsFile();
-				
+				// tsFile=new TsFile();
+
 				if (line.startsWith("#")) {
 					// 这里是Metadata信息
 					if (line.startsWith("#EXTINF:")) {
-						tsFile=new TsFile();
-						tsFile.setTime(Float.valueOf(line.substring("#EXTINF:".length(), line.length()-1)));
-						System.out.println(Float.valueOf(line.substring("#EXTINF:".length(), line.length()-1)));
+						tsFile = new TsFile();
+						tsFile.setTime(Float.valueOf(line.substring("#EXTINF:".length(), line.length() - 1)));
+						System.out.println(Float.valueOf(line.substring("#EXTINF:".length(), line.length() - 1)));
 					}
 				} else if (line.length() > 0) {
 					// 这里是一个指向的视频流路径 ,可能是绝对地址，也可能是相对地址
@@ -355,11 +374,10 @@ public class DownloadService extends Service {
 						tsFile.setTsUrl(ts_url);
 						list_ts.add(tsFile);
 					}
-					
+
 				}
 				//
-				
-				
+
 			}
 			in.close();
 			return list_ts;
@@ -398,13 +416,12 @@ public class DownloadService extends Service {
 		nofityIntent.putExtra(MyIntents.TYPE, MyIntents.Types.COMPLETE);
 		nofityIntent.putExtra(MyIntents.URL, url);
 		sendBroadcast(nofityIntent);
-		//判断文件是够完整
+		// 判断文件是够完整
 		target = DStorageUtils.FILE_ROOT + Md5Utils.encode(url) + "/";
 		boolean isExist = false;
 		File file = new File(target);
 		File[] listFiles = file.listFiles();
 		for (int i = 0; i < listFiles.length; i++) {
-			System.out.println(listFiles[i].getName());
 			if (listFiles[i].getName().contains("dest0.ts")) {
 				isExist = true;
 			}
@@ -416,6 +433,7 @@ public class DownloadService extends Service {
 				@Override
 				public void onSuccess(ResponseInfo<File> response) {
 				}
+
 				@Override
 				public void onFailure(HttpException arg0, String arg1) {// xUtils
 				}
@@ -436,7 +454,6 @@ public class DownloadService extends Service {
 		errorIntent.putExtra(MyIntents.ERROR_CODE, "");
 		errorIntent.putExtra(MyIntents.URL, url);
 		sendBroadcast(errorIntent);
-
 	}
 
 	public void nextDownload(String url) {
@@ -447,11 +464,39 @@ public class DownloadService extends Service {
 		GlobalParams.list.remove(url);
 		if (GlobalParams.list.size() != 0) {
 			url = GlobalParams.list.get(0);
-			if (!TextUtils.isEmpty(url) ) {
+			if (!TextUtils.isEmpty(url)) {
 				mDownloadManager.addTask(url);
 				flag = true;
 			}
 		}
+	}
+
+	public long getFileSizes(File f) throws Exception {// 取得文件大小
+		long s = 0;
+		if (f.exists()) {
+			FileInputStream fis = new FileInputStream(f);
+			s = fis.available();
+			fis.close();// 关闭fis流
+		} else {
+			f.createNewFile();
+			System.out.println("文件不存在");
+		}
+		return s;
+	}
+
+	// 递归
+	public long getFileSize(File f) throws Exception// 取得文件夹大小
+	{
+		long size = 0;
+		File flist[] = f.listFiles();
+		for (int i = 0; i < flist.length; i++) {
+			if (flist[i].isDirectory()) {
+				size = size + getFileSize(flist[i]);
+			} else {
+				size = size + flist[i].length();
+			}
+		}
+		return size;
 	}
 
 }

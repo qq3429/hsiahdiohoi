@@ -14,6 +14,8 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.innobuddy.download.services.DownloadService;
+import com.innobuddy.download.utils.ConfigUtils;
 import com.innobuddy.download.utils.DStorageUtils;
 import com.innobuddy.download.utils.MyIntents;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -98,8 +100,8 @@ public class CourseCell3Adapter extends BaseAdapter {
 				return;
 			}
 
-			long downloadSize = 0;
-			long totalSize = 0;
+			long downloadTime = 0;
+			long totalTime = 0;
 			int status = 0;
 			long download = 0;
 			try {
@@ -109,8 +111,8 @@ public class CourseCell3Adapter extends BaseAdapter {
 					JSONObject jsonObject = downloadObject.getJSONObject(url);
 
 					if (jsonObject != null) {
-						downloadSize = jsonObject.getLong(MyIntents.DOWNLOAD_SIZE);
-						totalSize = jsonObject.getLong(MyIntents.TOTAL_SIZE);
+						downloadTime = jsonObject.getLong(MyIntents.DOWNLOAD_TIME);
+						totalTime = jsonObject.getLong(MyIntents.TOTAL_TIME);
 						status = jsonObject.getInt(MyIntents.DOWNLOAD_STATUS);
 						download = jsonObject.getLong(MyIntents.LOADING_SIZE);
 					}
@@ -121,14 +123,26 @@ public class CourseCell3Adapter extends BaseAdapter {
 				e.printStackTrace();
 			}
 
-			if (totalSize > 0) {
-				holder.progressTextView.setText((int) Math.ceil(100.0 * downloadSize / totalSize) + "%");
+			if (totalTime > 0) {
+				holder.progressTextView.setText((int) Math.ceil(100.0 * downloadTime / totalTime) + "%");
 				// holder.totalSizeTextView.setText(DStorageUtils.size(totalSize));
 				if (download != 0) {
 					holder.totalSizeTextView.setText("下载" + DStorageUtils.size(download));
 				}
 			} else {
+				downloadTime=ConfigUtils.getLong(_context, url+"downloadTime");
+				totalTime=ConfigUtils.getLong(_context, url+"totalTime");
+				download=ConfigUtils.getLong(_context, url + "download"); 
+				if (totalTime > 0) {
+					holder.progressTextView.setText((int) Math.ceil(100.0 * downloadTime / totalTime) + "%");
+					// holder.totalSizeTextView.setText(DStorageUtils.size(totalSize));
+					if (download != 0) {
+						holder.totalSizeTextView.setText("下载" + DStorageUtils.size(download));
+					}
+				}else{
 				holder.progressTextView.setText("0%");
+				}
+				
 			}
 			if (holder.progressTextView.getText().toString().trim().equals("0%")) {
 				holder.totalSizeTextView.setText("");

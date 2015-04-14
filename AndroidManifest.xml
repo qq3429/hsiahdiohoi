@@ -60,6 +60,11 @@
             android:label="@string/title_activity_recent_watch"
             android:screenOrientation="portrait" >
         </activity>
+        <activity
+            android:name=".LoginActivity"
+            android:label="@string/title_activity_login"
+            android:screenOrientation="portrait" >
+        </activity>
 
         <service android:name="com.innobuddy.download.services.TrafficCounterService" >
         </service>

@@ -1,6 +1,7 @@
 
 package com.innobuddy.download.services;
 
+
 import java.io.File;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
@@ -14,8 +15,8 @@ import android.os.Handler;
 import android.os.Message;
 import android.widget.Toast;
 
-import com.innobuddy.SmartStudy.GlobalParams;
 import com.innobuddy.SmartStudy.Md5Utils;
+import com.innobuddy.SmartStudy.global.GlobalParams;
 import com.innobuddy.download.utils.ConfigUtils;
 import com.innobuddy.download.utils.DStorageUtils;
 import com.innobuddy.download.utils.FileUtils;
@@ -343,8 +344,8 @@ public class DownloadManager extends Thread {
                 updateIntent.putExtra(MyIntents.PROCESS_SPEED, task.getDownloadSpeed() + "kbps | "
                         + task.getDownloadSize() + " / " + task.getTotalSize());
                 updateIntent.putExtra(MyIntents.PROCESS_PROGRESS, task.getDownloadPercent() + "");
-                updateIntent.putExtra(MyIntents.DOWNLOAD_SIZE, task.getDownloadSize());
-                updateIntent.putExtra(MyIntents.TOTAL_SIZE, task.getTotalSize());
+                updateIntent.putExtra(MyIntents.DOWNLOAD_TIME, task.getDownloadSize());
+                updateIntent.putExtra(MyIntents.TOTAL_TIME, task.getTotalSize());
                 updateIntent.putExtra(MyIntents.URL, task.getUrl());
                 
                 mContext.sendBroadcast(updateIntent);

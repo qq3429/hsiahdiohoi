@@ -15,6 +15,7 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -22,6 +23,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.innobuddy.SmartStudy.DB.DBHelper;
 import com.innobuddy.download.utils.DStorageUtils;
@@ -234,6 +236,74 @@ public class OfflineFragment extends Fragment {
 		MobclickAgent.onPageEnd("MainScreen"); // 统计界面
 	}
 
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		// Handle action bar item clicks here. The action bar will
+		// automatically handle clicks on the Home/Up button, so long
+		// as you specify a parent activity in AndroidManifest.xml.
+		int id = item.getItemId();
+		if (id == R.id.action_clear) {
 
+			new AlertDialog.Builder(getActivity()).setTitle("提示").setMessage("确定要清空最近观看吗？").setPositiveButton("确定", new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialoginterface, int i) {
+
+					DBHelper.getInstance(null).deleteRecentWatch();
+
+					if (adapter.cursor != null) {
+						adapter.cursor.close();
+						adapter.cursor = null;
+					}
+
+					adapter.cursor = DBHelper.getInstance(null).queryRecentWatch();
+					adapter.notifyDataSetChanged();
+
+					checkEmpty();
+
+				}
+			}).setNegativeButton("取消", new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialoginterface, int i) {
+
+				}
+			}).setNeutralButton("清空", new DialogInterface.OnClickListener() {
+
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					Toast.makeText(getActivity(), "清空", Toast.LENGTH_LONG).show();
+
+					//
+					adapter.cursor = DBHelper.getInstance(null).queryOffline();
+					adapter.notifyDataSetChanged();  
+
+					if (adapter.cursor != null) {
+						if (adapter.cursor.moveToFirst()) {
+							String url = adapter.cursor.getString(adapter.cursor.getColumnIndex("url"));
+							System.out.println(url);
+							File file = new File(DStorageUtils.FILE_ROOT + Md5Utils.encode(url));
+							FileUtils.deleteDir(file);
+							// adapter.cursor.moveToNext();
+						}
+					}
+					DBHelper.getInstance(null).deleteAlloffline();
+					adapter.cursor = DBHelper.getInstance(null).queryOffline(); 
+					adapter.notifyDataSetChanged();
+					checkEmpty();
+					if (adapter.cursor != null) {
+						adapter.cursor.close();  
+						adapter.cursor = null;
+					}
+
+				}
+			}).show();
+
+			return true;
+		} else if (id == R.id.homeAsUp) {
+			// finish();
+			return true;
+		} else if (id == R.id.home) {
+			// finish();
+			return true;
+		}
+		return super.onOptionsItemSelected(item);
+	}
 
 }

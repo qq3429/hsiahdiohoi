@@ -5,8 +5,8 @@ public class MyIntents {
 	public static final String TYPE = "type";
 	public static final String PROCESS_SPEED = "process_speed";
 	public static final String PROCESS_PROGRESS = "process_progress";
-	public static final String DOWNLOAD_SIZE = "download_size";
-	public static final String TOTAL_SIZE = "total_size";
+	public static final String DOWNLOAD_TIME = "download_time";
+	public static final String TOTAL_TIME = "total_time";
 	public static final String LOADING_SIZE="loading_size";
 	public static final String URL = "url";
 	public static final String ERROR_CODE = "error_code";

@@ -157,8 +157,8 @@ public class DownloadFragment extends Fragment {
                 if (jsonObject == null) {
                 	jsonObject = new JSONObject();
                 	try {
-                        jsonObject.put(MyIntents.DOWNLOAD_SIZE, 0L);
-                        jsonObject.put(MyIntents.TOTAL_SIZE, 0L);
+                        jsonObject.put(MyIntents.DOWNLOAD_TIME, 0L);
+                        jsonObject.put(MyIntents.TOTAL_TIME, 0L);
                         jsonObject.put(MyIntents.LOADING_SIZE, 0L);
                         jsonObject.put(MyIntents.DOWNLOAD_STATUS, MyIntents.Status.WAITING);
                         downloadObject.put(url, jsonObject);
@@ -315,8 +315,8 @@ public class DownloadFragment extends Fragment {
                     if (jsonObject == null) {
                     	jsonObject = new JSONObject();
                     	try {
-                            jsonObject.put(MyIntents.DOWNLOAD_SIZE, 0L);
-                            jsonObject.put(MyIntents.TOTAL_SIZE, 0L);
+                            jsonObject.put(MyIntents.DOWNLOAD_TIME, 0L);
+                            jsonObject.put(MyIntents.TOTAL_TIME, 0L);
                             jsonObject.put(MyIntents.LOADING_SIZE, 0L);
                             jsonObject.put(MyIntents.DOWNLOAD_STATUS, MyIntents.Status.WAITING);
     					} catch (JSONException e) {
@@ -383,16 +383,16 @@ public class DownloadFragment extends Fragment {
                         
                         break;
                     case MyIntents.Types.PROCESS:
-                        long downloadSize = intent.getLongExtra(MyIntents.DOWNLOAD_SIZE, 0L);
-                        long totalSize = intent.getLongExtra(MyIntents.TOTAL_SIZE, 0L);
+                        long downloadTime = intent.getLongExtra(MyIntents.DOWNLOAD_TIME, 0L);
+                        long totalTime = intent.getLongExtra(MyIntents.TOTAL_TIME, 0L);
                 		long download=intent.getLongExtra(MyIntents.LOADING_SIZE, 0L);
                         try {
                     		int status = jsonObject.getInt(MyIntents.DOWNLOAD_STATUS);
                     		if (status != MyIntents.Status.PAUSE) {
                                 jsonObject.put(MyIntents.DOWNLOAD_STATUS, MyIntents.Status.DOWNLOADING);
 							}
-                            jsonObject.put(MyIntents.DOWNLOAD_SIZE, downloadSize);
-                            jsonObject.put(MyIntents.TOTAL_SIZE, totalSize);   
+                            jsonObject.put(MyIntents.DOWNLOAD_TIME, downloadTime);
+                            jsonObject.put(MyIntents.TOTAL_TIME, totalTime);   
                             jsonObject.put(MyIntents.LOADING_SIZE, download);
 						} catch (JSONException e) {
 							

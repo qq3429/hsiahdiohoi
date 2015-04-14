@@ -536,6 +536,7 @@ public class VideoPlayerActivity extends Activity implements OnClickListener {
 		videoPath = DStorageUtils.FILE_ROOT + Md5Utils.encode(videoUrl) + "/" + NetworkUtils.getFileNameFromUrl(videoUrl);
 		File file = new File(videoPath);
 		// System.out.println(file.getAbsolutePath());
+		//m3u8存在播放本地文件 并且已经缓存完成
 		if (file.exists() && ConfigUtils.getString(VideoPlayerActivity.this, videoUrl + "end").equals("Y")) {
 			mVideo.setVideoPath(videoPath);
 		} else {

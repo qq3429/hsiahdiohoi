@@ -1,6 +1,7 @@
 
 package com.innobuddy.download.services;
 
+
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -19,7 +20,7 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import com.innobuddy.SmartStudy.GlobalParams;
+import com.innobuddy.SmartStudy.global.GlobalParams;
 import com.innobuddy.download.error.FileAlreadyExistException;
 import com.innobuddy.download.error.NoMemoryException;
 import com.innobuddy.download.http.AndroidHttpClient;
@@ -35,7 +36,6 @@ public class DownloadTask extends AsyncTask<Void, Integer, Long> {
     private static final boolean DEBUG = true;
     public static final String TEMP_SUFFIX = ".download";
 
-    private URL URL;
     private File file;
     private File tempFile;
     private String url;
@@ -81,7 +81,6 @@ public class DownloadTask extends AsyncTask<Void, Integer, Long> {
 
         super();
         this.url = url;
-        this.URL = new URL(url);
         this.listener = listener;
         //String path2=url.replace("ts", "m3u8");
        // System.out.println(path2);

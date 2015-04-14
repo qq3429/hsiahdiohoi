@@ -341,5 +341,9 @@ public class DBHelper extends SQLiteOpenHelper {
 		String[] whereValue = {Integer.toString(id)};
 		db.delete(TABLE_OFFLINE, where, whereValue);
 	}
+	public void deleteAlloffline(){
+		SQLiteDatabase db=getWritableDatabase();
+		db.delete(TABLE_OFFLINE, null, null);
+	}
 	
 }
