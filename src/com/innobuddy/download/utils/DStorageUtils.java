@@ -1,4 +1,3 @@
-
 package com.innobuddy.download.utils;
 
 import java.io.File;
@@ -20,120 +19,119 @@ import android.util.Log;
 
 public class DStorageUtils {
 
-    private static final String SDCARD_ROOT = Environment.getExternalStorageDirectory()
-            .getAbsolutePath() + "/";
-    public static final String FILE_ROOT = SDCARD_ROOT + "SmartStudy/";
+	private static final String SDCARD_ROOT = Environment.getExternalStorageDirectory().getAbsolutePath() + "/";
+	public static final String FILE_ROOT = SDCARD_ROOT + "SmartStudy/";
 
-    private static final long LOW_STORAGE_THRESHOLD = 1024 * 1024 * 10;
+	private static final long LOW_STORAGE_THRESHOLD = 1024 * 1024 * 10;
 
-    public static boolean isSdCardWrittenable() {
+	public static boolean isSdCardWrittenable() {
 
-        if (android.os.Environment.getExternalStorageState().equals(
-                android.os.Environment.MEDIA_MOUNTED)) {
-            return true;
-        }
-        return false;
-    }
+		if (android.os.Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED)) {
+			return true;
+		}
+		return false;
+	}
 
-    @SuppressLint("NewApi")
-    @SuppressWarnings("deprecation")
+	@SuppressLint("NewApi")
+	@SuppressWarnings("deprecation")
 	public static long getAvailableStorage() {
 
-        String storageDirectory = null;
-        storageDirectory = Environment.getExternalStorageDirectory().toString();
+		String storageDirectory = null;
+		storageDirectory = Environment.getExternalStorageDirectory().toString();
 
-        try {
-            StatFs stat = new StatFs(storageDirectory);
+		try {
+			StatFs stat = new StatFs(storageDirectory);
 
-            if (Build.VERSION.SDK_INT >= 18) {
-    			return stat.getAvailableBytes();
-    		} else {
-                return ((long) stat.getAvailableBlocks() * (long) stat.getBlockSize());
-    		}
-            
-        } catch (RuntimeException ex) {
-            return 0;
-        }
-        
-    }
+			if (Build.VERSION.SDK_INT >= 18) {
+				return stat.getAvailableBytes();
+			} else {
+				return ((long) stat.getAvailableBlocks() * (long) stat.getBlockSize());
+			}
 
-    public static boolean checkAvailableStorage() {
+		} catch (RuntimeException ex) {
+			return 0;
+		}
 
-        if (getAvailableStorage() < LOW_STORAGE_THRESHOLD) {
-            return false;
-        }
+	}
 
-        return true;
-    }
+	public static boolean checkAvailableStorage() {
 
-    public static boolean isSDCardPresent() {
+		if (getAvailableStorage() < LOW_STORAGE_THRESHOLD) {
+			return false;
+		}
 
-        return Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED);
-    }
+		return true;
+	}
 
-    public static void mkdir() throws IOException {
+	public static boolean isSDCardPresent() {
 
-        File file = new File(FILE_ROOT);
-        if (!file.exists() || !file.isDirectory())
-            file.mkdir();
-    }
+		return Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED);
+	}
 
-    public static Bitmap getLoacalBitmap(String url) {
+	public static void mkdir() throws IOException {
 
-        try {
-            FileInputStream fis = new FileInputStream(url);
-            return BitmapFactory.decodeStream(fis); // /把流转化为Bitmap图片
+		File file = new File(FILE_ROOT);
+		if (!file.exists() || !file.isDirectory())
+			file.mkdir();
+	}
 
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
+	public static Bitmap getLoacalBitmap(String url) {
 
-    public static String size(long size) {
+		try {
+			FileInputStream fis = new FileInputStream(url);
+			return BitmapFactory.decodeStream(fis); // /把流转化为Bitmap图片
 
-        if (size / (1024 * 1024) > 0) {
-            float tmpSize = (float) (size) / (float) (1024 * 1024);
-            DecimalFormat df = new DecimalFormat("#.##");
-            return "" + df.format(tmpSize) + "MB";
-        } else if (size / 1024 > 0) {
-            return "" + (size / (1024)) + "KB";
-        } else
-            return "" + size + "B";
-    }
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
 
-    public static void installAPK(Context context, final String url) {
+	public static String size(long size) {
+		if (size > 0) {
+			if (size / (1024 * 1024) > 0) {
+				float tmpSize = (float) (size) / (float) (1024 * 1024);
+				DecimalFormat df = new DecimalFormat("#.##");
+				return "" + df.format(tmpSize) + "MB";
+			} else if (size / 1024 > 0) {
+				return "" + (size / (1024)) + "KB";
+			} else
+				return "" + size + "B";
+		} else {
+			return "";
+		}
+	}
 
-        Intent intent = new Intent(Intent.ACTION_VIEW);
-        String fileName = FILE_ROOT + NetworkUtils.getFileNameFromUrl(url);
-        intent.setDataAndType(Uri.fromFile(new File(fileName)),
-                "application/vnd.android.package-archive");
-        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-        intent.setClassName("com.android.packageinstaller",
-                "com.android.packageinstaller.PackageInstallerActivity");
-        context.startActivity(intent);
-    }
+	public static void installAPK(Context context, final String url) {
 
-    public static boolean delete(File path) {
+		Intent intent = new Intent(Intent.ACTION_VIEW);
+		String fileName = FILE_ROOT + NetworkUtils.getFileNameFromUrl(url);
+		intent.setDataAndType(Uri.fromFile(new File(fileName)), "application/vnd.android.package-archive");
+		intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+		intent.setClassName("com.android.packageinstaller", "com.android.packageinstaller.PackageInstallerActivity");
+		context.startActivity(intent);
+	}
 
-        boolean result = true;
-        if (path.exists()) {
-            if (path.isDirectory()) {
-                for (File child : path.listFiles()) {
-                    result &= delete(child);
-                }
-                result &= path.delete(); // Delete empty directory.
-            }
-            if (path.isFile()) {
-                result &= path.delete();
-            }
-            if (!result) {
-                Log.e(null, "Delete failed;");
-            }
-            return result;
-        } else {
-            Log.e(null, "File does not exist.");
-            return false;
-        }
-    }
+	public static boolean delete(File path) {
+
+		boolean result = true;
+		if (path.exists()) {
+			if (path.isDirectory()) {
+				for (File child : path.listFiles()) {
+					result &= delete(child);
+				}
+				result &= path.delete(); // Delete empty directory.
+			}
+			if (path.isFile()) {
+				result &= path.delete();
+			}
+			if (!result) {
+				Log.e(null, "Delete failed;");
+			}
+			return result;
+		} else {
+			Log.e(null, "File does not exist.");
+			return false;
+		}
+	}
 }

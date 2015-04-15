@@ -1,6 +1,7 @@
 package com.innobuddy.download.utils;
 
 import java.io.File;
+import java.io.FileInputStream;
 
 public class FileUtils {
 	 /**
@@ -24,5 +25,35 @@ public class FileUtils {
         // 目录此时为空，可以删除
         return dir.delete();
     }
+    
+    
+
+	public static long getFileSizes(File f) throws Exception {// 取得文件大小
+		long s = 0;
+		if (f.exists()) {
+			FileInputStream fis = new FileInputStream(f);
+			s = fis.available();
+			fis.close();// 关闭fis流
+		} else {
+			f.createNewFile();
+			System.out.println("文件不存在");
+		}
+		return s;
+	}
+
+	// 递归
+	public static long getFileSize(File f) throws Exception// 取得文件夹大小
+	{
+		long size = 0;
+		File flist[] = f.listFiles();
+		for (int i = 0; i < flist.length; i++) {
+			if (flist[i].isDirectory()) {
+				size = size + getFileSize(flist[i]);
+			} else {
+				size = size + flist[i].length();
+			}
+		}
+		return size;
+	}
 
 }

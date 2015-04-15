@@ -272,7 +272,7 @@ public class OfflineFragment extends Fragment {
 
 					//
 					adapter.cursor = DBHelper.getInstance(null).queryOffline();
-					adapter.notifyDataSetChanged();  
+					adapter.notifyDataSetChanged();
 
 					if (adapter.cursor != null) {
 						if (adapter.cursor.moveToFirst()) {
@@ -280,15 +280,15 @@ public class OfflineFragment extends Fragment {
 							System.out.println(url);
 							File file = new File(DStorageUtils.FILE_ROOT + Md5Utils.encode(url));
 							FileUtils.deleteDir(file);
-							// adapter.cursor.moveToNext();
+
 						}
 					}
 					DBHelper.getInstance(null).deleteAlloffline();
-					adapter.cursor = DBHelper.getInstance(null).queryOffline(); 
+					adapter.cursor = DBHelper.getInstance(null).queryOffline();
 					adapter.notifyDataSetChanged();
 					checkEmpty();
 					if (adapter.cursor != null) {
-						adapter.cursor.close();  
+						adapter.cursor.close();
 						adapter.cursor = null;
 					}
 

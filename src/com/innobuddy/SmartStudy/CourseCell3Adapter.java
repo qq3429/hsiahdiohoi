@@ -1,5 +1,6 @@
 package com.innobuddy.SmartStudy;
 
+import java.io.File;
 import java.util.HashMap;
 
 import org.json.JSONException;
@@ -17,6 +18,7 @@ import android.widget.TextView;
 import com.innobuddy.download.services.DownloadService;
 import com.innobuddy.download.utils.ConfigUtils;
 import com.innobuddy.download.utils.DStorageUtils;
+import com.innobuddy.download.utils.FileUtils;
 import com.innobuddy.download.utils.MyIntents;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
@@ -132,12 +134,23 @@ public class CourseCell3Adapter extends BaseAdapter {
 			} else {
 				downloadTime=ConfigUtils.getLong(_context, url+"downloadTime");
 				totalTime=ConfigUtils.getLong(_context, url+"totalTime");
-				download=ConfigUtils.getLong(_context, url + "download"); 
+				//download=ConfigUtils.getLong(_context, url + "download"); 
+				String path = DStorageUtils.FILE_ROOT + Md5Utils.encode(url) + "/";
+				File file = new File(path);
+				long downloadSize=0L;
+				try {
+					downloadSize = FileUtils.getFileSize(file);
+					//String str = DStorageUtils.size(totelSize);
+					//System.out.println(str);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				if (totalTime > 0) {
 					holder.progressTextView.setText((int) Math.ceil(100.0 * downloadTime / totalTime) + "%");
 					// holder.totalSizeTextView.setText(DStorageUtils.size(totalSize));
 					if (download != 0) {
-						holder.totalSizeTextView.setText("下载" + DStorageUtils.size(download));
+						holder.totalSizeTextView.setText("下载" + DStorageUtils.size(downloadSize));
 					}
 				}else{
 				holder.progressTextView.setText("0%");

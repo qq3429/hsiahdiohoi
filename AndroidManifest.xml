@@ -65,6 +65,11 @@
             android:label="@string/title_activity_login"
             android:screenOrientation="portrait" >
         </activity>
+        <activity
+            android:name=".RegisterActivity"
+            android:label="@string/title_activity_register"
+            android:screenOrientation="portrait" >
+        </activity>
 
         <service android:name="com.innobuddy.download.services.TrafficCounterService" >
         </service>
