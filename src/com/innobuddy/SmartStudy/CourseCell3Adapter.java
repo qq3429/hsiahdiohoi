@@ -15,7 +15,6 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.innobuddy.download.services.DownloadService;
 import com.innobuddy.download.utils.ConfigUtils;
 import com.innobuddy.download.utils.DStorageUtils;
 import com.innobuddy.download.utils.FileUtils;

@@ -150,6 +150,35 @@ public class OfflineFragment extends Fragment {
 					public void onClick(DialogInterface dialoginterface, int i) {
 
 					}
+				}).setNeutralButton("清空", new DialogInterface.OnClickListener() {
+
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						Toast.makeText(getActivity(), "清空", Toast.LENGTH_LONG).show();
+
+						//
+						adapter.cursor = DBHelper.getInstance(null).queryOffline();
+						adapter.notifyDataSetChanged();
+
+						if (adapter.cursor != null) {
+							if (adapter.cursor.moveToFirst()) {
+								String url = adapter.cursor.getString(adapter.cursor.getColumnIndex("url"));
+								System.out.println(url);
+								File file = new File(DStorageUtils.FILE_ROOT + Md5Utils.encode(url));
+								FileUtils.deleteDir(file);
+
+							}
+						}
+						DBHelper.getInstance(null).deleteAlloffline();
+						adapter.cursor = DBHelper.getInstance(null).queryOffline();
+						adapter.notifyDataSetChanged();
+						checkEmpty();
+						if (adapter.cursor != null) {
+							adapter.cursor.close();
+							adapter.cursor = null;
+						}
+
+					}
 				}).show();
 
 				return true;
@@ -262,35 +291,6 @@ public class OfflineFragment extends Fragment {
 				}
 			}).setNegativeButton("取消", new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface dialoginterface, int i) {
-
-				}
-			}).setNeutralButton("清空", new DialogInterface.OnClickListener() {
-
-				@Override
-				public void onClick(DialogInterface dialog, int which) {
-					Toast.makeText(getActivity(), "清空", Toast.LENGTH_LONG).show();
-
-					//
-					adapter.cursor = DBHelper.getInstance(null).queryOffline();
-					adapter.notifyDataSetChanged();
-
-					if (adapter.cursor != null) {
-						if (adapter.cursor.moveToFirst()) {
-							String url = adapter.cursor.getString(adapter.cursor.getColumnIndex("url"));
-							System.out.println(url);
-							File file = new File(DStorageUtils.FILE_ROOT + Md5Utils.encode(url));
-							FileUtils.deleteDir(file);
-
-						}
-					}
-					DBHelper.getInstance(null).deleteAlloffline();
-					adapter.cursor = DBHelper.getInstance(null).queryOffline();
-					adapter.notifyDataSetChanged();
-					checkEmpty();
-					if (adapter.cursor != null) {
-						adapter.cursor.close();
-						adapter.cursor = null;
-					}
 
 				}
 			}).show();

@@ -4,6 +4,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -23,7 +27,7 @@ public class Fragment2 extends Fragment {
 
 	private String[] listTitle = { "离线观看", "我的收藏", "近期观看", "登陆注册" };
 
-	private int[] listImage = { R.drawable.mine_offline, R.drawable.mine_connect, R.drawable.mine_recent_watch, R.drawable.ic_launcher };
+	private int[] listImage = { R.drawable.mine_offline, R.drawable.mine_connect, R.drawable.mine_recent_watch, R.drawable.mine_recent_watch };
 
 	SimpleAdapter adapter = null;
 
@@ -79,12 +83,46 @@ public class Fragment2 extends Fragment {
 
 				} else if (position == 3) {
 					if (GlobalParams.isLogin) {
-						Toast.makeText(getActivity(), "已经登陆", Toast.LENGTH_LONG).show();
+						// Toast.makeText(getActivity(), "已经登陆",
+						// Toast.LENGTH_LONG).show();
+						// 退出登陆实现 调用接口
+						AlertDialog.Builder dialog = new Builder(getActivity());
+						dialog.setTitle("你确定要退出登录吗");
+						dialog.setNegativeButton("确定", new OnClickListener() {
+							
+							@Override
+							public void onClick(DialogInterface dialog, int which) {
+								GlobalParams.isLogin = false;
+								listTitle[3] = "登陆注册";
+								arrayList.clear();
+								if (arrayList.size() == 0) {
+									for (int i = 0; i < listTitle.length; i++) {
+										Map<String, Object> item = new HashMap<String, Object>();
+										item.put("image", listImage[i]);
+										item.put("title", listTitle[i]);
+										arrayList.add(item);
+									}
+								}
+								
+								adapter.notifyDataSetChanged();
+								
+							}
+						});
+						dialog.setPositiveButton("取消", new OnClickListener() {
+							
+							@Override
+							public void onClick(DialogInterface dialog, int which) {
+								
+							}
+						});
+						dialog.show();
+						
 					} else {
 						Toast.makeText(getActivity(), "登陆注册", Toast.LENGTH_LONG).show();
 						Intent intent = new Intent();
 						intent.setClass(getActivity(), LoginActivity.class);
 						startActivity(intent);
+
 					}
 
 				}
@@ -96,12 +134,21 @@ public class Fragment2 extends Fragment {
 
 	public void onResume() {
 		super.onResume();
-		MobclickAgent.onPageStart("MainScreen"); // 统计页面
-	}
+		if (GlobalParams.isLogin) {
+			listTitle[3] = "退出登录";
+			arrayList.clear();
+			if (arrayList.size() == 0) {
+				for (int i = 0; i < listTitle.length; i++) {
+					Map<String, Object> item = new HashMap<String, Object>();
+					item.put("image", listImage[i]);
+					item.put("title", listTitle[i]);
+					arrayList.add(item);
+				}
+			}
+		}
 
-	public void onPause() {
-		super.onPause();
-		MobclickAgent.onPageEnd("MainScreen");
+		adapter.notifyDataSetChanged();
+		MobclickAgent.onPageStart("MainScreen"); // 统计页面
 	}
 
 }

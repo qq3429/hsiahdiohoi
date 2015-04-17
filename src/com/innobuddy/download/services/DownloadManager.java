@@ -21,7 +21,6 @@ import com.innobuddy.download.utils.ConfigUtils;
 import com.innobuddy.download.utils.DStorageUtils;
 import com.innobuddy.download.utils.FileUtils;
 import com.innobuddy.download.utils.MyIntents;
-import com.innobuddy.download.utils.NetworkUtils;
 
 public class DownloadManager extends Thread {
 
