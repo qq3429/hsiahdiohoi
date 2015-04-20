@@ -1,4 +1,4 @@
-package com.innobuddy.SmartStudy;
+package com.innobuddy.SmartStudy.activity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -16,6 +16,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.innobuddy.SmartStudy.R;
+import com.innobuddy.SmartStudy.R.id;
+import com.innobuddy.SmartStudy.R.layout;
 import com.lidroid.xutils.exception.HttpException;
 import com.lidroid.xutils.http.RequestParams;
 import com.lidroid.xutils.http.ResponseInfo;
@@ -70,7 +73,6 @@ public class RegisterPswActivity extends BaseActivity {
 		super.onCreate(savedInstanceState);
 		mobileNumber = getIntent().getStringExtra("mobileNumber");
 		code = getIntent().getStringExtra("code");
-
 		setContentView(R.layout.activity_register_psw);
 		mEtRegisterPsw = (EditText) findViewById(R.id.et_register_psw);
 		mEtConfirmPsw = (EditText) findViewById(R.id.et_confirm_psw);
@@ -137,15 +139,16 @@ public class RegisterPswActivity extends BaseActivity {
 
 				@Override
 				public void onFailure(HttpException err, String arg) {
-
+					//
+					Toast.makeText(RegisterPswActivity.this,"网络连接失败", Toast.LENGTH_LONG).show();
 				}
 
 				@Override
 				public void onSuccess(ResponseInfo<String> responseInfo) {
 					// 关闭当前界面
 
-					System.out.println(responseInfo.getFirstHeader("Content-Type").getValue());
-					System.out.println(responseInfo.result);// text/html;
+					//System.out.println(responseInfo.getFirstHeader("Content-Type").getValue());
+					//System.out.println(responseInfo.result);// text/html;
 															// charset=utf-8
 					if (responseInfo.getFirstHeader("Content-Type").getValue().equals("application/json; charset=utf-8")) {
 						Message msg = Message.obtain();

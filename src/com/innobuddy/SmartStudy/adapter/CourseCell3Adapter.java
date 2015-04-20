@@ -1,4 +1,4 @@
-package com.innobuddy.SmartStudy;
+package com.innobuddy.SmartStudy.adapter;
 
 import java.io.File;
 import java.util.HashMap;
@@ -15,6 +15,12 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.innobuddy.SmartStudy.R;
+import com.innobuddy.SmartStudy.R.drawable;
+import com.innobuddy.SmartStudy.R.id;
+import com.innobuddy.SmartStudy.R.layout;
+import com.innobuddy.SmartStudy.utils.Md5Utils;
+import com.innobuddy.SmartStudy.utils.Utilitys;
 import com.innobuddy.download.utils.ConfigUtils;
 import com.innobuddy.download.utils.DStorageUtils;
 import com.innobuddy.download.utils.FileUtils;
@@ -25,7 +31,7 @@ public class CourseCell3Adapter extends BaseAdapter {
 
 	LayoutInflater _inflater;
 	Context _context;
-	Cursor cursor;
+	public Cursor cursor;
 	JSONObject downloadObject;
 	HashMap<String, CourseCell3Holder> hashMap;
 

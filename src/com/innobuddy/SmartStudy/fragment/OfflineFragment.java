@@ -1,4 +1,4 @@
-package com.innobuddy.SmartStudy;
+package com.innobuddy.SmartStudy.fragment;
 
 import java.io.File;
 
@@ -25,7 +25,13 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.innobuddy.SmartStudy.R;
 import com.innobuddy.SmartStudy.DB.DBHelper;
+import com.innobuddy.SmartStudy.R.id;
+import com.innobuddy.SmartStudy.R.layout;
+import com.innobuddy.SmartStudy.adapter.CourseCell2Adapter;
+import com.innobuddy.SmartStudy.utils.Md5Utils;
+import com.innobuddy.SmartStudy.utils.Utilitys;
 import com.innobuddy.download.utils.DStorageUtils;
 import com.innobuddy.download.utils.FileUtils;
 import com.umeng.analytics.MobclickAgent;

@@ -15,8 +15,8 @@ import android.os.Handler;
 import android.os.Message;
 import android.widget.Toast;
 
-import com.innobuddy.SmartStudy.Md5Utils;
 import com.innobuddy.SmartStudy.global.GlobalParams;
+import com.innobuddy.SmartStudy.utils.Md5Utils;
 import com.innobuddy.download.utils.ConfigUtils;
 import com.innobuddy.download.utils.DStorageUtils;
 import com.innobuddy.download.utils.FileUtils;

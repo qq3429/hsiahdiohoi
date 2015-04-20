@@ -19,8 +19,8 @@ import android.os.RemoteException;
 import android.text.TextUtils;
 import android.widget.Toast;
 
-import com.innobuddy.SmartStudy.Md5Utils;
 import com.innobuddy.SmartStudy.global.GlobalParams;
+import com.innobuddy.SmartStudy.utils.Md5Utils;
 import com.innobuddy.download.domain.TsFile;
 import com.innobuddy.download.utils.ConfigUtils;
 import com.innobuddy.download.utils.DStorageUtils;

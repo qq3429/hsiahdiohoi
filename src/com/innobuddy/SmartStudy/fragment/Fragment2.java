@@ -1,4 +1,4 @@
-package com.innobuddy.SmartStudy;
+package com.innobuddy.SmartStudy.fragment;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -20,6 +20,13 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
+import com.innobuddy.SmartStudy.R;
+import com.innobuddy.SmartStudy.R.drawable;
+import com.innobuddy.SmartStudy.R.id;
+import com.innobuddy.SmartStudy.R.layout;
+import com.innobuddy.SmartStudy.activity.CollectActivity;
+import com.innobuddy.SmartStudy.activity.LoginActivity;
+import com.innobuddy.SmartStudy.activity.RecentWatchActivity;
 import com.innobuddy.SmartStudy.global.GlobalParams;
 import com.umeng.analytics.MobclickAgent;
 
@@ -87,9 +94,10 @@ public class Fragment2 extends Fragment {
 						// Toast.LENGTH_LONG).show();
 						// 退出登陆实现 调用接口
 						AlertDialog.Builder dialog = new Builder(getActivity());
-						dialog.setTitle("你确定要退出登录吗");
-						dialog.setNegativeButton("确定", new OnClickListener() {
-							
+						dialog.setTitle("提示");
+						dialog.setMessage("你确定要退出登陆吗");
+						dialog.setPositiveButton("确定", new OnClickListener() {
+
 							@Override
 							public void onClick(DialogInterface dialog, int which) {
 								GlobalParams.isLogin = false;
@@ -103,22 +111,21 @@ public class Fragment2 extends Fragment {
 										arrayList.add(item);
 									}
 								}
-								
+
 								adapter.notifyDataSetChanged();
-								
+
 							}
 						});
-						dialog.setPositiveButton("取消", new OnClickListener() {
-							
+						dialog.setNegativeButton("取消", new OnClickListener() {
+
 							@Override
 							public void onClick(DialogInterface dialog, int which) {
 								
 							}
 						});
 						dialog.show();
-						
+
 					} else {
-						Toast.makeText(getActivity(), "登陆注册", Toast.LENGTH_LONG).show();
 						Intent intent = new Intent();
 						intent.setClass(getActivity(), LoginActivity.class);
 						startActivity(intent);

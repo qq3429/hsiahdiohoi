@@ -1,4 +1,4 @@
-package com.innobuddy.SmartStudy;
+package com.innobuddy.SmartStudy.fragment;
 
 import java.io.File;
 import java.io.IOException;
@@ -17,7 +17,10 @@ import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.TabHost.TabSpec;
 import android.widget.Toast;
 
+import com.innobuddy.SmartStudy.R;
 import com.innobuddy.SmartStudy.DB.DBHelper;
+import com.innobuddy.SmartStudy.R.id;
+import com.innobuddy.SmartStudy.R.layout;
 import com.innobuddy.download.utils.DStorageUtils;
 import com.innobuddy.download.utils.MyIntents;
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiscCache;
@@ -225,7 +228,7 @@ public class MainActivity extends FragmentActivity {
 			// sendBroadcast(nofityIntent);
 
 			finish();
-			// System.exit(0);
+			 System.exit(0);
 		}
 	}
 	

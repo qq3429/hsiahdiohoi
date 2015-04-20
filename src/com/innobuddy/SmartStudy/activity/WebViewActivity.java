@@ -1,4 +1,8 @@
-package com.innobuddy.SmartStudy;
+package com.innobuddy.SmartStudy.activity;
+
+import com.innobuddy.SmartStudy.R;
+import com.innobuddy.SmartStudy.R.id;
+import com.innobuddy.SmartStudy.R.layout;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;

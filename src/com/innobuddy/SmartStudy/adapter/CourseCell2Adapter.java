@@ -1,4 +1,4 @@
-package com.innobuddy.SmartStudy;
+package com.innobuddy.SmartStudy.adapter;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -13,14 +13,18 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.innobuddy.SmartStudy.R;
 import com.innobuddy.SmartStudy.DB.DBHelper;
+import com.innobuddy.SmartStudy.R.id;
+import com.innobuddy.SmartStudy.R.layout;
+import com.innobuddy.SmartStudy.utils.Utilitys;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 public class CourseCell2Adapter extends BaseAdapter {
 
 	LayoutInflater _inflater;
 	Context _context;
-	Cursor cursor;
+	public Cursor cursor;
 	
 	public CourseCell2Adapter(Context context, Cursor c) {
 		_inflater = LayoutInflater.from(context);

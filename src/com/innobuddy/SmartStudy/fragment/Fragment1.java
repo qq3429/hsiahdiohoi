@@ -1,4 +1,4 @@
-package com.innobuddy.SmartStudy;
+package com.innobuddy.SmartStudy.fragment;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -24,6 +24,13 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ListView;
 
+import com.innobuddy.SmartStudy.R;
+import com.innobuddy.SmartStudy.R.drawable;
+import com.innobuddy.SmartStudy.R.id;
+import com.innobuddy.SmartStudy.R.layout;
+import com.innobuddy.SmartStudy.adapter.CourseCellAdapter;
+import com.innobuddy.SmartStudy.adapter.SeparatedListAdapter;
+import com.innobuddy.SmartStudy.utils.Utilitys;
 import com.innobuddy.download.utils.ConfigUtils;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;

@@ -1,6 +1,10 @@
-package com.innobuddy.SmartStudy;
+package com.innobuddy.SmartStudy.view;
 
 import java.util.ArrayList;
+
+import com.innobuddy.SmartStudy.R;
+import com.innobuddy.SmartStudy.R.color;
+import com.innobuddy.SmartStudy.R.dimen;
 
 import android.app.Activity;
 import android.content.Context;

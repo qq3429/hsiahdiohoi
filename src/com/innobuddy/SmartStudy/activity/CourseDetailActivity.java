@@ -1,4 +1,4 @@
-package com.innobuddy.SmartStudy;
+package com.innobuddy.SmartStudy.activity;
 
 
 
@@ -16,7 +16,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
-import com.innobuddy.SmartStudy.TabFragmentIndicator.OnTabClickListener;
+import com.innobuddy.SmartStudy.R;
+import com.innobuddy.SmartStudy.R.id;
+import com.innobuddy.SmartStudy.R.layout;
+import com.innobuddy.SmartStudy.R.menu;
+import com.innobuddy.SmartStudy.fragment.CourseDetailFragment;
+import com.innobuddy.SmartStudy.view.TabFragmentIndicator;
+import com.innobuddy.SmartStudy.view.TabFragmentIndicator.OnTabClickListener;
 
 public class CourseDetailActivity extends FragmentActivity implements OnTabClickListener {
 

@@ -1,4 +1,4 @@
-package com.innobuddy.SmartStudy;
+package com.innobuddy.SmartStudy.utils;
 
 import java.io.File;
 
@@ -12,7 +12,9 @@ import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
+import com.innobuddy.SmartStudy.R;
 import com.innobuddy.SmartStudy.DB.DBHelper;
+import com.innobuddy.SmartStudy.R.drawable;
 import com.innobuddy.SmartStudy.Video.VideoPlayerActivity;
 import com.innobuddy.download.utils.DStorageUtils;
 import com.innobuddy.download.utils.NetworkUtils;

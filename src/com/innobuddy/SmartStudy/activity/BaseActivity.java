@@ -1,4 +1,4 @@
-package com.innobuddy.SmartStudy;
+package com.innobuddy.SmartStudy.activity;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -35,19 +35,7 @@ public class BaseActivity extends Activity implements OnClickListener {
 
 	}
 
-//	/**
-//	 * 友盟统计
-//	 */
-//	public void onResume() {
-//		super.onResume();
-//		MobclickAgent.onPageStart("MainScreen"); // 统计页面
-//	}
-//
-//	public void onPause() {
-//		super.onPause();
-//		MobclickAgent.onPageEnd("MainScreen");
-//	
-//	}
+
 	@Override
 	protected void onPause() {
 		// TODO Auto-generated method stub

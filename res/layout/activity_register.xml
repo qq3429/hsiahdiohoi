@@ -71,7 +71,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dip"
             android:layout_weight="1"
-            android:background="@drawable/btn_bg"
+            android:background="@drawable/selector_btn_bg"
             android:text="获取验证码"
             android:textColor="#ffffff" />
     </LinearLayout>
@@ -81,7 +81,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dip"
-        android:background="@drawable/btn_bg"
+      android:background="@drawable/selector_btn_bg"
         android:text="下一步"
         android:textColor="#ffffff" />
 

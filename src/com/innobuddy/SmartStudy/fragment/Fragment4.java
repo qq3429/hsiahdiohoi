@@ -1,4 +1,4 @@
-package com.innobuddy.SmartStudy;
+package com.innobuddy.SmartStudy.fragment;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -9,6 +9,10 @@ import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.Switch;
 
+import com.innobuddy.SmartStudy.R;
+import com.innobuddy.SmartStudy.R.id;
+import com.innobuddy.SmartStudy.R.layout;
+import com.innobuddy.SmartStudy.utils.Utilitys;
 import com.umeng.analytics.MobclickAgent;
 
 public class Fragment4 extends Fragment {

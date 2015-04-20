@@ -45,10 +45,10 @@ import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.innobuddy.SmartStudy.Md5Utils;
 import com.innobuddy.SmartStudy.R;
-import com.innobuddy.SmartStudy.Utilitys;
 import com.innobuddy.SmartStudy.DB.DBHelper;
+import com.innobuddy.SmartStudy.utils.Md5Utils;
+import com.innobuddy.SmartStudy.utils.Utilitys;
 import com.innobuddy.download.utils.ConfigUtils;
 import com.innobuddy.download.utils.DStorageUtils;
 import com.innobuddy.download.utils.MyIntents;
@@ -95,7 +95,7 @@ public class VideoPlayerActivity extends Activity implements OnClickListener {
 
 	private String videoUrl = "";
 
-	private String videoCacheUrl = "";
+	//private String videoCacheUrl = "";
 
 	private String videoPath = "";
 
@@ -139,7 +139,7 @@ public class VideoPlayerActivity extends Activity implements OnClickListener {
 
 				videoUrl = jsonObject.getString(DBHelper.VIDEO_URL);
 
-				videoCacheUrl = jsonObject.getString(DBHelper.VIDEO_CACHE_URL);
+				//videoCacheUrl = jsonObject.getString(DBHelper.VIDEO_CACHE_URL);
 
 				name = jsonObject.getString(DBHelper.VIDEO_NAME);
 

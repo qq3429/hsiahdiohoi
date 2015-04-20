@@ -1,11 +1,13 @@
-package com.innobuddy.SmartStudy;
+package com.innobuddy.SmartStudy.activity;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.Random;
+import org.json.JSONException;
+import org.json.JSONObject;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -17,7 +19,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.innobuddy.SmartStudy.R;
+import com.innobuddy.SmartStudy.R.id;
+import com.innobuddy.SmartStudy.R.layout;
 import com.innobuddy.SmartStudy.global.GlobalParams;
+import com.innobuddy.SmartStudy.utils.Md5Utils;
 import com.innobuddy.SmartStudy.utils.ValidateUtil;
 import com.innobuddy.download.utils.ConfigUtils;
 import com.lidroid.xutils.exception.HttpException;
@@ -34,6 +40,50 @@ public class LoginActivity extends BaseActivity implements OnFocusChangeListener
 	private TextView mTvFindPsw;
 	private ImageView mIvLoginNumberClear;
 	private ImageView mIvLoginPswClear;
+
+	private Handler handler = new Handler() {
+		@SuppressLint("HandlerLeak")
+		public void handleMessage(android.os.Message msg) {
+			switch (msg.what) {
+			case 1000:
+				String json = (String) msg.obj;
+				//
+				try {
+					JSONObject obj = new JSONObject(json);
+					String err = obj.getString("err");
+					if (!TextUtils.isEmpty(err)) {
+						Toast.makeText(LoginActivity.this, err, Toast.LENGTH_LONG).show();
+						return;
+					}
+					String account=obj.getString("account");
+					if(!TextUtils.isEmpty(account)){
+						Toast.makeText(LoginActivity.this, account, Toast.LENGTH_LONG).show();
+						return;
+					}
+					String username=obj.getString("username");
+					if(!TextUtils.isEmpty(account)){
+						Toast.makeText(LoginActivity.this, username, Toast.LENGTH_LONG).show();
+						return;
+					}
+					boolean succeed = obj.getBoolean("succeed");
+					// obj.has(name)
+					if (succeed) {
+						Toast.makeText(LoginActivity.this, "登陆成功", Toast.LENGTH_LONG).show();
+						return;
+					}
+
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
+				break;
+
+			default:
+				break;
+			}
+		};
+	};
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -136,38 +186,50 @@ public class LoginActivity extends BaseActivity implements OnFocusChangeListener
 				Toast.makeText(this, "电话号码格式不正确", Toast.LENGTH_LONG).show();
 				return;
 			}
-			if(password.length()<6)
-			{
-				Toast.makeText(this,  "密码长度应不小于6位", Toast.LENGTH_LONG).show();
+			if (password.length() < 6) {
+				Toast.makeText(this, "密码长度应不小于6位", Toast.LENGTH_LONG).show();
+				return;
 			}
 			// 校验通过
 			// 进行网络请求
 			// 进行数据加密处理
-			
-			RequestParams params=new RequestParams();
-			params.addBodyParameter("account",mobileNumber);
-			params.addBodyParameter("password",password);
-			params.addBodyParameter("username","tangyichao"+new Random().nextInt(1000));
-//			params.addBodyParameter("auto","true");
-//			params.addBodyParameter("smartRedirect","http://www.baidu.com");
-//			params.addBodyParameter("smartCallback","go");
-			params.addBodyParameter("source","www.baidu");
-			http.send(HttpMethod.POST, "http://dev.account.smartstudy.com/signup/handle",params, new RequestCallBack<String>() {
+
+			RequestParams params = new RequestParams();
+			params.addBodyParameter("account", mobileNumber);
+			params.addBodyParameter("password", password);
+			// params.addBodyParameter("username","tangyichao"+new
+			// Random().nextInt(1000));
+			params.addBodyParameter("auto", "true");
+			params.addBodyParameter("smartRedirect", "http://www.baidu.com");
+			params.addBodyParameter("smartCallback", "go");
+			// params.addBodyParameter("source","www.baidu");
+			http.send(HttpMethod.POST, "http://dev.account.smartstudy.com/signin/handle", params, new RequestCallBack<String>() {
 
 				@Override
 				public void onFailure(HttpException err, String arg) {
-					//登录失败
+					// 登录失败
 				}
 
 				@Override
-				public void onSuccess(ResponseInfo<String> response) {
-					System.out.println(response.result);
-					GlobalParams.isLogin = true;
-					ConfigUtils.setString(LoginActivity.this, "userName", mobileNumber);
-					finish();// 关闭当前界面
+				public void onSuccess(ResponseInfo<String> responseInfo) {
+					if (responseInfo.getFirstHeader("Content-Type").getValue().equals("application/json; charset=utf-8")) {
+
+						Message msg = Message.obtain();
+						msg.what = 1000;
+						msg.obj = responseInfo.result;
+						handler.sendMessage(msg);
+
+						GlobalParams.isLogin = true;
+						ConfigUtils.setString(LoginActivity.this, "userName", mobileNumber);
+						finish();// 关闭当前界面
+					} else {
+						
+					}
 				}
 			});
 			
+			//
+
 			break;
 		case R.id.tv_register:
 			Toast.makeText(this, "注册", Toast.LENGTH_LONG).show();

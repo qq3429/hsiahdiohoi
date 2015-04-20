@@ -1,4 +1,4 @@
-package com.innobuddy.SmartStudy;
+package com.innobuddy.SmartStudy.fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -7,7 +7,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.innobuddy.SmartStudy.TabFragmentIndicator.OnTabClickListener;
+import com.innobuddy.SmartStudy.R;
+import com.innobuddy.SmartStudy.R.id;
+import com.innobuddy.SmartStudy.R.layout;
+import com.innobuddy.SmartStudy.view.TabFragmentIndicator;
+import com.innobuddy.SmartStudy.view.TabFragmentIndicator.OnTabClickListener;
 import com.umeng.analytics.MobclickAgent;
 
 public class Fragment3 extends Fragment implements OnTabClickListener {

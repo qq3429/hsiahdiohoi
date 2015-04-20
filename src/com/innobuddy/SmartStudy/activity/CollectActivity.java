@@ -1,5 +1,4 @@
-package com.innobuddy.SmartStudy;
-
+package com.innobuddy.SmartStudy.activity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -22,10 +21,15 @@ import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.innobuddy.SmartStudy.R;
 import com.innobuddy.SmartStudy.DB.DBHelper;
-import com.umeng.analytics.MobclickAgent;
+import com.innobuddy.SmartStudy.R.id;
+import com.innobuddy.SmartStudy.R.layout;
+import com.innobuddy.SmartStudy.R.menu;
+import com.innobuddy.SmartStudy.adapter.CourseCell2Adapter;
+import com.innobuddy.SmartStudy.utils.Utilitys;
 
-public class RecentWatchActivity extends Activity {
+public class CollectActivity extends Activity {
 
 	PositionReceiver positionReceiver;
 	
@@ -48,7 +52,7 @@ public class RecentWatchActivity extends Activity {
 			unregisterReceiver(positionReceiver);
 	        positionReceiver = null;
 		}
-		
+
 		super.finish();
 	}
 
@@ -56,15 +60,14 @@ public class RecentWatchActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_collect);
 		
-		Cursor cursor = DBHelper.getInstance(null).queryRecentWatch();
-		
-		setContentView(R.layout.activity_recent_watch);
-		
-        listView = (ListView)findViewById(R.id.listView1);     
+		listView = (ListView)findViewById(R.id.listView1);        
         
         emptyTextView = (TextView)findViewById(R.id.emptyTextView);        
-               
+		
+		Cursor cursor = DBHelper.getInstance(null).queryCollect();
+        
 		adapter = new CourseCell2Adapter(this, cursor);
 		listView.setAdapter(adapter);
 		
@@ -90,11 +93,11 @@ public class RecentWatchActivity extends Activity {
 					e.printStackTrace();
 				}
 								
-				Utilitys.getInstance().playVideo(jsonObject, RecentWatchActivity.this);
+				Utilitys.getInstance().playVideo(jsonObject, CollectActivity.this);
 				
 			}
 		});
-		
+
 		listView.setOnItemLongClickListener(new OnItemLongClickListener() {
 			
 			@Override
@@ -102,7 +105,7 @@ public class RecentWatchActivity extends Activity {
 				
 				longClickPostion = position;
 				
-				new AlertDialog.Builder(RecentWatchActivity.this).setTitle("提示").setMessage("确定要删除该项吗？")
+				new AlertDialog.Builder(CollectActivity.this).setTitle("提示").setMessage("确定要删除该项吗？")
 				.setPositiveButton("确定", new DialogInterface.OnClickListener() {
 									public void onClick(
 											DialogInterface dialoginterface,
@@ -110,14 +113,14 @@ public class RecentWatchActivity extends Activity {
 										
 										adapter.cursor.moveToPosition(longClickPostion);
 										int id = adapter.cursor.getInt(adapter.cursor.getColumnIndex("id"));
-										DBHelper.getInstance(null).deleteRecentWatch(id);
+										DBHelper.getInstance(null).deleteCollect(id);
 										
 										if (adapter.cursor != null) {
 											adapter.cursor.close();
 											adapter.cursor = null;
 										}
 
-										adapter.cursor = DBHelper.getInstance(null).queryRecentWatch();
+										adapter.cursor = DBHelper.getInstance(null).queryCollect();
 								        adapter.notifyDataSetChanged();
 										
 										checkEmpty();
@@ -137,10 +140,6 @@ public class RecentWatchActivity extends Activity {
 			}
 		});
 
-//		getActionBar().setHomeButtonEnabled(true);
-//		getActionBar().setDisplayHomeAsUpEnabled(true);
-//		getActionBar().setDisplayShowHomeEnabled(true);
-		
 		if (positionReceiver == null) {
 			positionReceiver = new PositionReceiver();
 	        IntentFilter filter = new IntentFilter();
@@ -165,7 +164,7 @@ public class RecentWatchActivity extends Activity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.recent_watch, menu);
+		getMenuInflater().inflate(R.menu.collect, menu);
 		return true;
 	}
 
@@ -177,20 +176,20 @@ public class RecentWatchActivity extends Activity {
 		int id = item.getItemId();
 		if (id == R.id.action_clear) {
 			
-			new AlertDialog.Builder(RecentWatchActivity.this).setTitle("提示").setMessage("确定要清空最近观看吗？")
+			new AlertDialog.Builder(CollectActivity.this).setTitle("提示").setMessage("确定要清空我的收藏吗？")
 			.setPositiveButton("确定", new DialogInterface.OnClickListener() {
 								public void onClick(
 										DialogInterface dialoginterface,
 										int i) {
 									
-									DBHelper.getInstance(null).deleteRecentWatch();
+									DBHelper.getInstance(null).deleteCollect();
 									
 									if (adapter.cursor != null) {
 										adapter.cursor.close();
 										adapter.cursor = null;
 									}
 
-									adapter.cursor = DBHelper.getInstance(null).queryRecentWatch();
+									adapter.cursor = DBHelper.getInstance(null).queryCollect();
 							        adapter.notifyDataSetChanged();
 									
 									checkEmpty();
@@ -205,13 +204,7 @@ public class RecentWatchActivity extends Activity {
 								}
 							})
 							.show();
-			
-			return true;
-		} else if (id == R.id.homeAsUp) {
-			finish();
-			return true;
-		} else if (id == R.id.home) {
-			finish();
+
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
@@ -228,7 +221,7 @@ public class RecentWatchActivity extends Activity {
         			adapter.cursor = null;
         		}
 
-        		adapter.cursor = DBHelper.getInstance(null).queryRecentWatch();
+        		adapter.cursor = DBHelper.getInstance(null).queryCollect();
             	adapter.notifyDataSetChanged();
             	
             	checkEmpty();
@@ -237,12 +230,6 @@ public class RecentWatchActivity extends Activity {
         }
 		
 	}
-	public void onResume() {
-	    super.onResume();
-	    MobclickAgent.onResume(this);       //统计时长
-	}
-	public void onPause() {
-	    super.onPause();
-	    MobclickAgent.onPause(this);
-	}
+
+	
 }

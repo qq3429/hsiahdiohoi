@@ -41,14 +41,19 @@
             android:theme="@android:style/Theme.NoTitleBar"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name=".MainActivity"
-            android:label="@string/app_name"
-            android:screenOrientation="portrait" >
+            android:name="com.innobuddy.SmartStudy.SplashActivity"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name="com.innobuddy.SmartStudy.fragment.MainActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name="com.innobuddy.SmartStudy.Video.VideoPlayerActivity"
@@ -57,27 +62,27 @@
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
         </activity>
         <activity
-            android:name=".RecentWatchActivity"
+            android:name="com.innobuddy.SmartStudy.activity.RecentWatchActivity"
             android:label="@string/title_activity_recent_watch"
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name=".LoginActivity"
+            android:name="com.innobuddy.SmartStudy.activity.LoginActivity"
             android:label="@string/title_activity_login"
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name=".RegisterActivity"
+            android:name="com.innobuddy.SmartStudy.activity.RegisterActivity"
+            android:label="@string/title_activity_register"
+            android:screenOrientation="portrait" >
+        </activity>
+            <activity
+            android:name="com.innobuddy.SmartStudy.activity.RegisterPswActivity"
             android:label="@string/title_activity_register"
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name=".RegisterPswActivity"
-            android:label="@string/title_activity_register"
-            android:screenOrientation="portrait" >
-        </activity>
-         <activity
-            android:name=".WebViewActivity"
+            android:name="com.innobuddy.SmartStudy.activity.WebViewActivity"
             android:screenOrientation="portrait" >
         </activity>
 
@@ -90,11 +95,7 @@
         </service>
 
         <activity
-            android:name=".CourseDetailActivity"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
-            android:name=".CollectActivity"
+            android:name="com.innobuddy.SmartStudy.activity.CollectActivity"
             android:label="@string/title_activity_collect"
             android:screenOrientation="portrait" >
         </activity>

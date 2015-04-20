@@ -1,4 +1,4 @@
-package com.innobuddy.SmartStudy;
+package com.innobuddy.SmartStudy.activity;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -13,6 +13,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.innobuddy.SmartStudy.R;
+import com.innobuddy.SmartStudy.R.drawable;
+import com.innobuddy.SmartStudy.R.id;
+import com.innobuddy.SmartStudy.R.layout;
 import com.innobuddy.SmartStudy.utils.ValidateUtil;
 
 public class RegisterActivity extends BaseActivity {
@@ -33,7 +37,7 @@ public class RegisterActivity extends BaseActivity {
 					mBtnObtionCode.setText("获取验证码");
 					mBtnObtionCode.setEnabled(true);
 					mEtMobileNumber.setEnabled(true);
-					mBtnObtionCode.setBackgroundResource(R.drawable.btn_bg);
+					mBtnObtionCode.setBackgroundResource(R.drawable.btn_bg_defult);
 					cancelCountDownTask();
 					time = 60;
 				}

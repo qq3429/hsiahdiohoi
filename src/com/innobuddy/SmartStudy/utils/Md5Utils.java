@@ -1,4 +1,4 @@
-package com.innobuddy.SmartStudy;
+package com.innobuddy.SmartStudy.utils;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
