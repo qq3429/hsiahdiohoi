@@ -23,9 +23,6 @@ import android.widget.TextView;
 
 import com.innobuddy.SmartStudy.R;
 import com.innobuddy.SmartStudy.DB.DBHelper;
-import com.innobuddy.SmartStudy.R.id;
-import com.innobuddy.SmartStudy.R.layout;
-import com.innobuddy.SmartStudy.R.menu;
 import com.innobuddy.SmartStudy.adapter.CourseCell2Adapter;
 import com.innobuddy.SmartStudy.utils.Utilitys;
 

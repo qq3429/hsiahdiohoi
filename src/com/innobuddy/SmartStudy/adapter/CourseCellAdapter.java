@@ -14,11 +14,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.innobuddy.SmartStudy.R;
-import com.innobuddy.SmartStudy.R.id;
-import com.innobuddy.SmartStudy.R.layout;
 import com.innobuddy.SmartStudy.utils.Utilitys;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
@@ -58,9 +55,9 @@ public class CourseCellAdapter extends BaseAdapter {
 	    {
 	      convertView = _inflater.inflate(R.layout.course_cell1, null);
 	      holder = new CourseCellHolder();
-	      holder.textView1 = (TextView) convertView.findViewById(R.id.textView1);
+	     // holder.textView1 = (TextView) convertView.findViewById(R.id.textView1);
 	      holder.imageView1 = (ImageView) convertView.findViewById(R.id.imageView1);
-	      holder.textView2 = (TextView) convertView.findViewById(R.id.textView2);
+	      //holder.textView2 = (TextView) convertView.findViewById(R.id.textView2);
 	      holder.imageView2 = (ImageView) convertView.findViewById(R.id.imageView2);
 	      
 	        DisplayMetrics displayMetrics = new DisplayMetrics();
@@ -130,9 +127,9 @@ public class CourseCellAdapter extends BaseAdapter {
 	
 	  private class CourseCellHolder
 	  {
-	    TextView textView1;
+	   // TextView textView1;
 	    ImageView imageView1;
-	    TextView textView2;
+	   // TextView textView2;
 	    ImageView imageView2;
 	  }
 

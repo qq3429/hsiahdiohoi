@@ -16,9 +16,6 @@ import android.widget.ImageView;
 import android.widget.ListView;
 
 import com.innobuddy.SmartStudy.R;
-import com.innobuddy.SmartStudy.R.drawable;
-import com.innobuddy.SmartStudy.R.id;
-import com.innobuddy.SmartStudy.R.layout;
 import com.innobuddy.SmartStudy.adapter.CourseCellAdapter;
 import com.innobuddy.SmartStudy.utils.Utilitys;
 import com.nostra13.universalimageloader.core.ImageLoader;

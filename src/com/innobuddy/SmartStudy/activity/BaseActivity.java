@@ -28,6 +28,7 @@ public class BaseActivity extends Activity implements OnClickListener {
 		/******************/
 		http=new HttpUtils();
 		http.configCurrentHttpCacheExpiry(0); // 请求缓存
+		
 	}
 
 	@Override

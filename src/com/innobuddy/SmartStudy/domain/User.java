@@ -1,7 +1,11 @@
 package com.innobuddy.SmartStudy.domain;
 
 import java.io.Serializable;
-
+/**
+ * 用户个人信息
+ * @author tangyichao
+ *
+ */
 public class User implements Serializable {
 
 	/**

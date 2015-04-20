@@ -18,15 +18,11 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
-import android.widget.Toast;
 
 import com.innobuddy.SmartStudy.R;
-import com.innobuddy.SmartStudy.R.drawable;
-import com.innobuddy.SmartStudy.R.id;
-import com.innobuddy.SmartStudy.R.layout;
 import com.innobuddy.SmartStudy.activity.CollectActivity;
-import com.innobuddy.SmartStudy.activity.LoginActivity;
 import com.innobuddy.SmartStudy.activity.RecentWatchActivity;
+import com.innobuddy.SmartStudy.activity.user.LoginActivity;
 import com.innobuddy.SmartStudy.global.GlobalParams;
 import com.umeng.analytics.MobclickAgent;
 

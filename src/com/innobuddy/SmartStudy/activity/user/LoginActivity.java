@@ -1,4 +1,4 @@
-package com.innobuddy.SmartStudy.activity;
+package com.innobuddy.SmartStudy.activity.user;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -14,14 +14,15 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.view.View.OnFocusChangeListener;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.innobuddy.SmartStudy.R;
-import com.innobuddy.SmartStudy.R.id;
-import com.innobuddy.SmartStudy.R.layout;
+import com.innobuddy.SmartStudy.activity.BaseActivity;
+import com.innobuddy.SmartStudy.global.ConstantValue;
 import com.innobuddy.SmartStudy.global.GlobalParams;
 import com.innobuddy.SmartStudy.utils.Md5Utils;
 import com.innobuddy.SmartStudy.utils.ValidateUtil;
@@ -32,6 +33,7 @@ import com.lidroid.xutils.http.ResponseInfo;
 import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest.HttpMethod;
 
+@SuppressLint("HandlerLeak")
 public class LoginActivity extends BaseActivity implements OnFocusChangeListener {
 	private EditText mEtLoginMobileNumber;
 	private Button mBtnLogin;
@@ -40,7 +42,7 @@ public class LoginActivity extends BaseActivity implements OnFocusChangeListener
 	private TextView mTvFindPsw;
 	private ImageView mIvLoginNumberClear;
 	private ImageView mIvLoginPswClear;
-
+	private CheckBox mCbSavePsw;
 	private Handler handler = new Handler() {
 		@SuppressLint("HandlerLeak")
 		public void handleMessage(android.os.Message msg) {
@@ -55,13 +57,13 @@ public class LoginActivity extends BaseActivity implements OnFocusChangeListener
 						Toast.makeText(LoginActivity.this, err, Toast.LENGTH_LONG).show();
 						return;
 					}
-					String account=obj.getString("account");
-					if(!TextUtils.isEmpty(account)){
+					String account = obj.getString("account");
+					if (!TextUtils.isEmpty(account)) {
 						Toast.makeText(LoginActivity.this, account, Toast.LENGTH_LONG).show();
 						return;
 					}
-					String username=obj.getString("username");
-					if(!TextUtils.isEmpty(account)){
+					String username = obj.getString("username");
+					if (!TextUtils.isEmpty(account)) {
 						Toast.makeText(LoginActivity.this, username, Toast.LENGTH_LONG).show();
 						return;
 					}
@@ -71,12 +73,9 @@ public class LoginActivity extends BaseActivity implements OnFocusChangeListener
 						Toast.makeText(LoginActivity.this, "登陆成功", Toast.LENGTH_LONG).show();
 						return;
 					}
-
 				} catch (JSONException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-
 				break;
 
 			default:
@@ -84,6 +83,8 @@ public class LoginActivity extends BaseActivity implements OnFocusChangeListener
 			}
 		};
 	};
+
+	// private CheckBox mCbSavePsw;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -98,6 +99,7 @@ public class LoginActivity extends BaseActivity implements OnFocusChangeListener
 		mBtnLogin = (Button) findViewById(R.id.btn_login);
 		mIvLoginNumberClear = (ImageView) findViewById(R.id.iv_login_number_clear);
 		mIvLoginPswClear = (ImageView) findViewById(R.id.iv_login_psw_clear);
+		mCbSavePsw = (CheckBox) findViewById(R.id.cb_save_psw);
 		mBtnLogin.setOnClickListener(this);
 		mTvRegister.setOnClickListener(this);
 		mTvFindPsw.setOnClickListener(this);
@@ -108,6 +110,18 @@ public class LoginActivity extends BaseActivity implements OnFocusChangeListener
 			mEtLoginMobileNumber.setText(mobileNumber);
 		}
 		//
+		String password = ConfigUtils.getString(this, "password");
+		
+		
+		if (!TextUtils.isEmpty(password)) {
+			String passwordEncrypt=com.innobuddy.SmartStudy.utils.ThreeDes.dataEncrypt(password, ConstantValue.Keys.THERREDS.getBytes());
+			//System.out.println(password1);
+			mEtLoginPsw.setText(passwordEncrypt);
+			mCbSavePsw.setChecked(true);
+		} else {
+			mCbSavePsw.setChecked(false);
+			mEtLoginPsw.setText("");// 密码
+		}
 		mEtLoginMobileNumber.addTextChangedListener(new TextWatcher() {
 
 			@Override
@@ -130,7 +144,6 @@ public class LoginActivity extends BaseActivity implements OnFocusChangeListener
 
 			@Override
 			public void afterTextChanged(Editable s) {
-				// TODO Auto-generated method stub
 
 			}
 		});
@@ -156,7 +169,6 @@ public class LoginActivity extends BaseActivity implements OnFocusChangeListener
 
 			@Override
 			public void afterTextChanged(Editable s) {
-				// TODO Auto-generated method stub
 
 			}
 		});
@@ -168,10 +180,10 @@ public class LoginActivity extends BaseActivity implements OnFocusChangeListener
 	public void onClick(View v) {
 		super.onClick(v);
 		final String mobileNumber = mEtLoginMobileNumber.getText().toString().trim();
-		String password = mEtLoginPsw.getText().toString().trim();
+		final String password = mEtLoginPsw.getText().toString().trim();
 		String pswMd5 = Md5Utils.encode(password);// Md5数据加密
 		boolean isNumber = ValidateUtil.isMobile(mobileNumber);
-
+		final boolean isSavePsw = mCbSavePsw.isChecked();
 		switch (v.getId()) {
 		case R.id.btn_login:
 			if (TextUtils.isEmpty(mobileNumber)) {
@@ -208,6 +220,7 @@ public class LoginActivity extends BaseActivity implements OnFocusChangeListener
 				@Override
 				public void onFailure(HttpException err, String arg) {
 					// 登录失败
+					Toast.makeText(LoginActivity.this, "登陆失败", Toast.LENGTH_LONG).show();
 				}
 
 				@Override
@@ -218,18 +231,23 @@ public class LoginActivity extends BaseActivity implements OnFocusChangeListener
 						msg.what = 1000;
 						msg.obj = responseInfo.result;
 						handler.sendMessage(msg);
-
 						GlobalParams.isLogin = true;
 						ConfigUtils.setString(LoginActivity.this, "userName", mobileNumber);
+						
+						
+						if (isSavePsw) {
+							String passwordEncrypt = com.innobuddy.SmartStudy.utils.ThreeDes.dataDecrypt(password, ConstantValue.Keys.THERREDS.getBytes());
+							ConfigUtils.setString(LoginActivity.this, "password",passwordEncrypt);
+						} else {
+							ConfigUtils.setString(LoginActivity.this, "password", "");
+						}
 						finish();// 关闭当前界面
 					} else {
-						
+						Toast.makeText(LoginActivity.this, "登陆失败", Toast.LENGTH_LONG).show();
 					}
 				}
 			});
-			
 			//
-
 			break;
 		case R.id.tv_register:
 			Toast.makeText(this, "注册", Toast.LENGTH_LONG).show();
@@ -237,7 +255,6 @@ public class LoginActivity extends BaseActivity implements OnFocusChangeListener
 			intent.setClass(this, RegisterActivity.class);
 			startActivity(intent);
 			// overridePendingTransition(R.anim.zoom_enter,R.anim.zoom_exit);
-
 			break;
 		case R.id.tv_find_psw:
 			Toast.makeText(this, "找回密码", Toast.LENGTH_LONG).show();

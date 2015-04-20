@@ -10,8 +10,6 @@ import android.widget.CompoundButton;
 import android.widget.Switch;
 
 import com.innobuddy.SmartStudy.R;
-import com.innobuddy.SmartStudy.R.id;
-import com.innobuddy.SmartStudy.R.layout;
 import com.innobuddy.SmartStudy.utils.Utilitys;
 import com.umeng.analytics.MobclickAgent;
 

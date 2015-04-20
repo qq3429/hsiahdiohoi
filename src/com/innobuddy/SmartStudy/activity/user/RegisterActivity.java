@@ -1,4 +1,4 @@
-package com.innobuddy.SmartStudy.activity;
+package com.innobuddy.SmartStudy.activity.user;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -17,7 +17,12 @@ import com.innobuddy.SmartStudy.R;
 import com.innobuddy.SmartStudy.R.drawable;
 import com.innobuddy.SmartStudy.R.id;
 import com.innobuddy.SmartStudy.R.layout;
+import com.innobuddy.SmartStudy.activity.BaseActivity;
 import com.innobuddy.SmartStudy.utils.ValidateUtil;
+import com.lidroid.xutils.exception.HttpException;
+import com.lidroid.xutils.http.ResponseInfo;
+import com.lidroid.xutils.http.callback.RequestCallBack;
+import com.lidroid.xutils.http.client.HttpRequest.HttpMethod;
 
 public class RegisterActivity extends BaseActivity {
 	private Button mBtnObtionCode;
@@ -110,6 +115,18 @@ public class RegisterActivity extends BaseActivity {
 				Toast.makeText(this, "验证码不能为空", Toast.LENGTH_LONG).show();
 				return;
 			}
+			http.send(HttpMethod.POST, "", new RequestCallBack<String>() {
+
+				@Override
+				public void onFailure(HttpException arg0, String arg1) {
+					
+				}
+
+				@Override
+				public void onSuccess(ResponseInfo<String> arg0) {
+					
+				}
+			});
 			Intent intent=new Intent();
 			intent.putExtra("mobileNumber", mobileNumber);
 			intent.putExtra("code", code);

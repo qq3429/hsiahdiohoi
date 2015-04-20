@@ -41,7 +41,7 @@
             android:theme="@android:style/Theme.NoTitleBar"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name="com.innobuddy.SmartStudy.SplashActivity"
+            android:name="com.innobuddy.SmartStudy.activity.SplashActivity"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
             <intent-filter>
@@ -67,17 +67,17 @@
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name="com.innobuddy.SmartStudy.activity.LoginActivity"
+            android:name="com.innobuddy.SmartStudy.activity.user.LoginActivity"
             android:label="@string/title_activity_login"
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name="com.innobuddy.SmartStudy.activity.RegisterActivity"
+            android:name="com.innobuddy.SmartStudy.activity.user.RegisterActivity"
             android:label="@string/title_activity_register"
             android:screenOrientation="portrait" >
         </activity>
-            <activity
-            android:name="com.innobuddy.SmartStudy.activity.RegisterPswActivity"
+        <activity
+            android:name="com.innobuddy.SmartStudy.activity.user.RegisterPswActivity"
             android:label="@string/title_activity_register"
             android:screenOrientation="portrait" >
         </activity>
@@ -97,6 +97,10 @@
         <activity
             android:name="com.innobuddy.SmartStudy.activity.CollectActivity"
             android:label="@string/title_activity_collect"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.innobuddy.SmartStudy.activity.CourseDetailActivity"
             android:screenOrientation="portrait" >
         </activity>
     </application>

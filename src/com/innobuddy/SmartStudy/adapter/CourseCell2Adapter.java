@@ -4,6 +4,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.database.Cursor;
 import android.view.LayoutInflater;
@@ -15,11 +16,10 @@ import android.widget.TextView;
 
 import com.innobuddy.SmartStudy.R;
 import com.innobuddy.SmartStudy.DB.DBHelper;
-import com.innobuddy.SmartStudy.R.id;
-import com.innobuddy.SmartStudy.R.layout;
 import com.innobuddy.SmartStudy.utils.Utilitys;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
+@SuppressLint({ "SimpleDateFormat", "InflateParams" }) 
 public class CourseCell2Adapter extends BaseAdapter {
 
 	LayoutInflater _inflater;

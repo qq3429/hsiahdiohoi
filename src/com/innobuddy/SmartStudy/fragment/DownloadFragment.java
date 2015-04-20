@@ -28,8 +28,6 @@ import android.widget.TextView;
 
 import com.innobuddy.SmartStudy.R;
 import com.innobuddy.SmartStudy.DB.DBHelper;
-import com.innobuddy.SmartStudy.R.id;
-import com.innobuddy.SmartStudy.R.layout;
 import com.innobuddy.SmartStudy.adapter.CourseCell3Adapter;
 import com.innobuddy.SmartStudy.utils.Md5Utils;
 import com.innobuddy.download.utils.DStorageUtils;

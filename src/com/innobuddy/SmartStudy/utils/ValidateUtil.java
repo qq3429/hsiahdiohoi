@@ -3,11 +3,11 @@ package com.innobuddy.SmartStudy.utils;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+
 /**
  * 正则表达式的工具类
- * 
- * @author 义超
- * 
+ * @author tangyichao
+ *
  */
 public class ValidateUtil {
 

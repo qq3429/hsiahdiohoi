@@ -1,9 +1,5 @@
 package com.innobuddy.SmartStudy.activity;
 
-import com.innobuddy.SmartStudy.R;
-import com.innobuddy.SmartStudy.R.id;
-import com.innobuddy.SmartStudy.R.layout;
-
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -11,6 +7,7 @@ import android.net.Uri;
 import android.net.http.SslError;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.View;
 import android.webkit.DownloadListener;
 import android.webkit.SslErrorHandler;
 import android.webkit.WebChromeClient;
@@ -18,11 +15,14 @@ import android.webkit.WebSettings;
 import android.webkit.WebSettings.LayoutAlgorithm;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.ProgressBar;
+
+import com.innobuddy.SmartStudy.R;
 
 public class WebViewActivity extends BaseActivity {
 	private String url;
 	private WebView mWv;
-
+	private ProgressBar mPb;
 	@SuppressLint("SetJavaScriptEnabled")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -30,7 +30,7 @@ public class WebViewActivity extends BaseActivity {
 		url = getIntent().getStringExtra("url");
 		setContentView(R.layout.activity_webview);
 		mWv = (WebView) findViewById(R.id.wv);
-
+		mPb=(ProgressBar) findViewById(R.id.pb);
 		mWv.setWebViewClient(new WebViewClient() {
 			public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
 				handler.proceed();// 接受证书
@@ -46,6 +46,7 @@ public class WebViewActivity extends BaseActivity {
 		if (!TextUtils.isEmpty(url)) {
 			mWv.loadUrl(url);
 		}
+		
 	}
 
 	@Override
@@ -67,6 +68,7 @@ public class WebViewActivity extends BaseActivity {
 			public void onPageFinished(WebView view, String url) {
 
 				super.onPageFinished(view, url);
+				mPb.setVisibility(View.GONE);
 			}
 
 			@Override

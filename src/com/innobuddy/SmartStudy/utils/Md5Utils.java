@@ -4,8 +4,8 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 /**
- * 生成MD5
- * @author Administrator
+ * 字符串生成MD5值工具类
+ * @author tangyichao
  *
  */
 public class Md5Utils {

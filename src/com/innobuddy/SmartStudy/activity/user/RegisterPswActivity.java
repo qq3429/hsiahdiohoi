@@ -1,4 +1,4 @@
-package com.innobuddy.SmartStudy.activity;
+package com.innobuddy.SmartStudy.activity.user;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -19,6 +19,8 @@ import android.widget.Toast;
 import com.innobuddy.SmartStudy.R;
 import com.innobuddy.SmartStudy.R.id;
 import com.innobuddy.SmartStudy.R.layout;
+import com.innobuddy.SmartStudy.activity.BaseActivity;
+import com.innobuddy.SmartStudy.activity.WebViewActivity;
 import com.lidroid.xutils.exception.HttpException;
 import com.lidroid.xutils.http.RequestParams;
 import com.lidroid.xutils.http.ResponseInfo;
@@ -157,6 +159,7 @@ public class RegisterPswActivity extends BaseActivity {
 						handler.sendMessage(msg);
 					} else {
 						//当做失败处理
+						Toast.makeText(RegisterPswActivity.this, "网络连接失败", Toast.LENGTH_LONG).show();
 					}
 				}
 			});

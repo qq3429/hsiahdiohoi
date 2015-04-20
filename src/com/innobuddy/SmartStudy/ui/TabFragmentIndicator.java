@@ -1,10 +1,6 @@
-package com.innobuddy.SmartStudy.view;
+package com.innobuddy.SmartStudy.ui;
 
 import java.util.ArrayList;
-
-import com.innobuddy.SmartStudy.R;
-import com.innobuddy.SmartStudy.R.color;
-import com.innobuddy.SmartStudy.R.dimen;
 
 import android.app.Activity;
 import android.content.Context;
@@ -25,6 +21,8 @@ import android.view.animation.Animation.AnimationListener;
 import android.view.animation.TranslateAnimation;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.innobuddy.SmartStudy.R;
 
 public class TabFragmentIndicator extends LinearLayout implements ViewPager.OnPageChangeListener, OnClickListener {
     

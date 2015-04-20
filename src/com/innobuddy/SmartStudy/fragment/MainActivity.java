@@ -19,8 +19,6 @@ import android.widget.Toast;
 
 import com.innobuddy.SmartStudy.R;
 import com.innobuddy.SmartStudy.DB.DBHelper;
-import com.innobuddy.SmartStudy.R.id;
-import com.innobuddy.SmartStudy.R.layout;
 import com.innobuddy.download.utils.DStorageUtils;
 import com.innobuddy.download.utils.MyIntents;
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiscCache;

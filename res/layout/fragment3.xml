@@ -5,7 +5,7 @@
     android:background="#f0f0f0"
     android:orientation="vertical" >
 
-    <com.innobuddy.SmartStudy.view.TabFragmentIndicator
+    <com.innobuddy.SmartStudy.ui.TabFragmentIndicator
         android:layout_width="match_parent"
         android:id="@+id/tabFragmentIndicator"
         android:background="@drawable/ab_stacked_solid_custom"
