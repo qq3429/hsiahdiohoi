@@ -20,6 +20,7 @@
 
     <application
         android:allowBackup="true"
+        android:name="com.innobuddy.SmartStudy.application.SmartStudyApplication"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:logo="@drawable/ic_logo"
@@ -79,6 +80,18 @@
         <activity
             android:name="com.innobuddy.SmartStudy.activity.user.RegisterPswActivity"
             android:label="@string/title_activity_register"
+            android:screenOrientation="portrait" >
+        </activity>
+        
+        <activity
+            android:name="com.innobuddy.SmartStudy.activity.user.BackPasswordActivity"
+            android:label="@string/title_activity_backpassword"
+            android:screenOrientation="portrait" >
+        </activity>
+        
+           <activity
+            android:name="com.innobuddy.SmartStudy.activity.user.ResetPasswordActivity"
+            android:label="@string/title_activity_reset"
             android:screenOrientation="portrait" >
         </activity>
         <activity

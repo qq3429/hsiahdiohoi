@@ -10,5 +10,7 @@
     <string name="title_activity_login">登陆</string>
     <string name="title_activity_register">注册</string>
     <string name="digits">abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMEOPQRSTUVWXYZ0123456789</string>
+    <string name="title_activity_backpassword">找回密码</string>
+    <string name="title_activity_reset">重置密码</string>
 
 </resources>

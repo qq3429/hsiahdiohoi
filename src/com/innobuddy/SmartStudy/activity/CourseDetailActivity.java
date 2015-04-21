@@ -17,9 +17,6 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.innobuddy.SmartStudy.R;
-import com.innobuddy.SmartStudy.R.id;
-import com.innobuddy.SmartStudy.R.layout;
-import com.innobuddy.SmartStudy.R.menu;
 import com.innobuddy.SmartStudy.fragment.CourseDetailFragment;
 import com.innobuddy.SmartStudy.ui.TabFragmentIndicator;
 import com.innobuddy.SmartStudy.ui.TabFragmentIndicator.OnTabClickListener;

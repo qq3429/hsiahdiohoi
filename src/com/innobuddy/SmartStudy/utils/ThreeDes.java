@@ -4,9 +4,15 @@ import javax.crypto.Cipher;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 
+import android.annotation.SuppressLint;
 import android.util.Base64;
 
-
+/**
+ * 3重DES加密和解密算法的工具类
+ * 
+ * @author tangyichao
+ * 
+ */
 public class ThreeDes {
 	// private static final Logger log =
 	// LoggerFactory.getLogger(ThreeDes.class);
@@ -15,6 +21,7 @@ public class ThreeDes {
 
 	// keybyte为加密密钥，长度为24字节
 	// src为被加密的数据缓冲区（源）
+	@SuppressLint("TrulyRandom")
 	public static byte[] encryptMode(byte[] src, byte[] keybyte) {
 		try {
 			// 生成密钥
@@ -56,6 +63,7 @@ public class ThreeDes {
 	}
 
 	// 转换成十六进制字符串
+	@SuppressLint("DefaultLocale")
 	public static String byte2hex(byte[] b) {
 		String hs = "";
 		String stmp = "";
@@ -85,10 +93,10 @@ public class ThreeDes {
 		String encrypt = null;
 		try {
 			byte[] ret = encryptMode(str.getBytes("UTF-8"), key);
-			//System.out.println(new String(ret,"UTF-8"));
+			// System.out.println(new String(ret,"UTF-8"));
 			encrypt = new String(Base64.encode(ret, 0));
 		} catch (Exception e) {
-			//System.out.print(e);
+			// System.out.print(e);
 			encrypt = str;
 		}
 		return encrypt;
@@ -106,10 +114,10 @@ public class ThreeDes {
 	public static String dataDecrypt(String str, byte[] key) {
 		String decrypt = null;
 		try {
-			byte[] ret = decryptMode(Base64.decode(str.replaceAll(" ", "+").getBytes("UTF-8"),0), key);
+			byte[] ret = decryptMode(Base64.decode(str.replaceAll(" ", "+").getBytes("UTF-8"), 0), key);
 			decrypt = new String(ret, "UTF-8");
 		} catch (Exception e) {
-			//System.out.print(e);
+			// System.out.print(e);
 			decrypt = str;
 		}
 		return decrypt;

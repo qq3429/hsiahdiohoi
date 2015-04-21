@@ -114,7 +114,7 @@ public class LoginActivity extends BaseActivity implements OnFocusChangeListener
 		
 		
 		if (!TextUtils.isEmpty(password)) {
-			String passwordEncrypt=com.innobuddy.SmartStudy.utils.ThreeDes.dataEncrypt(password, ConstantValue.Keys.THERREDS.getBytes());
+			String passwordEncrypt=com.innobuddy.SmartStudy.utils.ThreeDes.dataEncrypt(password, Md5Utils.encode(ConstantValue.Keys.THERREDS).getBytes());
 			//System.out.println(password1);
 			mEtLoginPsw.setText(passwordEncrypt);
 			mCbSavePsw.setChecked(true);
@@ -234,9 +234,8 @@ public class LoginActivity extends BaseActivity implements OnFocusChangeListener
 						GlobalParams.isLogin = true;
 						ConfigUtils.setString(LoginActivity.this, "userName", mobileNumber);
 						
-						
 						if (isSavePsw) {
-							String passwordEncrypt = com.innobuddy.SmartStudy.utils.ThreeDes.dataDecrypt(password, ConstantValue.Keys.THERREDS.getBytes());
+							String passwordEncrypt = com.innobuddy.SmartStudy.utils.ThreeDes.dataDecrypt(password, Md5Utils.encode(ConstantValue.Keys.THERREDS).getBytes());
 							ConfigUtils.setString(LoginActivity.this, "password",passwordEncrypt);
 						} else {
 							ConfigUtils.setString(LoginActivity.this, "password", "");
@@ -257,7 +256,10 @@ public class LoginActivity extends BaseActivity implements OnFocusChangeListener
 			// overridePendingTransition(R.anim.zoom_enter,R.anim.zoom_exit);
 			break;
 		case R.id.tv_find_psw:
-			Toast.makeText(this, "找回密码", Toast.LENGTH_LONG).show();
+			//Toast.makeText(this, "找回密码", Toast.LENGTH_LONG).show();
+			Intent backPasswordIntent=new  Intent();
+			backPasswordIntent.setClass(this, BackPasswordActivity.class);
+			startActivity(backPasswordIntent);
 			break;
 		case R.id.iv_login_number_clear:
 			mEtLoginMobileNumber.setText("");
