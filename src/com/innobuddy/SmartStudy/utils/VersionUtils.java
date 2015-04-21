@@ -31,6 +31,27 @@ public class VersionUtils {
 			return "";
 		}
 	}
+	
+	/**
+	 *获取当前版本
+	 * @param context
+	 * @return
+	 */
+	public static String getAppCurrentVersion(Context context) {
+		// 获取手机的包管理器 程序管理器
+		PackageManager pm = context.getPackageManager();
+		try {
+			// 代表的是某一个应用程序的清单文件 manifest.xml
+			PackageInfo packinfo = pm.getPackageInfo(context.getPackageName(), 0);
+
+			return  packinfo.versionName;
+		} catch (NameNotFoundException e) {
+			e.printStackTrace();
+			// can't reach
+			return "";
+		}
+	}
+
 
 	/**
 	 * 获取应用程序的版本号

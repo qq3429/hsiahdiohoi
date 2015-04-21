@@ -17,8 +17,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.innobuddy.SmartStudy.R;
-import com.innobuddy.SmartStudy.R.id;
-import com.innobuddy.SmartStudy.R.layout;
 import com.innobuddy.SmartStudy.activity.BaseActivity;
 import com.innobuddy.SmartStudy.activity.WebViewActivity;
 import com.lidroid.xutils.exception.HttpException;

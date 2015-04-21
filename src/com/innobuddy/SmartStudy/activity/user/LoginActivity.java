@@ -267,7 +267,6 @@ public class LoginActivity extends BaseActivity implements OnFocusChangeListener
 		case R.id.iv_login_psw_clear:
 			mEtLoginPsw.setText("");
 			break;
-
 		default:
 			break;
 		}

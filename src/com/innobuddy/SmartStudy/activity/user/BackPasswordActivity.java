@@ -32,7 +32,7 @@ public class BackPasswordActivity extends BaseActivity {
 	private Handler handler = new Handler() {
 		public void handleMessage(Message msg) {
 			switch (msg.what) {
-			case 60:
+			case 1000:
 				time = time - 1;
 				mBtnObtionCode.setText( time + "秒后重发");
 				if (time == 0) {
@@ -87,7 +87,7 @@ public class BackPasswordActivity extends BaseActivity {
 				public void run() {
 					// --发送给handler
 					Message msg = Message.obtain();
-					msg.what = 60;
+					msg.what = 1000;
 					handler.sendMessage(msg);
 				}
 

@@ -22,6 +22,11 @@ public class ConstantValue {
 	 * 获取验证码的URL
 	 */
 	public final static String CODE=URL+"";
+	
+	/**
+	 * 重置密码的URL
+	 */
+	public final static String  RESET="";
 
 	
 	/**

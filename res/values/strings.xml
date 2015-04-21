@@ -12,5 +12,7 @@
     <string name="digits">abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMEOPQRSTUVWXYZ0123456789</string>
     <string name="title_activity_backpassword">找回密码</string>
     <string name="title_activity_reset">重置密码</string>
+    <string name="title_activity_aboutus">关于我们</string>
+    <string name="title_activity_feedback">意见反馈</string>
 
 </resources>
