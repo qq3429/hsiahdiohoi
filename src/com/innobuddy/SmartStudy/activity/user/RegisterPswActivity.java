@@ -33,7 +33,7 @@ public class RegisterPswActivity extends BaseActivity {
 	private CheckBox mCbSelect;
 	private TextView mTvContent;
 	private String mobileNumber;
-	private String code;
+	private String code; 
 	private EditText mEtUsername;
 	private Handler handler = new Handler() {
 		public void handleMessage(android.os.Message msg) {

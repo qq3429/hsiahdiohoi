@@ -4,6 +4,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.annotation.SuppressLint;
+import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -11,6 +12,7 @@ import android.os.Message;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnFocusChangeListener;
 import android.widget.Button;
@@ -91,9 +93,13 @@ public class LoginActivity extends BaseActivity implements OnFocusChangeListener
 		super.onCreate(savedInstanceState);
 
 		setContentView(R.layout.activity_login);
+
+		ActionBar actionBar = getActionBar();
+		actionBar.setDisplayShowHomeEnabled(true);
+		actionBar.setDisplayHomeAsUpEnabled(true);
+		// actionBar.setHomeAsUpIndicator(R.drawable.ic_launcher);
 		mEtLoginMobileNumber = (EditText) findViewById(R.id.et_login_mobile_number);
 		mEtLoginPsw = (EditText) findViewById(R.id.et_login_psw);
-
 		mTvRegister = (TextView) findViewById(R.id.tv_register);
 		mTvFindPsw = (TextView) findViewById(R.id.tv_find_psw);
 		mBtnLogin = (Button) findViewById(R.id.btn_login);
@@ -111,11 +117,10 @@ public class LoginActivity extends BaseActivity implements OnFocusChangeListener
 		}
 		//
 		String password = ConfigUtils.getString(this, "password");
-		
-		
+
 		if (!TextUtils.isEmpty(password)) {
-			String passwordEncrypt=com.innobuddy.SmartStudy.utils.ThreeDes.dataEncrypt(password, Md5Utils.encode(ConstantValue.Keys.THERREDS).getBytes());
-			//System.out.println(password1);
+			String passwordEncrypt = com.innobuddy.SmartStudy.utils.ThreeDes.dataEncrypt(password, Md5Utils.encode(ConstantValue.Keys.THERREDS).getBytes());
+			// System.out.println(password1);
 			mEtLoginPsw.setText(passwordEncrypt);
 			mCbSavePsw.setChecked(true);
 		} else {
@@ -177,6 +182,22 @@ public class LoginActivity extends BaseActivity implements OnFocusChangeListener
 	}
 
 	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		// Handle action bar item clicks here. The action bar will
+		// automatically handle clicks on the Home/Up button, so long
+		// as you specify a parent activity in AndroidManifest.xml.
+		int id = item.getItemId();
+
+		if (id == android.R.id.home) {
+			// Toast.makeText(this, "开来吃我啊", Toast.LENGTH_LONG).show();
+			finish();
+			return true;
+		}
+
+		return super.onOptionsItemSelected(item);
+	}
+
+	@Override
 	public void onClick(View v) {
 		super.onClick(v);
 		final String mobileNumber = mEtLoginMobileNumber.getText().toString().trim();
@@ -233,10 +254,10 @@ public class LoginActivity extends BaseActivity implements OnFocusChangeListener
 						handler.sendMessage(msg);
 						GlobalParams.isLogin = true;
 						ConfigUtils.setString(LoginActivity.this, "userName", mobileNumber);
-						
+
 						if (isSavePsw) {
 							String passwordEncrypt = com.innobuddy.SmartStudy.utils.ThreeDes.dataDecrypt(password, Md5Utils.encode(ConstantValue.Keys.THERREDS).getBytes());
-							ConfigUtils.setString(LoginActivity.this, "password",passwordEncrypt);
+							ConfigUtils.setString(LoginActivity.this, "password", passwordEncrypt);
 						} else {
 							ConfigUtils.setString(LoginActivity.this, "password", "");
 						}
@@ -256,8 +277,8 @@ public class LoginActivity extends BaseActivity implements OnFocusChangeListener
 			// overridePendingTransition(R.anim.zoom_enter,R.anim.zoom_exit);
 			break;
 		case R.id.tv_find_psw:
-			//Toast.makeText(this, "找回密码", Toast.LENGTH_LONG).show();
-			Intent backPasswordIntent=new  Intent();
+			// Toast.makeText(this, "找回密码", Toast.LENGTH_LONG).show();
+			Intent backPasswordIntent = new Intent();
 			backPasswordIntent.setClass(this, BackPasswordActivity.class);
 			startActivity(backPasswordIntent);
 			break;

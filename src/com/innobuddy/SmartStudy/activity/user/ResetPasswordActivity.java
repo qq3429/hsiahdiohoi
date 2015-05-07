@@ -44,14 +44,12 @@ public class ResetPasswordActivity extends BaseActivity {
 						return;
 					}
 					boolean succeed = obj.getBoolean("succeed");
-					// obj.has(name)
 					if (succeed) {
 						Toast.makeText(ResetPasswordActivity.this, "重置成功", Toast.LENGTH_LONG).show();
 						return;
 					}
 
 				} catch (JSONException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 
@@ -73,8 +71,6 @@ public class ResetPasswordActivity extends BaseActivity {
 		mEtConfirmPsw = (EditText) findViewById(R.id.et_confirm_psw);
 		mBtnRegister = (Button) findViewById(R.id.btn_register);
 		mBtnRegister.setOnClickListener(this);
-		
-
 	}
 
 	@Override
@@ -118,14 +114,9 @@ public class ResetPasswordActivity extends BaseActivity {
 					//
 					Toast.makeText(ResetPasswordActivity.this,"网络连接失败", Toast.LENGTH_LONG).show();
 				}
-
 				@Override
 				public void onSuccess(ResponseInfo<String> responseInfo) {
 					// 关闭当前界面
-
-					//System.out.println(responseInfo.getFirstHeader("Content-Type").getValue());
-					//System.out.println(responseInfo.result);// text/html;
-															// charset=utf-8
 					if (responseInfo.getFirstHeader("Content-Type").getValue().equals("application/json; charset=utf-8")) {
 						
 						Message msg = Message.obtain();

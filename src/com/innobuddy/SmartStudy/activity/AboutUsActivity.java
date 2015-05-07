@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.innobuddy.SmartStudy.R;
 import com.innobuddy.SmartStudy.utils.VersionUtils;
@@ -15,6 +16,7 @@ public class AboutUsActivity extends BaseActivity {
 	private LinearLayout mLlPhone;
 	private TextView mTvCurrentVersion;
 	private LinearLayout mLlAgreement;
+	private LinearLayout mLlUpdateVersion;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -24,12 +26,14 @@ public class AboutUsActivity extends BaseActivity {
 		mLlPhone = (LinearLayout) findViewById(R.id.ll_phone);
 		mTvCurrentVersion = (TextView) findViewById(R.id.tv_current_version);
 		mLlAgreement = (LinearLayout) findViewById(R.id.ll_agreement);
+		mLlUpdateVersion = (LinearLayout) findViewById(R.id.ll_update_version);
 		String version = VersionUtils.getAppVersion(this);
 		String currentVersion=VersionUtils.getAppCurrentVersion(this);
 		mTvVersion.setText(version);
 		mTvCurrentVersion.setText(currentVersion);
 		mLlPhone.setOnClickListener(this);
 		mLlAgreement.setOnClickListener(this); //
+		mLlUpdateVersion.setOnClickListener(this);
 
 	}
 
@@ -49,6 +53,9 @@ public class AboutUsActivity extends BaseActivity {
 			agreementIntent.putExtra("url", "http://www.smartstudy.com/service");
 			agreementIntent.setClass(this, WebViewActivity.class);
 			startActivity(agreementIntent);
+			break;
+		case R.id.ll_update_version:
+			Toast.makeText(this, "已经是最新版本", Toast.LENGTH_LONG).show();
 			break;
 		default:
 			break;
