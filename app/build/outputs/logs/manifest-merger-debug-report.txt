@@ -15,6 +15,10 @@ ADDED from AndroidManifest.xml:2:1
 		INJECTED from AndroidManifest.xml:0:0
 uses-sdk
 ADDED from AndroidManifest.xml:7:5
+MERGED from com.android.support:support-v4:22.1.1:20:5
+MERGED from com.android.support:appcompat-v7:22.1.1:20:5
+MERGED from com.android.support:support-v4:22.1.1:20:5
+MERGED from me.neavo:vitamio:4.2.2:2:5
 	android:targetSdkVersion
 		ADDED from AndroidManifest.xml:9:9
 		INJECTED from AndroidManifest.xml:0:0
@@ -53,6 +57,10 @@ ADDED from AndroidManifest.xml:19:5
 		ADDED from AndroidManifest.xml:19:22
 application
 ADDED from AndroidManifest.xml:21:5
+MERGED from com.android.support:support-v4:22.1.1:22:5
+MERGED from com.android.support:appcompat-v7:22.1.1:22:5
+MERGED from com.android.support:support-v4:22.1.1:22:5
+MERGED from me.neavo:vitamio:4.2.2:4:2
 	android:label
 		ADDED from AndroidManifest.xml:25:9
 	android:allowBackup

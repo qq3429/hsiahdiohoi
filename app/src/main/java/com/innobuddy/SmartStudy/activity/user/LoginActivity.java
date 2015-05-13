@@ -4,11 +4,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.annotation.SuppressLint;
-import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v7.app.ActionBar;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -94,7 +94,7 @@ public class LoginActivity extends BaseActivity implements OnFocusChangeListener
 
 		setContentView(R.layout.activity_login);
 
-		ActionBar actionBar = getActionBar();
+		ActionBar actionBar = getSupportActionBar();
 		actionBar.setDisplayShowHomeEnabled(true);
 		actionBar.setDisplayHomeAsUpEnabled(true);
 		// actionBar.setHomeAsUpIndicator(R.drawable.ic_launcher);
