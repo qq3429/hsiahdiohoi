@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        jar="/Users/tangyichao/Documents/smartstudy/smartstudy-android/app/build/intermediates/exploded-aar/com.android.support/support-v4/22.1.1/jars/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="c95ba8152923e4872e86a82cfcba9a51c0214328">
+        <dex dex="/Users/tangyichao/Documents/smartstudy/smartstudy-android/app/build/intermediates/pre-dexed/debug/classes-772bc1a7fb25a032ba92e6a6dede2d1b97d21cfb.jar" />
+    </item>
+    <item
+        jar="/Users/tangyichao/Documents/smartstudy/smartstudy-android/app/libs/universal-image-loader-1.9.3.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="a85588bec3e2c4584d593d3f15df1677321bca72">
+        <dex dex="/Users/tangyichao/Documents/smartstudy/smartstudy-android/app/build/intermediates/pre-dexed/debug/universal-image-loader-1.9.3-b16241cd4b35bb8ac4a40d89d11445f1717acd63.jar" />
+    </item>
+    <item
+        jar="/Users/tangyichao/Documents/smartstudy/smartstudy-android/app/libs/xUtils-2.6.14.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="f10c51f3e0732fdeefe6e104279a58e275879b6c">
+        <dex dex="/Users/tangyichao/Documents/smartstudy/smartstudy-android/app/build/intermediates/pre-dexed/debug/xUtils-2.6.14-460bbda1afa57823f0a32452305839de27ca269c.jar" />
+    </item>
+    <item
+        jar="/Users/tangyichao/Documents/smartstudy/smartstudy-android/app/libs/android-async-http-1.4.5.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="77bf7cacf9cefe19dc105e5425d2eb1bb5285881">
+        <dex dex="/Users/tangyichao/Documents/smartstudy/smartstudy-android/app/build/intermediates/pre-dexed/debug/android-async-http-1.4.5-0968f421cec29afb161306df74b002014c0d6447.jar" />
+    </item>
+    <item
+        jar="/Applications/adt-bundle-mac-x86_64-20140702/sdk/extras/android/m2repository/com/android/support/support-annotations/22.1.1/support-annotations-22.1.1.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="01d051a6bfb1218b1db2d3a5af0480ac2c25c42a">
+        <dex dex="/Users/tangyichao/Documents/smartstudy/smartstudy-android/app/build/intermediates/pre-dexed/debug/support-annotations-22.1.1-97f4adda8d67d94a1e765a81b260c5e5a5d548a7.jar" />
+    </item>
+    <item
+        jar="/Users/tangyichao/Documents/smartstudy/smartstudy-android/app/build/intermediates/exploded-aar/me.neavo/vitamio/4.2.2/jars/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="42758c720605ffd5916f008ae3cbdee5617afbd3">
+        <dex dex="/Users/tangyichao/Documents/smartstudy/smartstudy-android/app/build/intermediates/pre-dexed/debug/classes-436665b1b177672fa082f9f29f079ad40beec2d4.jar" />
+    </item>
+    <item
+        jar="/Users/tangyichao/Documents/smartstudy/smartstudy-android/app/libs/umeng-analytics-v5.4.2.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="75ef4894b1489017838dc57dbe9a5782ab12c427">
+        <dex dex="/Users/tangyichao/Documents/smartstudy/smartstudy-android/app/build/intermediates/pre-dexed/debug/umeng-analytics-v5.4.2-1acc603c58b7c5c30f43e1fbddf5c9056787d147.jar" />
+    </item>
+    <item
+        jar="/Users/tangyichao/Documents/smartstudy/smartstudy-android/app/build/intermediates/exploded-aar/com.android.support/support-v4/22.1.1/jars/libs/internal_impl-22.1.1.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="9e070ad32b2700b0343e8e0cccc437733d91ba3a">
+        <dex dex="/Users/tangyichao/Documents/smartstudy/smartstudy-android/app/build/intermediates/pre-dexed/debug/internal_impl-22.1.1-e4d02ace209d86cc6b0e42df42bbd9d2ed636953.jar" />
+    </item>
+    <item
+        jar="/Users/tangyichao/Documents/smartstudy/smartstudy-android/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.1.1/jars/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="a3ff3c506644c820eb2bdf06e8339f72be578551">
+        <dex dex="/Users/tangyichao/Documents/smartstudy/smartstudy-android/app/build/intermediates/pre-dexed/debug/classes-c29e06914b5595acc13d5018d264ceae8acdcc27.jar" />
+    </item>
+
+</items>

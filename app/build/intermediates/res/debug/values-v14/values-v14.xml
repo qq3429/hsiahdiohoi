@@ -4,6 +4,8 @@
     <eat-comment/>
     <style name="AppBaseTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- API 14 theme customizations can go here. -->
+        <item name="colorPrimary">#ff9987</item>
+        <item name="colorPrimaryDark">#ff8776</item>
     </style>
     <!-- From: file:/Users/tangyichao/Documents/smartstudy/smartstudy-android/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.1.1/res/values-v14/values.xml -->
     <eat-comment/>

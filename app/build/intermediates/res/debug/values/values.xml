@@ -284,6 +284,8 @@
             res/values-vXX/styles.xml, while customizations related to
             backward-compatibility can go here.
         -->
+        <item name="colorPrimary">#ff9987</item>
+        <item name="colorPrimaryDark">#ff8776</item>
     </style>
     <style name="AppTheme" parent="AppBaseTheme">
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
