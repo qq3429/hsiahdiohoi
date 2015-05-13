@@ -1,7 +1,5 @@
 package com.innobuddy.SmartStudy.ui;
 
-import java.util.ArrayList;
-
 import android.app.Activity;
 import android.content.Context;
 import android.support.v4.app.Fragment;
@@ -23,6 +21,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.innobuddy.SmartStudy.R;
+
+import java.util.ArrayList;
 
 public class TabFragmentIndicator extends LinearLayout implements ViewPager.OnPageChangeListener, OnClickListener {
     

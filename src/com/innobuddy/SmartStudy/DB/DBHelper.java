@@ -1,4 +1,4 @@
-package com.innobuddy.SmartStudy.DB;
+package com.innobuddy.SmartStudy.db;
 
 import org.json.JSONObject;
 

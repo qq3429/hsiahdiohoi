@@ -1,4 +1,4 @@
-package com.innobuddy.SmartStudy.DB.dao;
+package com.innobuddy.SmartStudy.db.dao;
 /**
  * 例子
  * @author tangyichao

@@ -16,11 +16,11 @@
 
 package com.innobuddy.download.http;
 
+import android.text.format.Time;
+
 import java.util.Calendar;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import android.text.format.Time;
 
 /**
  * Helper for parsing an HTTP date.

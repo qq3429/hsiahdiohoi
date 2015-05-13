@@ -1,11 +1,5 @@
 package com.innobuddy.SmartStudy.adapter;
 
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.Map;
-
-import org.apache.http.Header;
-
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -20,6 +14,12 @@ import com.innobuddy.SmartStudy.R;
 import com.innobuddy.SmartStudy.activity.CourseDetailActivity;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
+
+import org.apache.http.Header;
+
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.Map;
   
 public class SeparatedListAdapter extends BaseAdapter {  
   

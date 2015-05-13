@@ -1,4 +1,4 @@
-package com.innobuddy.SmartStudy.Video;
+package com.innobuddy.SmartStudy.video;
 
 import android.content.Context;
 import android.util.AttributeSet;

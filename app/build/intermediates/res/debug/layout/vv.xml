@@ -3,7 +3,7 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content" >
 
-    <com.innobuddy.SmartStudy.Video.VolumeView
+    <com.innobuddy.SmartStudy.video.VolumeView
         android:id="@+id/volumeView"
         android:layout_width="120dp"
         android:layout_height="120dp" />

@@ -1,11 +1,5 @@
 package com.innobuddy.SmartStudy.fragment;
 
-import java.io.File;
-import java.util.Iterator;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -27,12 +21,18 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.innobuddy.SmartStudy.R;
-import com.innobuddy.SmartStudy.DB.DBHelper;
 import com.innobuddy.SmartStudy.adapter.CourseCell3Adapter;
+import com.innobuddy.SmartStudy.db.DBHelper;
 import com.innobuddy.SmartStudy.utils.Md5Utils;
 import com.innobuddy.download.utils.DStorageUtils;
 import com.innobuddy.download.utils.FileUtils;
 import com.innobuddy.download.utils.MyIntents;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.File;
+import java.util.Iterator;
 
 /**
  * A simple {@link Fragment} subclass.

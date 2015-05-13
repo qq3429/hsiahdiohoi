@@ -1,10 +1,10 @@
-package com.innobuddy.SmartStudy.DB.impl;
+package com.innobuddy.SmartStudy.db.impl;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.innobuddy.SmartStudy.DB.DBHelper;
-import com.innobuddy.SmartStudy.DB.dao.UserDao;
+import com.innobuddy.SmartStudy.db.DBHelper;
+import com.innobuddy.SmartStudy.db.dao.UserDao;
 /**
  * 例子
  * @author tangyichao

@@ -16,13 +16,10 @@
 
 package com.innobuddy.download.http;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.net.URI;
-import java.util.zip.GZIPInputStream;
-import java.util.zip.GZIPOutputStream;
+import android.content.ContentResolver;
+import android.content.Context;
+import android.os.Looper;
+import android.util.Log;
 
 import org.apache.http.Header;
 import org.apache.http.HttpEntity;
@@ -55,10 +52,13 @@ import org.apache.http.protocol.BasicHttpContext;
 import org.apache.http.protocol.BasicHttpProcessor;
 import org.apache.http.protocol.HttpContext;
 
-import android.content.ContentResolver;
-import android.content.Context;
-import android.os.Looper;
-import android.util.Log;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.URI;
+import java.util.zip.GZIPInputStream;
+import java.util.zip.GZIPOutputStream;
 
 /**
  * Subclass of the Apache {@link DefaultHttpClient} that is configured with

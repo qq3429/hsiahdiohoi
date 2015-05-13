@@ -1,11 +1,5 @@
 package com.innobuddy.SmartStudy.adapter;
 
-import java.io.File;
-import java.util.HashMap;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.content.Context;
 import android.database.Cursor;
 import android.view.LayoutInflater;
@@ -23,6 +17,12 @@ import com.innobuddy.download.utils.DStorageUtils;
 import com.innobuddy.download.utils.FileUtils;
 import com.innobuddy.download.utils.MyIntents;
 import com.nostra13.universalimageloader.core.ImageLoader;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.File;
+import java.util.HashMap;
 
 public class CourseCell3Adapter extends BaseAdapter {
 

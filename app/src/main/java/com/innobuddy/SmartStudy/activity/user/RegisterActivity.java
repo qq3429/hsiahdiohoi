@@ -1,8 +1,5 @@
 package com.innobuddy.SmartStudy.activity.user;
 
-import java.util.Timer;
-import java.util.TimerTask;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -20,6 +17,9 @@ import com.lidroid.xutils.exception.HttpException;
 import com.lidroid.xutils.http.ResponseInfo;
 import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest.HttpMethod;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class RegisterActivity extends BaseActivity {
 	private Button mBtnObtionCode;

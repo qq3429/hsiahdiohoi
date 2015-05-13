@@ -1,11 +1,11 @@
 package com.innobuddy.download.utils;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ConfigUtils {
 

@@ -1,13 +1,6 @@
 package com.innobuddy.SmartStudy.activity;
 
 
-
-import java.util.ArrayList;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
@@ -20,6 +13,12 @@ import com.innobuddy.SmartStudy.R;
 import com.innobuddy.SmartStudy.fragment.CourseDetailFragment;
 import com.innobuddy.SmartStudy.ui.TabFragmentIndicator;
 import com.innobuddy.SmartStudy.ui.TabFragmentIndicator.OnTabClickListener;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 public class CourseDetailActivity extends FragmentActivity implements OnTabClickListener {
 

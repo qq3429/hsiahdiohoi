@@ -1,8 +1,5 @@
 package com.innobuddy.SmartStudy.activity.user;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
@@ -34,6 +31,9 @@ import com.lidroid.xutils.http.RequestParams;
 import com.lidroid.xutils.http.ResponseInfo;
 import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest.HttpMethod;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 @SuppressLint("HandlerLeak")
 public class LoginActivity extends BaseActivity implements OnFocusChangeListener {

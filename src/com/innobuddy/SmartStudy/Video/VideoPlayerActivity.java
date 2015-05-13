@@ -1,4 +1,4 @@
-package com.innobuddy.SmartStudy.Video;
+package com.innobuddy.SmartStudy.video;
 
 import io.vov.vitamio.LibsChecker;
 import io.vov.vitamio.MediaPlayer;
@@ -46,7 +46,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.innobuddy.SmartStudy.R;
-import com.innobuddy.SmartStudy.DB.DBHelper;
+import com.innobuddy.SmartStudy.db.DBHelper;
 import com.innobuddy.SmartStudy.utils.Md5Utils;
 import com.innobuddy.SmartStudy.utils.Utilitys;
 import com.innobuddy.download.utils.ConfigUtils;

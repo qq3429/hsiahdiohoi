@@ -1,9 +1,5 @@
 package com.innobuddy.SmartStudy.fragment;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.content.DialogInterface;
@@ -25,6 +21,10 @@ import com.innobuddy.SmartStudy.activity.RecentWatchActivity;
 import com.innobuddy.SmartStudy.activity.user.LoginActivity;
 import com.innobuddy.SmartStudy.global.GlobalParams;
 import com.umeng.analytics.MobclickAgent;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Fragment2 extends Fragment {
 

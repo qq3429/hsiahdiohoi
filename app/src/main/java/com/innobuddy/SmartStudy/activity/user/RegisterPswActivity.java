@@ -1,8 +1,5 @@
 package com.innobuddy.SmartStudy.activity.user;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.content.Intent;
 import android.graphics.Paint;
 import android.os.Bundle;
@@ -24,6 +21,9 @@ import com.lidroid.xutils.http.RequestParams;
 import com.lidroid.xutils.http.ResponseInfo;
 import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest.HttpMethod;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class RegisterPswActivity extends BaseActivity {
 

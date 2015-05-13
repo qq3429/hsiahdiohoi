@@ -1,12 +1,12 @@
-package com.innobuddy.SmartStudy.DB;
-
-import org.json.JSONObject;
+package com.innobuddy.SmartStudy.db;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+
+import org.json.JSONObject;
 
 public class DBHelper extends SQLiteOpenHelper {
 

@@ -1,4 +1,4 @@
-package com.innobuddy.SmartStudy.Video;
+package com.innobuddy.SmartStudy.video;
 
 import android.app.Activity;
 import android.content.ContentResolver;

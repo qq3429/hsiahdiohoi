@@ -123,7 +123,7 @@ ADDED from AndroidManifest.xml:54:9
 		ADDED from AndroidManifest.xml:56:13
 	android:name
 		ADDED from AndroidManifest.xml:55:13
-activity#com.innobuddy.SmartStudy.Video.VideoPlayerActivity
+activity#com.innobuddy.SmartStudy.video.VideoPlayerActivity
 ADDED from AndroidManifest.xml:59:9
 	android:screenOrientation
 		ADDED from AndroidManifest.xml:62:13

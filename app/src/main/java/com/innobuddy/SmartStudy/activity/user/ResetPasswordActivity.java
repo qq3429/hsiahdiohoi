@@ -1,10 +1,6 @@
 package com.innobuddy.SmartStudy.activity.user;
 
 
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -21,6 +17,9 @@ import com.lidroid.xutils.http.RequestParams;
 import com.lidroid.xutils.http.ResponseInfo;
 import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest.HttpMethod;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class ResetPasswordActivity extends BaseActivity {
 

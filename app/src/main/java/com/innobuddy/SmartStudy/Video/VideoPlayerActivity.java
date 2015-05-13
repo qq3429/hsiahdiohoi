@@ -1,22 +1,4 @@
-package com.innobuddy.SmartStudy.Video;
-
-import io.vov.vitamio.LibsChecker;
-import io.vov.vitamio.MediaPlayer;
-import io.vov.vitamio.MediaPlayer.OnCompletionListener;
-import io.vov.vitamio.MediaPlayer.OnPreparedListener;
-import io.vov.vitamio.widget.VideoView;
-
-import java.io.File;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Set;
-import java.util.Timer;
-import java.util.TimerTask;
-import java.util.TreeSet;
-
-import org.json.JSONException;
-import org.json.JSONObject;
+package com.innobuddy.SmartStudy.video;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -46,13 +28,32 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.innobuddy.SmartStudy.R;
-import com.innobuddy.SmartStudy.DB.DBHelper;
+import com.innobuddy.SmartStudy.db.DBHelper;
+import com.innobuddy.SmartStudy.utils.DensityUtils;
 import com.innobuddy.SmartStudy.utils.Md5Utils;
 import com.innobuddy.SmartStudy.utils.Utilitys;
 import com.innobuddy.download.utils.ConfigUtils;
 import com.innobuddy.download.utils.DStorageUtils;
 import com.innobuddy.download.utils.MyIntents;
 import com.innobuddy.download.utils.NetworkUtils;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.File;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Set;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.TreeSet;
+
+import io.vov.vitamio.LibsChecker;
+import io.vov.vitamio.MediaPlayer;
+import io.vov.vitamio.MediaPlayer.OnCompletionListener;
+import io.vov.vitamio.MediaPlayer.OnPreparedListener;
+import io.vov.vitamio.widget.VideoView;
 
 public class VideoPlayerActivity extends Activity implements OnClickListener {
 
@@ -211,9 +212,9 @@ public class VideoPlayerActivity extends Activity implements OnClickListener {
 
 		mAudioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
 
-		width = DensityUtil.getWidthInPx(this);
-		height = DensityUtil.getHeightInPx(this);
-		threshold = DensityUtil.dip2px(this, 18);
+		width = DensityUtils.getWidthInPx(this);
+		height = DensityUtils.getHeightInPx(this);
+		threshold = DensityUtils.dip2px(this, 18);
 
 		orginalLight = LightnessController.getLightness(this);
 
@@ -234,11 +235,11 @@ public class VideoPlayerActivity extends Activity implements OnClickListener {
 	@Override
 	public void onConfigurationChanged(Configuration newConfig) {
 		if (this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
-			height = DensityUtil.getWidthInPx(this);
-			width = DensityUtil.getHeightInPx(this);
+			height = DensityUtils.getWidthInPx(this);
+			width = DensityUtils.getHeightInPx(this);
 		} else if (this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
-			width = DensityUtil.getWidthInPx(this);
-			height = DensityUtil.getHeightInPx(this);
+			width = DensityUtils.getWidthInPx(this);
+			height = DensityUtils.getHeightInPx(this);
 		}
 		super.onConfigurationChanged(newConfig);
 	}

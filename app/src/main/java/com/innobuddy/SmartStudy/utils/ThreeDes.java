@@ -1,11 +1,11 @@
 package com.innobuddy.SmartStudy.utils;
 
+import android.annotation.SuppressLint;
+import android.util.Base64;
+
 import javax.crypto.Cipher;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
-
-import android.annotation.SuppressLint;
-import android.util.Base64;
 
 /**
  * 3重DES加密和解密算法的工具类

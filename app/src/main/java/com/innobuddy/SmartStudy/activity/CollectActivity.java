@@ -1,8 +1,5 @@
 package com.innobuddy.SmartStudy.activity;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
@@ -22,9 +19,12 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.innobuddy.SmartStudy.R;
-import com.innobuddy.SmartStudy.DB.DBHelper;
 import com.innobuddy.SmartStudy.adapter.CourseCell2Adapter;
+import com.innobuddy.SmartStudy.db.DBHelper;
 import com.innobuddy.SmartStudy.utils.Utilitys;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class CollectActivity extends Activity {
 

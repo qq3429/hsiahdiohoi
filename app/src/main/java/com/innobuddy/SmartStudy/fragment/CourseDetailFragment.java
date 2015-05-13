@@ -1,11 +1,5 @@
 package com.innobuddy.SmartStudy.fragment;
 
-import java.util.ArrayList;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.DisplayMetrics;
@@ -19,6 +13,12 @@ import com.innobuddy.SmartStudy.R;
 import com.innobuddy.SmartStudy.adapter.CourseCellAdapter;
 import com.innobuddy.SmartStudy.utils.Utilitys;
 import com.nostra13.universalimageloader.core.ImageLoader;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass. Activities that contain this fragment

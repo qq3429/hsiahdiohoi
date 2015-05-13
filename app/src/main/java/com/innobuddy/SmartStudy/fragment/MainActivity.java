@@ -1,10 +1,5 @@
 package com.innobuddy.SmartStudy.fragment;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.Timer;
-import java.util.TimerTask;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -18,7 +13,7 @@ import android.widget.TabHost.TabSpec;
 import android.widget.Toast;
 
 import com.innobuddy.SmartStudy.R;
-import com.innobuddy.SmartStudy.DB.DBHelper;
+import com.innobuddy.SmartStudy.db.DBHelper;
 import com.innobuddy.download.utils.DStorageUtils;
 import com.innobuddy.download.utils.MyIntents;
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiscCache;
@@ -30,6 +25,11 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.download.BaseImageDownloader;
 import com.nostra13.universalimageloader.utils.StorageUtils;
 import com.umeng.analytics.MobclickAgent;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.Timer;
+import java.util.TimerTask;
 //import android.support.v13.app.FragmentTabHost;
 
 public class MainActivity extends FragmentActivity {

@@ -2,18 +2,6 @@
 package com.innobuddy.download.services;
 
 
-import java.io.BufferedInputStream;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.RandomAccessFile;
-import java.net.MalformedURLException;
-
-import org.apache.http.HttpResponse;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.conn.ConnectTimeoutException;
-
 import android.accounts.NetworkErrorException;
 import android.content.Context;
 import android.os.AsyncTask;
@@ -25,6 +13,18 @@ import com.innobuddy.download.error.NoMemoryException;
 import com.innobuddy.download.http.AndroidHttpClient;
 import com.innobuddy.download.utils.DStorageUtils;
 import com.innobuddy.download.utils.NetworkUtils;
+
+import org.apache.http.HttpResponse;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.conn.ConnectTimeoutException;
+
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.RandomAccessFile;
+import java.net.MalformedURLException;
 
 public class DownloadTask extends AsyncTask<Void, Integer, Long> {
 

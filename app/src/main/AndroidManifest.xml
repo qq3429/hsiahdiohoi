@@ -57,7 +57,7 @@
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name="com.innobuddy.SmartStudy.Video.VideoPlayerActivity"
+            android:name="com.innobuddy.SmartStudy.video.VideoPlayerActivity"
             android:label="@string/title_activity_video"
             android:screenOrientation="landscape"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >

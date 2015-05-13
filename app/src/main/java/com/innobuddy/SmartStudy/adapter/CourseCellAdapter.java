@@ -1,10 +1,5 @@
 package com.innobuddy.SmartStudy.adapter;
 
-import java.util.ArrayList;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
@@ -18,6 +13,11 @@ import android.widget.ImageView;
 import com.innobuddy.SmartStudy.R;
 import com.innobuddy.SmartStudy.utils.Utilitys;
 import com.nostra13.universalimageloader.core.ImageLoader;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 public class CourseCellAdapter extends BaseAdapter {
 	LayoutInflater _inflater;

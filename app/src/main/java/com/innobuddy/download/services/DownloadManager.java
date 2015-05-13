@@ -2,13 +2,6 @@
 package com.innobuddy.download.services;
 
 
-import java.io.File;
-import java.net.MalformedURLException;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Queue;
-
 import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
@@ -21,6 +14,13 @@ import com.innobuddy.download.utils.ConfigUtils;
 import com.innobuddy.download.utils.DStorageUtils;
 import com.innobuddy.download.utils.FileUtils;
 import com.innobuddy.download.utils.MyIntents;
+
+import java.io.File;
+import java.net.MalformedURLException;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Queue;
 
 public class DownloadManager extends Thread {
 
