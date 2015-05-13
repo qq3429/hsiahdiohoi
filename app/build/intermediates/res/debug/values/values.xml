@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- From: file:/Users/tangyichao/Documents/smartstudy/smartstudy-android/app/src/main/res/values/colors.xml -->
+    <eat-comment/>
+    <color name="haf_orange">#f0b195</color>
+    <color name="haf_transparent">#7f000000</color>
+    <color name="selected">#54c4ff</color>
+    <color name="white">#ffffff</color>
+    <!-- From: file:/Users/tangyichao/Documents/smartstudy/smartstudy-android/app/src/main/res/values/dimens.xml -->
+    <eat-comment/>
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="cursor_height">5dp</dimen>
+    <dimen name="tab_height">45dp</dimen>
+    <!-- From: file:/Users/tangyichao/Documents/smartstudy/smartstudy-android/app/src/main/res/values/strings.xml -->
+    <eat-comment/>
+    <string name="action_clear">清空</string>
+    <string name="action_settings">设置</string>
+    <string name="app_name">智课堂</string>
+    <string name="digits">abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMEOPQRSTUVWXYZ0123456789</string>
+    <string name="title_activity_aboutus">关于我们</string>
+    <string name="title_activity_backpassword">找回密码</string>
+    <string name="title_activity_collect">我的收藏</string>
+    <string name="title_activity_feedback">意见反馈</string>
+    <string name="title_activity_login">登陆</string>
+    <string name="title_activity_recent_watch">近期观看</string>
+    <string name="title_activity_register">注册</string>
+    <string name="title_activity_reset">重置密码</string>
+    <string name="title_activity_video">播放器</string>
+    <!-- From: file:/Users/tangyichao/Documents/smartstudy/smartstudy-android/app/src/main/res/values/styles.xml -->
+    <eat-comment/>
+    <style name="ActionBar.TitleTextStyle" parent="@android:style/TextAppearance.Holo.Widget.ActionBar.Title">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+    <style name="ActionBar.menuTextStyle" parent="@android:style/TextAppearance.Holo.Widget.ActionBar.Menu">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+    <style name="AppBaseTheme" parent="Theme.AppCompat.Light">
+        <!--
+            Theme customizations available in newer API levels can go in
+            res/values-vXX/styles.xml, while customizations related to
+            backward-compatibility can go here.
+        -->
+    </style>
+    <style name="AppTheme" parent="AppBaseTheme">
+        <!-- All customizations that are NOT specific to a particular API-level can go here. -->
+        <item name="android:actionBarStyle">@style/actionbar_style</item>
+        <item name="android:actionMenuTextAppearance">@style/ActionBar.menuTextStyle</item>
+    </style>
+    <style name="Style.ActionBarTabTextStyle" parent="android:style/Widget.Holo.Light.ActionBar.TabText">        
+        <item name="android:textColor">#000000</item>
+        <item name="android:textSize">16sp</item>   
+    </style>
+    <style name="actionbar_style" parent="@android:style/Widget.Holo.Light.ActionBar">
+        <item name="android:background">#54c4ff</item>
+        <item name="android:titleTextStyle">@style/ActionBar.TitleTextStyle</item>
+    </style>
+    <style name="dot_style">
+        <item name="android:layout_width">5dip</item>
+        <item name="android:layout_height">5dip</item>
+        <item name="android:background">@drawable/dot_normal</item>
+        <item name="android:layout_marginLeft">2dip</item>
+        <item name="android:layout_marginRight">2dip</item>
+    </style>
+    <style name="tab_rb_style">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:button">@null</item>
+        <item name="android:textColor">@color/tab_selector_tv_color</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:gravity">center_horizontal|bottom</item>
+        <item name="android:layout_gravity">bottom</item>
+        <!-- <item name="android:background" >@drawable/tab_selector_checked_bg</item> -->
+    </style>
+</resources>

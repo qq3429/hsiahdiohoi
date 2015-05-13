@@ -1,0 +1,313 @@
+ECLIPSE ANDROID PROJECT IMPORT SUMMARY
+======================================
+
+Ignored Files:
+--------------
+The following files were *not* copied into the new Gradle project; you
+should evaluate whether these are still needed in your project and if
+so manually move them:
+
+* .gitignore
+* .idea/
+* .idea/.name
+* .idea/compiler.xml
+* .idea/copyright/
+* .idea/copyright/profiles_settings.xml
+* .idea/misc.xml
+* .idea/modules.xml
+* .idea/vcs.xml
+* .idea/workspace.xml
+* app/
+* app/build.gradle
+* app/libs/
+* app/libs/android-async-http-1.4.5.jar
+* app/libs/android-support-v13.jar
+* app/libs/umeng-analytics-v5.4.2.jar
+* app/libs/universal-image-loader-1.9.3.jar
+* app/libs/xUtils-2.6.14.jar
+* app/src/
+* app/src/main/
+* app/src/main/AndroidManifest.xml
+* app/src/main/aidl/
+* app/src/main/aidl/com/
+* app/src/main/aidl/com/innobuddy/
+* app/src/main/aidl/com/innobuddy/download/
+* app/src/main/aidl/com/innobuddy/download/services/
+* app/src/main/aidl/com/innobuddy/download/services/IDownloadService.aidl
+* app/src/main/java/
+* app/src/main/java/cn/
+* app/src/main/java/cn/trinea/
+* app/src/main/java/cn/trinea/android/
+* app/src/main/java/cn/trinea/android/view/
+* app/src/main/java/cn/trinea/android/view/autoscrollviewpager/
+* app/src/main/java/cn/trinea/android/view/autoscrollviewpager/AutoScrollViewPager.java
+* app/src/main/java/cn/trinea/android/view/autoscrollviewpager/CustomDurationScroller.java
+* app/src/main/java/com/
+* app/src/main/java/com/innobuddy/
+* app/src/main/java/com/innobuddy/SmartStudy/
+* app/src/main/java/com/innobuddy/SmartStudy/DB/
+* app/src/main/java/com/innobuddy/SmartStudy/DB/DBHelper.java
+* app/src/main/java/com/innobuddy/SmartStudy/DB/dao/
+* app/src/main/java/com/innobuddy/SmartStudy/DB/dao/UserDao.java
+* app/src/main/java/com/innobuddy/SmartStudy/DB/impl/
+* app/src/main/java/com/innobuddy/SmartStudy/DB/impl/UserImpl.java
+* app/src/main/java/com/innobuddy/SmartStudy/Video/
+* app/src/main/java/com/innobuddy/SmartStudy/Video/DensityUtil.java
+* app/src/main/java/com/innobuddy/SmartStudy/Video/FullScreenVideoView.java
+* app/src/main/java/com/innobuddy/SmartStudy/Video/LightnessController.java
+* app/src/main/java/com/innobuddy/SmartStudy/Video/VideoPlayerActivity.java
+* app/src/main/java/com/innobuddy/SmartStudy/Video/VolumeController.java
+* app/src/main/java/com/innobuddy/SmartStudy/Video/VolumeView.java
+* app/src/main/java/com/innobuddy/SmartStudy/activity/
+* app/src/main/java/com/innobuddy/SmartStudy/activity/AboutUsActivity.java
+* app/src/main/java/com/innobuddy/SmartStudy/activity/BaseActivity.java
+* app/src/main/java/com/innobuddy/SmartStudy/activity/CollectActivity.java
+* app/src/main/java/com/innobuddy/SmartStudy/activity/CourseDetailActivity.java
+* app/src/main/java/com/innobuddy/SmartStudy/activity/FeedbackActivity.java
+* app/src/main/java/com/innobuddy/SmartStudy/activity/RecentWatchActivity.java
+* app/src/main/java/com/innobuddy/SmartStudy/activity/SplashActivity.java
+* app/src/main/java/com/innobuddy/SmartStudy/activity/WebViewActivity.java
+* app/src/main/java/com/innobuddy/SmartStudy/activity/user/
+* app/src/main/java/com/innobuddy/SmartStudy/activity/user/BackPasswordActivity.java
+* app/src/main/java/com/innobuddy/SmartStudy/activity/user/LoginActivity.java
+* app/src/main/java/com/innobuddy/SmartStudy/activity/user/RegisterActivity.java
+* app/src/main/java/com/innobuddy/SmartStudy/activity/user/RegisterPswActivity.java
+* app/src/main/java/com/innobuddy/SmartStudy/activity/user/ResetPasswordActivity.java
+* app/src/main/java/com/innobuddy/SmartStudy/adapter/
+* app/src/main/java/com/innobuddy/SmartStudy/adapter/CourseCell2Adapter.java
+* app/src/main/java/com/innobuddy/SmartStudy/adapter/CourseCell3Adapter.java
+* app/src/main/java/com/innobuddy/SmartStudy/adapter/CourseCellAdapter.java
+* app/src/main/java/com/innobuddy/SmartStudy/adapter/SeparatedListAdapter.java
+* app/src/main/java/com/innobuddy/SmartStudy/application/
+* app/src/main/java/com/innobuddy/SmartStudy/application/SmartStudyApplication.java
+* app/src/main/java/com/innobuddy/SmartStudy/domain/
+* app/src/main/java/com/innobuddy/SmartStudy/domain/User.java
+* app/src/main/java/com/innobuddy/SmartStudy/fragment/
+* app/src/main/java/com/innobuddy/SmartStudy/fragment/CourseDetailFragment.java
+* app/src/main/java/com/innobuddy/SmartStudy/fragment/DownloadFragment.java
+* app/src/main/java/com/innobuddy/SmartStudy/fragment/Fragment1.java
+* app/src/main/java/com/innobuddy/SmartStudy/fragment/Fragment2.java
+* app/src/main/java/com/innobuddy/SmartStudy/fragment/Fragment3.java
+* app/src/main/java/com/innobuddy/SmartStudy/fragment/Fragment4.java
+* app/src/main/java/com/innobuddy/SmartStudy/fragment/MainActivity.java
+* app/src/main/java/com/innobuddy/SmartStudy/fragment/OfflineFragment.java
+* app/src/main/java/com/innobuddy/SmartStudy/global/
+* app/src/main/java/com/innobuddy/SmartStudy/global/ConstantValue.java
+* app/src/main/java/com/innobuddy/SmartStudy/global/GlobalParams.java
+* app/src/main/java/com/innobuddy/SmartStudy/ui/
+* app/src/main/java/com/innobuddy/SmartStudy/ui/TabFragmentIndicator.java
+* app/src/main/java/com/innobuddy/SmartStudy/utils/
+* app/src/main/java/com/innobuddy/SmartStudy/utils/DensityUtils.java
+* app/src/main/java/com/innobuddy/SmartStudy/utils/Md5Utils.java
+* app/src/main/java/com/innobuddy/SmartStudy/utils/ThreeDes.java
+* app/src/main/java/com/innobuddy/SmartStudy/utils/Utilitys.java
+* app/src/main/java/com/innobuddy/SmartStudy/utils/ValidateUtil.java
+* app/src/main/java/com/innobuddy/SmartStudy/utils/VersionUtils.java
+* app/src/main/java/com/innobuddy/download/
+* app/src/main/java/com/innobuddy/download/domain/
+* app/src/main/java/com/innobuddy/download/domain/TsFile.java
+* app/src/main/java/com/innobuddy/download/error/
+* app/src/main/java/com/innobuddy/download/error/DownloadException.java
+* app/src/main/java/com/innobuddy/download/error/FileAlreadyExistException.java
+* app/src/main/java/com/innobuddy/download/error/NoMemoryException.java
+* app/src/main/java/com/innobuddy/download/http/
+* app/src/main/java/com/innobuddy/download/http/AndroidHttpClient.java
+* app/src/main/java/com/innobuddy/download/http/HttpDateTime.java
+* app/src/main/java/com/innobuddy/download/services/
+* app/src/main/java/com/innobuddy/download/services/DownloadManager.java
+* app/src/main/java/com/innobuddy/download/services/DownloadService.java
+* app/src/main/java/com/innobuddy/download/services/DownloadTask.java
+* app/src/main/java/com/innobuddy/download/services/DownloadTaskListener.java
+* app/src/main/java/com/innobuddy/download/services/TrafficCounterService.java
+* app/src/main/java/com/innobuddy/download/utils/
+* app/src/main/java/com/innobuddy/download/utils/ConfigUtils.java
+* app/src/main/java/com/innobuddy/download/utils/DStorageUtils.java
+* app/src/main/java/com/innobuddy/download/utils/FileUtils.java
+* app/src/main/java/com/innobuddy/download/utils/MyIntents.java
+* app/src/main/java/com/innobuddy/download/utils/NetworkUtils.java
+* app/src/main/java/com/innobuddy/download/utils/TextUtils.java
+* app/src/main/java/com/innobuddy/download/utils/Utils.java
+* app/src/main/res/
+* app/src/main/res/anim/
+* app/src/main/res/anim/option_entry_from_bottom.xml
+* app/src/main/res/anim/option_entry_from_right.xml
+* app/src/main/res/anim/option_entry_from_top.xml
+* app/src/main/res/anim/option_leave_from_bottom.xml
+* app/src/main/res/anim/option_leave_from_right.xml
+* app/src/main/res/anim/option_leave_from_top.xml
+* app/src/main/res/anim/zoom_enter.xml
+* app/src/main/res/anim/zoom_enter1.xml
+* app/src/main/res/anim/zoom_exit.xml
+* app/src/main/res/anim/zoom_exit1.xml
+* app/src/main/res/color/
+* app/src/main/res/color/tab_selector_tv_color.xml
+* app/src/main/res/drawable-hdpi/
+* app/src/main/res/drawable-hdpi/line_point.png
+* app/src/main/res/drawable-hdpi/ling.png
+* app/src/main/res/drawable-hdpi/mmfooter_bg.9.png
+* app/src/main/res/drawable-hdpi/tab_bg_halo.9.png
+* app/src/main/res/drawable-hdpi/top_btnback.png
+* app/src/main/res/drawable-hdpi/video_btn_down.png
+* app/src/main/res/drawable-hdpi/video_btn_on.png
+* app/src/main/res/drawable-hdpi/video_line01.png
+* app/src/main/res/drawable-hdpi/video_line02.png
+* app/src/main/res/drawable-xhdpi/
+* app/src/main/res/drawable-xhdpi/ab_stacked_solid_custom.9.png
+* app/src/main/res/drawable-xhdpi/course_default.png
+* app/src/main/res/drawable-xhdpi/course_focus.png
+* app/src/main/res/drawable-xhdpi/download_downloading.png
+* app/src/main/res/drawable-xhdpi/download_error.png
+* app/src/main/res/drawable-xhdpi/download_paused.png
+* app/src/main/res/drawable-xhdpi/download_waiting.png
+* app/src/main/res/drawable-xhdpi/go_back.png
+* app/src/main/res/drawable-xhdpi/ic_launcher.png
+* app/src/main/res/drawable-xhdpi/ic_logo.png
+* app/src/main/res/drawable-xhdpi/mine_connect.png
+* app/src/main/res/drawable-xhdpi/mine_offline.png
+* app/src/main/res/drawable-xhdpi/mine_recent_watch.png
+* app/src/main/res/drawable-xhdpi/phone_watch.png
+* app/src/main/res/drawable-xhdpi/slip_line_background.png
+* app/src/main/res/drawable-xhdpi/slip_line_progress.png
+* app/src/main/res/drawable-xhdpi/slip_line_secondaryprogress.png
+* app/src/main/res/drawable-xhdpi/tab_course.png
+* app/src/main/res/drawable-xhdpi/tab_course_press.png
+* app/src/main/res/drawable-xhdpi/tab_mine.png
+* app/src/main/res/drawable-xhdpi/tab_mine_press.png
+* app/src/main/res/drawable-xhdpi/tab_offline.png
+* app/src/main/res/drawable-xhdpi/tab_offline_press.png
+* app/src/main/res/drawable-xhdpi/tab_settings.png
+* app/src/main/res/drawable-xhdpi/tab_settings_press.png
+* app/src/main/res/drawable-xhdpi/video_backward.png
+* app/src/main/res/drawable-xhdpi/video_collect.png
+* app/src/main/res/drawable-xhdpi/video_forward.png
+* app/src/main/res/drawable-xhdpi/video_offline.png
+* app/src/main/res/drawable-xhdpi/video_pause.png
+* app/src/main/res/drawable-xhdpi/video_play.png
+* app/src/main/res/drawable-xhdpi/video_progress_thumb.png
+* app/src/main/res/drawable-xxhdpi/
+* app/src/main/res/drawable-xxhdpi/ic_launcher.png
+* app/src/main/res/drawable/
+* app/src/main/res/drawable/btn_bg_defult.xml
+* app/src/main/res/drawable/btn_bg_enable.xml
+* app/src/main/res/drawable/btn_bg_press.xml
+* app/src/main/res/drawable/btn_bitmap.xml
+* app/src/main/res/drawable/dot_focused.xml
+* app/src/main/res/drawable/dot_normal.xml
+* app/src/main/res/drawable/ll_bg.xml
+* app/src/main/res/drawable/seekbar.xml
+* app/src/main/res/drawable/seekbar_thumb.xml
+* app/src/main/res/drawable/selector_btn_bg.xml
+* app/src/main/res/drawable/tab_selector_checked_bg.xml
+* app/src/main/res/drawable/tab_selector_course.xml
+* app/src/main/res/drawable/tab_selector_mine.xml
+* app/src/main/res/drawable/tab_selector_offline.xml
+* app/src/main/res/drawable/tab_selector_settings.xml
+* app/src/main/res/drawable/title_bk.xml
+* app/src/main/res/drawable/video_seekbar.xml
+* app/src/main/res/layout/
+* app/src/main/res/layout/activity_about_us.xml
+* app/src/main/res/layout/activity_collect.xml
+* app/src/main/res/layout/activity_course_detail.xml
+* app/src/main/res/layout/activity_feedback.xml
+* app/src/main/res/layout/activity_login.xml
+* app/src/main/res/layout/activity_main.xml
+* app/src/main/res/layout/activity_recent_watch.xml
+* app/src/main/res/layout/activity_register.xml
+* app/src/main/res/layout/activity_register_psw.xml
+* app/src/main/res/layout/activity_reset_psw.xml
+* app/src/main/res/layout/activity_splash.xml
+* app/src/main/res/layout/activity_video.xml
+* app/src/main/res/layout/activity_video_player.xml
+* app/src/main/res/layout/activity_webview.xml
+* app/src/main/res/layout/course_cell1.xml
+* app/src/main/res/layout/course_cell2.xml
+* app/src/main/res/layout/course_cell3.xml
+* app/src/main/res/layout/course_cell_header.xml
+* app/src/main/res/layout/course_detail_tabindicator.xml
+* app/src/main/res/layout/course_header.xml
+* app/src/main/res/layout/fragment1.xml
+* app/src/main/res/layout/fragment2.xml
+* app/src/main/res/layout/fragment3.xml
+* app/src/main/res/layout/fragment4.xml
+* app/src/main/res/layout/fragment_course_detail.xml
+* app/src/main/res/layout/fragment_download.xml
+* app/src/main/res/layout/fragment_offline.xml
+* app/src/main/res/layout/hello_world.xml
+* app/src/main/res/layout/mine_cell.xml
+* app/src/main/res/layout/offline_tabindicator.xml
+* app/src/main/res/layout/tab_slider.xml
+* app/src/main/res/layout/video_button.xml
+* app/src/main/res/layout/video_seekbar.xml
+* app/src/main/res/layout/vv.xml
+* app/src/main/res/menu/
+* app/src/main/res/menu/.xml
+* app/src/main/res/menu/collect.xml
+* app/src/main/res/menu/course_detail.xml
+* app/src/main/res/menu/main.xml
+* app/src/main/res/menu/recent_watch.xml
+* app/src/main/res/menu/tab.xml
+* app/src/main/res/menu/video.xml
+* app/src/main/res/values-v11/
+* app/src/main/res/values-v11/styles.xml
+* app/src/main/res/values-v14/
+* app/src/main/res/values-v14/styles.xml
+* app/src/main/res/values-w820dp/
+* app/src/main/res/values-w820dp/dimens.xml
+* app/src/main/res/values/
+* app/src/main/res/values/colors.xml
+* app/src/main/res/values/dimens.xml
+* app/src/main/res/values/strings.xml
+* app/src/main/res/values/styles.xml
+* build.gradle
+* gradle/
+* gradle/wrapper/
+* gradle/wrapper/gradle-wrapper.jar
+* gradle/wrapper/gradle-wrapper.properties
+* gradlew
+* gradlew.bat
+* ic_launcher-web.png
+* proguard-project.txt
+* settings.gradle
+* ss
+
+Replaced Jars with Dependencies:
+--------------------------------
+The importer recognized the following .jar files as third party
+libraries and replaced them with Gradle dependencies instead. This has
+the advantage that more explicit version information is known, and the
+libraries can be updated automatically. However, it is possible that
+the .jar file in your project was of an older version than the
+dependency we picked, which could render the project not compileable.
+You can disable the jar replacement in the import wizard and try again:
+
+android-support-v4.jar => com.android.support:support-v4:19.1.0
+
+Moved Files:
+------------
+Android Gradle projects use a different directory structure than ADT
+Eclipse projects. Here's how the projects were restructured:
+
+* AndroidManifest.xml => app/src/main/AndroidManifest.xml
+* libs/android-async-http-1.4.5.jar => app/libs/android-async-http-1.4.5.jar
+* libs/android-support-v13.jar => app/libs/android-support-v13.jar
+* libs/umeng-analytics-v5.4.2.jar => app/libs/umeng-analytics-v5.4.2.jar
+* libs/universal-image-loader-1.9.3.jar => app/libs/universal-image-loader-1.9.3.jar
+* libs/xUtils-2.6.14.jar => app/libs/xUtils-2.6.14.jar
+* res/ => app/src/main/res/
+* src/ => app/src/main/java/
+* src/com/innobuddy/download/services/IDownloadService.aidl => app/src/main/aidl/com/innobuddy/download/services/IDownloadService.aidl
+
+Next Steps:
+-----------
+You can now build the project. The Gradle project needs network
+connectivity to download dependencies.
+
+Bugs:
+-----
+If for some reason your project does not build, and you determine that
+it is due to a bug or limitation of the Eclipse to Gradle importer,
+please file a bug at http://b.android.com with category
+Component-Tools.
+
+(This import summary is for your information only, and can be deleted
+after import once you are satisfied with the results.)
